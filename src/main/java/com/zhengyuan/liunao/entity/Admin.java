@@ -4,15 +4,14 @@ public class Admin {
 	private String account;
 	private String psw;
 	private String name;
-	public Admin() {
-		super();
-	}
-	public Admin(String account, String psw, String name) {
-		super();
+	private Integer role;
+	public Admin(String account, String psw, String name, Integer role) {
 		this.account = account;
 		this.psw = psw;
 		this.name = name;
+		this.role = role;
 	}
+
 	public String getAccount() {
 		return account;
 	}
@@ -31,9 +30,18 @@ public class Admin {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public Integer getRole() {
+		return role;
+	}
+
+	public void setRole(Integer role) {
+		this.role = role;
+	}
+
 	@Override
 	public String toString() {
-		return "Admin [account=" + account + ", psw=" + psw + ", name=" + name + "]";
+		return "Admin [account=" + account + ", psw=" + psw + ", name=" + name + ", role=" + role + "]";
 	}
 	
 	

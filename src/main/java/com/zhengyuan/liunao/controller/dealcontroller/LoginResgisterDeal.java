@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.zhengyuan.liunao.exception.GlobelException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +35,7 @@ import cn.hutool.crypto.SecureUtil;
 
 @Controller
 @RequestMapping("/Sys")
+@Slf4j
 public class LoginResgisterDeal {
 
 	@Autowired
@@ -47,64 +50,38 @@ public class LoginResgisterDeal {
     @ResponseBody
 	@RequestMapping(value = "/dealLogin")
 	public String getInfo(@RequestParam(value = "num") String num, @RequestParam(value = "psw") String psw,
-			@RequestParam(value = "identify") String identify, HttpSession httpSession) {
-
+			@RequestParam(value = "identify") Integer identify, HttpSession httpSession) {
 		String dataJson = "fail";
-		if (Integer.parseInt(identify) == 0) {
-			List<Admin> adminList = new ArrayList<>();
-			adminList = adminService.findAdmin(num, SecureUtil.md5(psw));
-			if (adminList.size() > 0) {
-				String account = adminList.get(0).getAccount();
-				String name = adminList.get(0).getName();
-				httpSession.setAttribute("account", account);
-				httpSession.setAttribute("name", name);
-				httpSession.setAttribute("photo", "admin.png");
-				httpSession.setAttribute("role", "admin");
-				dataJson = JSON.toJSONString(adminList);
-				return dataJson;
-			}
-		} else if (Integer.parseInt(identify) == 1) {
-			List<Teacher> teaList = new ArrayList<>();
-			teaList = teacherService.findTeacher(num, SecureUtil.md5(psw));
-			if (teaList.size() > 0) {
-				String name = teaList.get(0).getName();
-				String photo = teaList.get(0).getPhoto();
-				String account = teaList.get(0).getTeachno();
-				httpSession.setAttribute("account", account);
-				httpSession.setAttribute("name", name);
-				httpSession.setAttribute("photo", photo);
-				httpSession.setAttribute("role", "teacher");
-				dataJson = JSON.toJSONString(teaList);
-				return dataJson;
-			}
-		} else if (Integer.parseInt(identify) == 2) {
-			List<Stu> stuList = new ArrayList<>();
-			stuList = stuService.findStu(num, SecureUtil.md5(psw));
-			if (stuList.size() > 0) {
-				String name = stuList.get(0).getName();
-				String photo = stuList.get(0).getPhoto();
-				String account = stuList.get(0).getStuno();
-				httpSession.setAttribute("account", account);
-				httpSession.setAttribute("name", name);
-				httpSession.setAttribute("photo", photo);
-				httpSession.setAttribute("role", "stu");
-				dataJson = JSON.toJSONString(stuList);
-				return dataJson;
-			}
+		Admin admin = adminService.findAdmin(num, SecureUtil.md5(psw), identify);
+		if (null == admin) {
+			log.error("count find user by account:{}", num);
+			throw new GlobelException("can not find user");
 		}
-		return "fail";
+		String account = admin.getAccount();
+		String name = admin.getName();
+		httpSession.setAttribute("account", account);
+		httpSession.setAttribute("name", name);
+		httpSession.setAttribute("photo", identify == 0?"admin.png":"normal.png");
+		httpSession.setAttribute("role", identify == 0?"admin":"normal");
+		dataJson = JSON.toJSONString(admin);
+		return dataJson;
 	}
 	
 	
-	@RequestMapping(value = "/registerStuDeal")
+	@RequestMapping(value = "/registUser")
 	@ResponseBody
-	public String registerDeal(@RequestBody Map map) {
-		System.out.println("stu psw:"+map.get("psw"));
+	public String registUser(@RequestBody Map map) {
+		log.info("regist info: {}", JSON.toJSONString(map));
 		map.put("psw", SecureUtil.md5(map.get("psw").toString()));
-		if (stuService.addStu(map) > 0) {
+		// 查询用户是否存在
+		int count = adminService.queryCountByAccount((String) map.get("account"));
+		if (count > 0) {
+			log.error("this account already be registed, account:{}", JSON.toJSONString(map.get("account")));
+			throw new GlobelException("this account already be registed");
+		}
+		if (adminService.registUser(map) > 0) {
 			return "success";
 		}
-
 		return "failure";
 	}
 	

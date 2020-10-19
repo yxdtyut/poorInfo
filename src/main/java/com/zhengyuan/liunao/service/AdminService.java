@@ -1,9 +1,13 @@
 package com.zhengyuan.liunao.service;
 
-import java.util.List;
-
 import com.zhengyuan.liunao.entity.Admin;
 
+import java.util.Map;
+
 public interface AdminService {
-	public List<Admin> findAdmin(String account, String psw);
+	public Admin findAdmin(String account, String psw, Integer identify);
+
+    int registUser(Map map);
+
+    int queryCountByAccount(String account);
 }
