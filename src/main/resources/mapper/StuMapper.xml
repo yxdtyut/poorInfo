@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhengyuan.liunao.mapper.StuMapper">
-    <select id="findStu" resultType="com.zhengyuan.liunao.entity.Stu">
+<mapper namespace="com.mizhi.yxd.mapper.StuMapper">
+    <select id="findStu" resultType="com.mizhi.yxd.entity.Stu">
       select * from stu where stuno=#{0} and psw=#{1}
     </select>
 
@@ -13,17 +13,17 @@
     
 
 
-	 <select id="findAllStu" resultType="com.zhengyuan.liunao.entity.Stu">
+	 <select id="findAllStu" resultType="com.mizhi.yxd.entity.Stu">
       select * from    Stu   order by stuno limit #{start},#{pagesize}
     </select>
     
     
 	 
-	  <select id="findAll" resultType="com.zhengyuan.liunao.entity.Stu">
+	  <select id="findAll" resultType="com.mizhi.yxd.entity.Stu">
       select * from    Stu  
     </select>
     
-     <select id="findStuByName" resultType="com.zhengyuan.liunao.entity.Stu">
+     <select id="findStuByName" resultType="com.mizhi.yxd.entity.Stu">
         select * from stu where name like CONCAT(CONCAT('%',#{0}),'%') limit #{1},#{2}
     </select>
 
@@ -33,7 +33,7 @@
     </select>
 	
 	
-	<select id="echartStu" resultType="com.zhengyuan.liunao.entity.Stu">
+	<select id="echartStu" resultType="com.mizhi.yxd.entity.Stu">
         select * from stu
     </select>
     
@@ -49,7 +49,7 @@
 	</delete>
 
 
-	<select id = "getStuByNum" resultType="com.zhengyuan.liunao.entity.Stu">
+	<select id = "getStuByNum" resultType="com.mizhi.yxd.entity.Stu">
 		select * from stu where stuno= #{stuno}
 	</select>
 	
@@ -67,7 +67,7 @@
 		WHERE id in (select id from (select id from stu where stuno = #{oldNum}) t1 )
 	</update>
 	
-	<select id = "getScoreByStuName" resultType="com.zhengyuan.liunao.entity.Scores">
+	<select id = "getScoreByStuName" resultType="com.mizhi.yxd.entity.Scores">
 		select ss.stuno,s.name,c.coursename,ss.score,ss.type  from stu_sco ss
 inner JOIN course c
 on c.courseid = ss.courseid

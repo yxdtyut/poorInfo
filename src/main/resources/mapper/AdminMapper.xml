@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhengyuan.liunao.mapper.AdminMapper">
+<mapper namespace="com.mizhi.yxd.mapper.AdminMapper">
     <insert id="registUser">
         insert into admin(account, name, psw, role) values (#{account},#{name},#{psw},#{identify})
     </insert>
 
-    <select id="findAdmin" resultType="com.zhengyuan.liunao.entity.Admin">
+    <select id="findAdmin" resultType="com.mizhi.yxd.entity.Admin">
       select account,psw,name,role from admin where account=#{0} and psw=#{1} and role=#{2} limit 1
    </select>
 

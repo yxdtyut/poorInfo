@@ -24,7 +24,7 @@
 <div class="container">
     <div class="logo">
         <a href="./index.html"><img border="0" src="/Sys/images/hs.jpg">
-            米脂县贫困生源管理系统</a>
+            米脂县贫困生源系统</a>
     </div>
     <div class="left_open">
         <i title="展开左侧栏" class="iconfont">&#xe699;</i>
@@ -37,9 +37,6 @@
                 th:src="@{/Sys/images/my1.png}" th:if="${session.account=='admin'}"/></a>
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
-                <dd>
-                    <a onclick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a>
-                </dd>
                 <dd>
                     <a href="loginView">切换帐号</a>
                 </dd>
@@ -58,16 +55,16 @@
         <ul id="nav">
 
             <li><a href="javascript:;"> <i class="iconfont">&#xe726;</i>
-                <cite>用户管理</cite> <i class="iconfont nav_right">&#xe697;</i>
+                <cite>生源管理</cite> <i class="iconfont nav_right">&#xe697;</i>
             </a>
                 <ul class="sub-menu">
                     <li><a _href="stuInfo"> <i class="iconfont">&#xe6a7;</i>
-                        <cite>已注册学生管理</cite>
+                        <cite>贫困库生源</cite>
                     </a></li>
 
 
                     <li><a _href="teacherInfo"> <i class="iconfont">&#xe6a7;</i>
-                        <cite>已注册教师管理</cite>
+                        <cite>资助库生源</cite>
                     </a></li>
                 </ul>
             </li>

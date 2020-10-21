@@ -64,7 +64,7 @@
                     lay-filter="login">登 录
             </button>
         </div>
-        <div class="layui-form-item" id="loginsub">
+        <div class="layui-form-item" id="registsub">
             <button type="button" class="layui-btn layui-btn-fluid" onclick="goToRes()">注 册</button>
         </div>
     </div>
@@ -88,8 +88,9 @@
                         url: "dealLogin",
                         data: logindata,
                         type: 'POST',
+                        dataType:'json',
                         success: function (data) {
-                            if (data != "fail") {
+                            if (data.code == 200) {
                                 layer.msg("登录成功！！！", function () {
                                     location.href = "adminIndex"
                                 });
@@ -98,7 +99,7 @@
                                     var layer = layui.layer;
                                     layer.open({
                                         type: 4,
-                                        content: ["账号或者密码或者身份不匹配",
+                                        content: [data.msg,
                                             "#loginsub"],
                                         shade: 0,
                                         tips: [2, '#c00'],

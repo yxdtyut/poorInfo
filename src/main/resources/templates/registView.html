@@ -61,7 +61,7 @@
             </div>
         </div>
     </div>
-    <div class="layui-form-item lau-sign-other" style="margin-top: 20px;text-align:center">
+    <div class="layui-form-item" style="margin-top: 20px;text-align:center" id="registDiv">
         <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="register"
                 style="margin-right: 100px">提交
         </button>
@@ -90,9 +90,14 @@
                     dateType: 'json',
                     contentType: 'application/json',
                     success: function (data) {
-                        if (data == "success") {
+                        if (data.code == 200) {
                             layer.msg("注册成功！", function () {
                                 window.parent.location.href='../login.html'
+                            });
+                        } else {
+                            layui.use('layer', function () {
+                                var layer = layui.layer;
+                                layer.msg(data.msg);
                             });
                         }
                     },

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhengyuan.liunao.mapper.GcCourseMapper">
+<mapper namespace="com.mizhi.yxd.mapper.GcCourseMapper">
 
-	<select id="findScores" resultType="com.zhengyuan.liunao.entity.Scores">
+	<select id="findScores" resultType="com.mizhi.yxd.entity.Scores">
 		select
 		s.stuno,s.name,c.coursename,ss.score,ss.type from stu s
 		inner join stu_sco ss
@@ -15,7 +15,7 @@
 	</select>
 	
 	
-	<select id="findAllScores" resultType="com.zhengyuan.liunao.entity.Scores">
+	<select id="findAllScores" resultType="com.mizhi.yxd.entity.Scores">
 		select
 		s.stuno,s.name,c.coursename,ss.score,ss.type from stu s
 		inner join stu_sco ss
@@ -27,7 +27,7 @@
 	
 	
 	
-	<select id="compClaScores" resultType="com.zhengyuan.liunao.entity.Scores">
+	<select id="compClaScores" resultType="com.mizhi.yxd.entity.Scores">
 		select
 		s.stuno,s.name,c.coursename,ss.score,ss.type from stu s
 		inner join stu_sco ss
@@ -40,7 +40,7 @@
 	
 	
 	
-		<select id="countScores" resultType="com.zhengyuan.liunao.entity.Scores">
+		<select id="countScores" resultType="com.mizhi.yxd.entity.Scores">
 		select
 		s.stuno,s.name,c.coursename,ss.score,ss.type from stu s
 		inner join stu_sco ss
@@ -70,7 +70,7 @@ where coursename = #{coursename}
 	
 	
 	
-	<select id="findPersonScore" resultType="com.zhengyuan.liunao.entity.Scores">
+	<select id="findPersonScore" resultType="com.mizhi.yxd.entity.Scores">
 			select
 		s.stuno,s.name,c.coursename,ss.score,ss.type from stu s
 		inner join stu_sco ss
