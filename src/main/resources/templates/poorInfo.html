@@ -61,7 +61,7 @@
       
       <xblock >
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="stuAdd()"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn layui-btn-primary" id="importData"><i class="layui-icon"></i>导入</button>
       </xblock>
   <table id="test" lay-filter="test"></table>
   
@@ -267,9 +267,9 @@
       var table = layui.table
       ,form = layui.form,upload = layui.upload;
        var uploadInst = upload.render({
-        elem: '#uploadExcel'
-        , exts: "xls"
-        ,url: '/Sys/ImportStu'
+        elem: '#importData'
+        , exts: "xls|xlsx|xlsm"
+        ,url: '/poor/import'
       });
 
 })

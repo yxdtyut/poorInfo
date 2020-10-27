@@ -45,9 +45,9 @@ public class ViewRoute {
         return "teacherInfo";
     }
 
-    @RequestMapping("/stuInfo")
-    public String stuInfo() {
-        return "stuInfo";
+    @RequestMapping("/poorInfo")
+    public String poorInfo() {
+        return "poorInfo";
     }
 
     @RequestMapping("/stuInfo_mf")
