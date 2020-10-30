@@ -45,37 +45,36 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-       
-
- <div class="demoTable" style="margin-bottom: 20px">
-  搜索姓名：
-  <div class="layui-inline">
-    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
-  </div>
-  <button class="layui-btn" data-type="reload" ><i class="layui-icon">&#xe615;</i></button>
-</div>   
-
-
-
+         <div class="demoTable" style="margin-bottom: 20px">
+          姓名：
+          <div class="layui-inline">
+            <input class="layui-input" name="id" id="username" autocomplete="off">
+          </div>
+         身份证：
+         <div class="layui-inline">
+             <input class="layui-input" name="id" id="idcard" autocomplete="off">
+         </div>
+          <button class="layui-btn" data-type="reload" id="query"><i class="layui-icon">&#xe615;</i></button>
+        </div>
       </div>
       
       <xblock >
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn layui-btn-primary" id="importData"><i class="layui-icon"></i>导入</button>
+        <button class="layui-btn layui-btn-danger" id="importData"><i class="layui-icon"></i>导入</button>
       </xblock>
-  <table id="test" lay-filter="test"></table>
+  <table id="poorTable" lay-filter="poorTable"></table>
   
     </div>   
   </body>
   
   <script type="text/html" id="barDemo">
-    <a title="修改信息 "   onclick="stuModi()" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
-              </a>
-              <a title="删除"  onclick="deleteStu()" href="javascript:;" lay-event="edit">
-                <i class="layui-icon">&#xe640;</i>
-              </a>
-</script>
+      <a title="修改信息 "   onclick="stuModi()" href="javascript:;">
+        <i class="layui-icon">&#xe642;</i>
+      </a>
+      <a title="删除"  onclick="deleteStu()" href="javascript:;" lay-event="edit">
+        <i class="layui-icon">&#xe640;</i>
+      </a>
+  </script>
   
   
   
@@ -84,10 +83,10 @@
   layui.use('table', function(){
       var table = layui.table;
       table.render({
-          elem: '#test'  //绑定table表格
-          ,id:'stuInfo'
+          elem: '#poorTable'  //绑定table表格
+          ,id:'poorInfo'
           ,method:'post'
-          ,url: 'getStuInfo' //后台springmvc接收路径
+          ,url: '/poor/poorInfo' //后台springmvc接收路径
           ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
   	        layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
 	      //,curr: 5 //设定初始在第 5 页
@@ -95,53 +94,66 @@
 	      ,first: false //不显示首页
 	      ,last: false //不显示尾页
 	      ,limit:5
-	      ,limits:[5,10,15]
+	      ,limits:[10,15,20]
 	    }
           ,cols: [
         	  [
              {type: 'checkbox',width:documentWidth*4/100} 
-              ,{field:'stuno',title:'学号', width:documentWidth*10/100, sort: true}
-              ,{field:'name', title:'姓名', width:documentWidth*8/100}
-              ,{field:'sex',title:'性别',width:documentWidth*8/100}
-              ,{field:'phone', title:'手机号', width:documentWidth*10/100}
-              ,{field:'qq', title:'qq号', width:documentWidth*10/100}
-              ,{field: 'photo', title: '用户头像',templet:function(d){
-            	     return d.photo == null ? 
-            	  '<a><img src="/Sys/images/defaultUser.png"></a>':
-            		  '<a><img src="../uploads/'+d.photo+'"></a>';
-              },edit: 'file'} 
-              /* ,{field: 'photo', title: '用户头像',templet:'<a><img src="../uploads/{{d.photo}}"></a>'
-            	  ,edit: 'file'} */
+              ,{type:'numbers',title:'序号', width:documentWidth*10/100, sort: true}
+              ,{field:'province', title:'省市', width:documentWidth*8/100}
+              ,{field:'county',title:'区县',width:documentWidth*8/100}
+              ,{field:'village', title:'乡镇', width:documentWidth*10/100}
+              ,{field:'cun', title:'村组（社区）', width:documentWidth*10/100}
+              ,{field:'name', title:'姓名', width:documentWidth*10/100}
+              ,{field:'idCard', title:'身份证号码', width:documentWidth*10/100}
+              ,{field:'betweenSixFifteen', title:'是否6-15周岁', width:documentWidth*10/100}
+              ,{field:'headOfHouseNum', title:'户编号', width:documentWidth*10/100}
+              ,{field:'headOfHouseName', title:'户主姓名', width:documentWidth*10/100}
+              ,{field:'headOfHouseTel', title:'联系电话', width:documentWidth*10/100}
+              ,{field:'school', title:'学校全称', width:documentWidth*10/100}
+              ,{field:'studyLevel', title:'学段', width:documentWidth*10/100}
+              ,{field:'grade', title:'年级', width:documentWidth*10/100}
+              ,{field:'clazz', title:'班级', width:documentWidth*10/100}
+              ,{field:'studentNumber', title:'学籍号', width:documentWidth*10/100}
+              ,{field:'studyWay', title:'就读方式', width:documentWidth*10/100}
+              ,{field:'disabilityOrNot', title:'是否残疾生', width:documentWidth*10/100}
+              ,{field:'disabilityNumber', title:'残疾生证号', width:documentWidth*10/100}
+              ,{field:'notInSchoolReason', title:'不在校原因', width:documentWidth*10/100}
+              ,{field:'poorType', title:'贫困类型', width:documentWidth*10/100}
+              ,{field:'ifVillage', title:'镇内/镇外', width:documentWidth*10/100}
+              ,{field:'ifCounty', title:'县内/县外', width:documentWidth*10/100}
+              ,{field:'ifProvince', title:'省内/省外', width:documentWidth*10/100}
+              ,{field:'thisEnjoy', title:'本学期是否享受米脂资助', width:documentWidth*10/100}
               ,{field:'operation',title:'操作',toolbar: '#barDemo'}
           ]
         	  ]
       });
     
-      
+      //表格重載
 	  var $ = layui.$, active = {
-    		    reload: function(){
-    		      var demoReload = $('#demoReload');
-    		      table.reload('stuInfo', {
-    		        page: {
-    		          curr: 1 //重新从第 1 页开始
-    		        },
-    		    url:'getStuByName'
-    		        ,where: {
-    		          key: {
-    		            id: demoReload.val()
-    		          }
-    		        }
-    		        ,method:'post'
-    		      });
-    		    }
-    		  };
+            reload: function(){
+              var username = $('#username');
+              var idcard = $('#idcard');
+              // 执行重载
+              table.reload('poorInfo', {
+                page: {
+                  curr: 1 //重新从第 1 页开始
+                },
+            url:'/poor/poorInfo'
+                ,where: {
+                    username: username.val(),
+                    idcard: idcard.val()
+                }
+                ,method:'post'
+              });
+            }
+          };
     		  
-    		  $('.demoTable .layui-btn').on('click', function(){
-    		    var type = $(this).data('type');
-    		    active[type] ? active[type].call(this) : '';
-    		  });	  
-  	     		  
-    		});
+          $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+          });
+  });
 
 
   

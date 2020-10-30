@@ -2,6 +2,7 @@ package com.mizhi.yxd.service.impl;
 
 import com.mizhi.yxd.entity.SubPoor;
 import com.mizhi.yxd.mapper.SubPoorMapper;
+import com.mizhi.yxd.request.PoorRequest;
 import com.mizhi.yxd.service.PoorService;
 import com.mizhi.yxd.tools.SnowflakeIdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,15 @@ public class PoorServiceImpl implements PoorService {
     public void insertBatch(List<SubPoor> poors) {
         poors.stream().forEach(subPoor -> subPoor.setId(SnowflakeIdWorker.primaryKey()));
         poorMapper.insertBatch(poors);
+    }
+
+    @Override
+    public List<SubPoor> findByCondition(PoorRequest poorRequest) {
+        return poorMapper.selectByCondition(poorRequest);
+    }
+
+    @Override
+    public int findCountByCondition(PoorRequest poorRequest) {
+        return poorMapper.findCountByCondition(poorRequest);
     }
 }

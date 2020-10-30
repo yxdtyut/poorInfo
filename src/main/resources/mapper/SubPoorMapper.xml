@@ -337,6 +337,25 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+
+  <select id="selectByCondition" resultType="com.mizhi.yxd.entity.SubPoor">
+    select
+    <include refid="Base_Column_List" />
+    from sub_poor
+    where account = #{poor.account}
+    <if test="poor.username != null and poor.username != ''">
+        and name=#{poor.username}
+    </if>
+    <if test="poor.idcard != null and poor.idcard != ''">
+      and id_card=#{poor.idcard}
+    </if>
+  </select>
+  <select id="findCountByCondition" resultType="java.lang.Integer">
+    select count(1)
+    from sub_poor
+    where account = #{poor.account}
+  </select>
+
   <update id="updateByExampleSelective" parameterType="map" >
     update sub_poor
     <set >

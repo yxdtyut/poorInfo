@@ -1,6 +1,7 @@
 package com.mizhi.yxd.service;
 
 import com.mizhi.yxd.entity.SubPoor;
+import com.mizhi.yxd.request.PoorRequest;
 
 import java.util.List;
 
@@ -11,4 +12,8 @@ import java.util.List;
  */
 public interface PoorService {
     void insertBatch(List<SubPoor> poors);
+
+    List<SubPoor> findByCondition(PoorRequest poorRequest);
+
+    int findCountByCondition(PoorRequest poorRequest);
 }
