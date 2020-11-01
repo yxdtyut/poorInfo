@@ -344,7 +344,7 @@
     from sub_poor
     where account = #{poor.account}
     <if test="poor.username != null and poor.username != ''">
-        and name=#{poor.username}
+        and name like  concat(concat('%',#{poor.username}),'%')
     </if>
     <if test="poor.idcard != null and poor.idcard != ''">
       and id_card=#{poor.idcard}
@@ -354,6 +354,12 @@
     select count(1)
     from sub_poor
     where account = #{poor.account}
+    <if test="poor.username != null and poor.username != ''">
+      and name like concat(concat('%',#{poor.username}),'%')
+    </if>
+    <if test="poor.idcard != null and poor.idcard != ''">
+      and id_card=#{poor.idcard}
+    </if>
   </select>
 
   <update id="updateByExampleSelective" parameterType="map" >
@@ -583,5 +589,9 @@
       this_enjoy = #{thisEnjoy,jdbcType=VARCHAR},
       account = #{account,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByField">
+    update sub_poor set ${poor.field} = #{poor.value} where id = #{poor.id} and account = #{poor.account}
   </update>
 </mapper>

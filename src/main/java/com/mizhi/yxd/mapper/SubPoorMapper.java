@@ -3,6 +3,7 @@ package com.mizhi.yxd.mapper;
 import com.mizhi.yxd.entity.SubPoor;
 import com.mizhi.yxd.entity.SubPoorExample;
 import com.mizhi.yxd.request.PoorRequest;
+import com.mizhi.yxd.vo.UpdatePoorVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -37,4 +38,6 @@ public interface SubPoorMapper {
     List<SubPoor> selectByCondition(@Param("poor") PoorRequest poorRequest);
 
     int findCountByCondition(@Param("poor")PoorRequest  poorRequest);
+
+    void updateByField(@Param("poor") UpdatePoorVo updatePoorVo);
 }

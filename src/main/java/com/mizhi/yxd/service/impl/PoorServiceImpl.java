@@ -5,6 +5,7 @@ import com.mizhi.yxd.mapper.SubPoorMapper;
 import com.mizhi.yxd.request.PoorRequest;
 import com.mizhi.yxd.service.PoorService;
 import com.mizhi.yxd.tools.SnowflakeIdWorker;
+import com.mizhi.yxd.vo.UpdatePoorVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,15 @@ public class PoorServiceImpl implements PoorService {
     @Override
     public int findCountByCondition(PoorRequest poorRequest) {
         return poorMapper.findCountByCondition(poorRequest);
+    }
+
+    @Override
+    public void updateByField(UpdatePoorVo updatePoorVo) {
+        poorMapper.updateByField(updatePoorVo);
+    }
+
+    @Override
+    public int deletePoorInfo(String id) {
+        return poorMapper.deleteByPrimaryKey(id);
     }
 }

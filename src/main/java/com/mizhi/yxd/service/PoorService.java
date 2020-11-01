@@ -2,6 +2,7 @@ package com.mizhi.yxd.service;
 
 import com.mizhi.yxd.entity.SubPoor;
 import com.mizhi.yxd.request.PoorRequest;
+import com.mizhi.yxd.vo.UpdatePoorVo;
 
 import java.util.List;
 
@@ -16,4 +17,8 @@ public interface PoorService {
     List<SubPoor> findByCondition(PoorRequest poorRequest);
 
     int findCountByCondition(PoorRequest poorRequest);
+
+    void updateByField(UpdatePoorVo updatePoorVo);
+
+    int deletePoorInfo(String id);
 }

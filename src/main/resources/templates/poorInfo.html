@@ -62,18 +62,13 @@
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <button class="layui-btn layui-btn-danger" id="importData"><i class="layui-icon"></i>导入</button>
       </xblock>
-  <table id="poorTable" lay-filter="poorTable"></table>
+        <table id="poorTable" lay-filter="poorTable"></table>
   
     </div>   
   </body>
   
-  <script type="text/html" id="barDemo">
-      <a title="修改信息 "   onclick="stuModi()" href="javascript:;">
-        <i class="layui-icon">&#xe642;</i>
-      </a>
-      <a title="删除"  onclick="deleteStu()" href="javascript:;" lay-event="edit">
-        <i class="layui-icon">&#xe640;</i>
-      </a>
+  <script type="text/html" id="poorBar">
+      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
   </script>
   
   
@@ -100,31 +95,31 @@
         	  [
              {type: 'checkbox',width:documentWidth*4/100} 
               ,{type:'numbers',title:'序号', width:documentWidth*10/100, sort: true}
-              ,{field:'province', title:'省市', width:documentWidth*8/100}
-              ,{field:'county',title:'区县',width:documentWidth*8/100}
-              ,{field:'village', title:'乡镇', width:documentWidth*10/100}
-              ,{field:'cun', title:'村组（社区）', width:documentWidth*10/100}
-              ,{field:'name', title:'姓名', width:documentWidth*10/100}
-              ,{field:'idCard', title:'身份证号码', width:documentWidth*10/100}
-              ,{field:'betweenSixFifteen', title:'是否6-15周岁', width:documentWidth*10/100}
-              ,{field:'headOfHouseNum', title:'户编号', width:documentWidth*10/100}
-              ,{field:'headOfHouseName', title:'户主姓名', width:documentWidth*10/100}
-              ,{field:'headOfHouseTel', title:'联系电话', width:documentWidth*10/100}
-              ,{field:'school', title:'学校全称', width:documentWidth*10/100}
-              ,{field:'studyLevel', title:'学段', width:documentWidth*10/100}
-              ,{field:'grade', title:'年级', width:documentWidth*10/100}
-              ,{field:'clazz', title:'班级', width:documentWidth*10/100}
-              ,{field:'studentNumber', title:'学籍号', width:documentWidth*10/100}
-              ,{field:'studyWay', title:'就读方式', width:documentWidth*10/100}
-              ,{field:'disabilityOrNot', title:'是否残疾生', width:documentWidth*10/100}
-              ,{field:'disabilityNumber', title:'残疾生证号', width:documentWidth*10/100}
-              ,{field:'notInSchoolReason', title:'不在校原因', width:documentWidth*10/100}
-              ,{field:'poorType', title:'贫困类型', width:documentWidth*10/100}
-              ,{field:'ifVillage', title:'镇内/镇外', width:documentWidth*10/100}
-              ,{field:'ifCounty', title:'县内/县外', width:documentWidth*10/100}
-              ,{field:'ifProvince', title:'省内/省外', width:documentWidth*10/100}
-              ,{field:'thisEnjoy', title:'本学期是否享受米脂资助', width:documentWidth*10/100}
-              ,{field:'operation',title:'操作',toolbar: '#barDemo'}
+              ,{field:'province', title:'省市', width:documentWidth*8/100, edit:"text"}
+              ,{field:'county',title:'区县',width:documentWidth*8/100, edit:"text"}
+              ,{field:'village', title:'乡镇', width:documentWidth*10/100, edit:"text"}
+              ,{field:'cun', title:'村组（社区）', width:documentWidth*10/100, edit:"text"}
+              ,{field:'name', title:'姓名', width:documentWidth*10/100, edit:"text"}
+              ,{field:'idCard', title:'身份证号码', width:documentWidth*10/100, edit:"text"}
+              ,{field:'betweenSixFifteen', title:'是否6-15周岁', width:documentWidth*10/100, edit:"text"}
+              ,{field:'headOfHouseNum', title:'户编号', width:documentWidth*10/100, edit:"text"}
+              ,{field:'headOfHouseName', title:'户主姓名', width:documentWidth*10/100, edit:"text"}
+              ,{field:'headOfHouseTel', title:'联系电话', width:documentWidth*10/100, edit:"text"}
+              ,{field:'school', title:'学校全称', width:documentWidth*10/100, edit:"text"}
+              ,{field:'studyLevel', title:'学段', width:documentWidth*10/100, edit:"text"}
+              ,{field:'grade', title:'年级', width:documentWidth*10/100, edit:"text"}
+              ,{field:'clazz', title:'班级', width:documentWidth*10/100, edit:"text"}
+              ,{field:'studentNumber', title:'学籍号', width:documentWidth*10/100, edit:"text"}
+              ,{field:'studyWay', title:'就读方式', width:documentWidth*10/100, edit:"text"}
+              ,{field:'disabilityOrNot', title:'是否残疾生', width:documentWidth*10/100, edit:"text"}
+              ,{field:'disabilityNumber', title:'残疾生证号', width:documentWidth*10/100, edit:"text"}
+              ,{field:'notInSchoolReason', title:'不在校原因', width:documentWidth*10/100, edit:"text"}
+              ,{field:'poorType', title:'贫困类型', width:documentWidth*10/150, edit:"text"}
+              ,{field:'ifVillage', title:'镇内/镇外', width:documentWidth*10/150, edit:"text"}
+              ,{field:'ifCounty', title:'县内/县外', width:documentWidth*10/150, edit:"text"}
+              ,{field:'ifProvince', title:'省内/省外', width:documentWidth*10/150, edit:"text"}
+              ,{field:'thisEnjoy', title:'本学期是否享受米脂资助', width:documentWidth*10/50, edit:"text"}
+              ,{field:'operation',title:'操作',toolbar: '#poorBar'}
           ]
         	  ]
       });
@@ -149,14 +144,59 @@
             }
           };
     		  
-          $('.demoTable .layui-btn').on('click', function(){
+          $('.poorTable .layui-btn').on('click', function(){
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
           });
+
+          table.on('edit(poorTable)', function (obj) {
+              var data = obj.data;
+              $.ajax({
+                  type:"put",
+                  url:"/poor/update",
+                  async:true,
+                  data:{
+                      field:obj.field,
+                      value:obj.value,
+                      id:data.id
+                  },
+                  dataType:"json",
+                  success:function(data){
+                      if(data.code == 200) {
+                          layer.msg('修改成功！',{icon:6,offset:"auto",time:2000});//提示框
+                      } else {
+                          layer.msg('修改失败！',{icon:5,offset:"auto",time:2000});//提示框
+                      }
+                  }
+              });
+          })
+
+          table.on('tool(poorTable)', function (obj) {
+              var data = obj.data;
+              if(obj.event === 'del'){
+                  layer.confirm('真的删除['+data.name+']么', function(index){
+                      deletePoorInfo(data.id);//alert(data.id);
+                  });
+              }
+          })
   });
 
-
-  
+  function deletePoorInfo(poorId){
+      $.ajax({
+          type:"delete",
+          url:"/poor/delete/"+poorId,
+          async:true,
+          dataType:"json",
+          success:function(data){
+              if(data.code == 200) {
+                  layer.msg('删除成功！',{icon:6,offset:"auto",time:1000});//提示框
+                  setTimeout(location.reload(),2000)
+              } else {
+                  layer.msg('删除失败！',{icon:5,offset:"auto",time:1000});//提示框
+              }
+          }
+      });
+  }
 
   function delAll (argument) {
 	  layui.use('table',function(){
@@ -229,47 +269,7 @@
                 });
     	 
     }
-  
-  function stuModi(){
-	  var num="";
-	  layui.use('table',function(){
-		  var table = layui.table
-		  var checkStatus = table.checkStatus('stuInfo');
-		  num = checkStatus.data[0].stuno;
-	  });
-	  layer.open({
-		  type: 2,
-          title: '修改页面',
-          skin: 'layui-layer-molv',
-          shadeClose: false,
-          shade: 0.8,
-          area:  ['700px', '450px'],
-          content: 'stuModi?num='+num,
-          end: function(){
-          	window.location.reload(); //刷新父页面
-          }
-	  });
-  }
-  
-  
-  function screen() {
-      //获取当前窗口的宽度
-	    var width = $(window).width();
-	    if (width > 1200) {
-	        return 3;   //大屏幕
-	    } else if (width > 992) {
-	        return 2;   //中屏幕
-	    } else if (width > 768) {
-	        return 1;   //小屏幕
-	    } else {
-	        return 0;   //超小屏幕
-	    }
-  }
-  
-  
-  
-  
-  
+
   function exportTable(){
 	  location.href="/Sys/export";  
   }
@@ -282,12 +282,16 @@
         elem: '#importData'
         , exts: "xls|xlsx|xlsm"
         ,url: '/poor/import'
+           ,done: function (data) {
+               if (data.code == 200) {
+                   layer.msg('导入成功！',{icon:6,offset:"auto",time:1000});//提示框
+                   layer._delay(location.reload(),2000)
+               } else {
+                   layer.msg('导入失败！',{icon:6,offset:"auto",time:1000});//提示框
+               }
+           }
       });
-
-})
-
-
-
+  })
 
 </script>  
   

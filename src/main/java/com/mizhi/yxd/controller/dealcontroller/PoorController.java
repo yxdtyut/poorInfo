@@ -10,14 +10,12 @@ import com.mizhi.yxd.tools.ExcelUtils;
 import com.mizhi.yxd.tools.Layui;
 import com.mizhi.yxd.vo.PoorExportVo;
 import com.mizhi.yxd.vo.PoorVo;
+import com.mizhi.yxd.vo.UpdatePoorVo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -70,5 +68,20 @@ public class PoorController {
         }
         Layui l = Layui.data(total, poorVos);
         return JSON.toJSON(l);
+    }
+
+    @PutMapping("/update")
+    public Result<String> updatePoorInfo(UpdatePoorVo updatePoorVo, HttpSession httpSession) {
+        log.info("update poor vo:{}", JSON.toJSONString(updatePoorVo));
+        updatePoorVo.setAccount((String) httpSession.getAttribute("account"));
+        poorService.updateByField(updatePoorVo);
+        return Result.success("success");
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public Result<Integer> deletePoorInfo(@PathVariable String id) {
+        log.info("delete poor info, id:{}", id);
+        int count = poorService.deletePoorInfo(id);
+        return Result.success(count);
     }
 }
