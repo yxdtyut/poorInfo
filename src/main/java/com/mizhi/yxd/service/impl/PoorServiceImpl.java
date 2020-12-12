@@ -47,4 +47,9 @@ public class PoorServiceImpl implements PoorService {
     public int deletePoorInfo(String id) {
         return poorMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int deleteByPoorIds(List<String> data) {
+        return poorMapper.deleteByPoorIds(data);
+    }
 }

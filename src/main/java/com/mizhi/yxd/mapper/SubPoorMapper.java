@@ -40,4 +40,6 @@ public interface SubPoorMapper {
     int findCountByCondition(@Param("poor")PoorRequest  poorRequest);
 
     void updateByField(@Param("poor") UpdatePoorVo updatePoorVo);
+
+    int deleteByPoorIds(@Param("list") List<String> data);
 }

@@ -21,4 +21,6 @@ public interface PoorService {
     void updateByField(UpdatePoorVo updatePoorVo);
 
     int deletePoorInfo(String id);
+
+    int deleteByPoorIds(List<String> data);
 }

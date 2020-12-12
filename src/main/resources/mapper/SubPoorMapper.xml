@@ -123,6 +123,14 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+
+  <delete id="deleteByPoorIds">
+    delete from sub_poor where id in
+    <foreach collection="list" item="id" close=")" open="(" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+
   <insert id="insert" parameterType="com.mizhi.yxd.entity.SubPoor" >
     insert into sub_poor (id, province, county, 
       village, cun, name, 

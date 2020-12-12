@@ -88,4 +88,18 @@ public class PoorController {
         int count = poorService.deletePoorInfo(id);
         return Result.success(count);
     }
+
+    @PostMapping("/deletes")
+    public Result<Integer> deletePoolInfos(String nums) {
+        String[] str = nums.split(",");
+        List<String> data = new ArrayList<String>();
+        for (int i = 0; i < str.length; i++) {
+            data.add(str[i]);
+        }
+        int count = 0;
+        if (data.size() > 0) {
+            count = poorService.deleteByPoorIds(data);
+        }
+        return Result.success(count);
+    }
 }
