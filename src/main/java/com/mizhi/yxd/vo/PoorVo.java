@@ -66,12 +66,6 @@ public class PoorVo {
     public static PoorVo transferFrom(SubPoor subPoor) {
         PoorVo poor = new PoorVo();
         BeanUtil.copyProperties(subPoor, poor);
-        if (null != subPoor.getSixFifteen()) {
-            poor.setBetweenSixFifteen(subPoor.getSixFifteen() == 1 ? "是" : "否");
-        }
-        if (null != subPoor.getIfDisability()) {
-            poor.setDisabilityOrNot(subPoor.getIfDisability() == 1 ? "是" : "否");
-        }
         return poor;
     }
 }

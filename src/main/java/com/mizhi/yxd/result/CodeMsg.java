@@ -17,6 +17,14 @@ public class CodeMsg {
     public static final CodeMsg USER_OR_PWD_NOT_RIGHT = new CodeMsg(500100, "用户或密码不正确");
     public static final CodeMsg USER_ALREADY_REGIST = new CodeMsg(500101, "用户已经被注册");
 
+    /**校验模块.6001xx*/
+    public static final CodeMsg NAME_IDCARD_NULL = new CodeMsg(600101, "存在姓名或身份证为空");
+    public static final CodeMsg SIX_FIFTEEN_NOT_RIGHT = new CodeMsg(600102, "是否6-15周岁字段只能写是或者否");
+    public static final CodeMsg IDCARD_NOT_RIGHT = new CodeMsg(600103, "身份证格式有误");
+    public static final CodeMsg DISABILITY_NOT_RIGHT = new CodeMsg(600104, "是否残疾生字段只能写是或者否");
+    public static final CodeMsg ENJOY_NOT_RIGHT = new CodeMsg(600105, "本学期是否享受米脂资助只能写是或者否");
+    public static final CodeMsg IMPORT_VALIDATE_ERROR = new CodeMsg(600106, "导入校验失败");
+
     private Integer code;
     private String msg;
 
@@ -26,6 +34,11 @@ public class CodeMsg {
     }
 
     private CodeMsg() {
+    }
+
+    public CodeMsg setMsg(String msg) {
+        this.msg = msg;
+        return this;
     }
 
 

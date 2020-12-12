@@ -101,7 +101,7 @@
               ,{field:'cun', title:'村组（社区）', width:documentWidth*10/100, edit:"text"}
               ,{field:'name', title:'姓名', width:documentWidth*10/100, edit:"text"}
               ,{field:'idCard', title:'身份证号码', width:documentWidth*10/100, edit:"text"}
-              ,{field:'betweenSixFifteen', title:'是否6-15周岁', width:documentWidth*10/100, edit:"text"}
+              ,{field:'sixFifteen', title:'是否6-15周岁', width:documentWidth*10/100, edit:"text"}
               ,{field:'headOfHouseNum', title:'户编号', width:documentWidth*10/100, edit:"text"}
               ,{field:'headOfHouseName', title:'户主姓名', width:documentWidth*10/100, edit:"text"}
               ,{field:'headOfHouseTel', title:'联系电话', width:documentWidth*10/100, edit:"text"}
@@ -111,7 +111,7 @@
               ,{field:'clazz', title:'班级', width:documentWidth*10/100, edit:"text"}
               ,{field:'studentNumber', title:'学籍号', width:documentWidth*10/100, edit:"text"}
               ,{field:'studyWay', title:'就读方式', width:documentWidth*10/100, edit:"text"}
-              ,{field:'disabilityOrNot', title:'是否残疾生', width:documentWidth*10/100, edit:"text"}
+              ,{field:'ifDisability', title:'是否残疾生', width:documentWidth*10/100, edit:"text"}
               ,{field:'disabilityNumber', title:'残疾生证号', width:documentWidth*10/100, edit:"text"}
               ,{field:'notInSchoolReason', title:'不在校原因', width:documentWidth*10/100, edit:"text"}
               ,{field:'poorType', title:'贫困类型', width:documentWidth*10/150, edit:"text"}
@@ -165,7 +165,7 @@
                       if(data.code == 200) {
                           layer.msg('修改成功！',{icon:6,offset:"auto",time:2000});//提示框
                       } else {
-                          layer.msg('修改失败！',{icon:5,offset:"auto",time:2000});//提示框
+                          layer.msg(data.msg,{icon:5,offset:"auto",time:2000});//提示框
                       }
                   }
               });
@@ -287,7 +287,7 @@
                    layer.msg('导入成功！',{icon:6,offset:"auto",time:1000});//提示框
                    layer._delay(location.reload(),2000)
                } else {
-                   layer.msg('导入失败！',{icon:6,offset:"auto",time:1000});//提示框
+                   layer.msg('导入失败,' + data.msg,{icon:6,offset:"auto",time:3000});//提示框
                }
            }
       });

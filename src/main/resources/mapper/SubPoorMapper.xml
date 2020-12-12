@@ -9,7 +9,7 @@
     <result column="cun" property="cun" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="id_card" property="idCard" jdbcType="VARCHAR" />
-    <result column="six_fifteen" property="sixFifteen" jdbcType="INTEGER" />
+    <result column="six_fifteen" property="sixFifteen" jdbcType="VARCHAR" />
     <result column="head_of_house_num" property="headOfHouseNum" jdbcType="VARCHAR" />
     <result column="head_of_house_name" property="headOfHouseName" jdbcType="VARCHAR" />
     <result column="head_of_house_tel" property="headOfHouseTel" jdbcType="VARCHAR" />
@@ -19,7 +19,7 @@
     <result column="clazz" property="clazz" jdbcType="VARCHAR" />
     <result column="student_number" property="studentNumber" jdbcType="VARCHAR" />
     <result column="study_way" property="studyWay" jdbcType="VARCHAR" />
-    <result column="if_disability" property="ifDisability" jdbcType="INTEGER" />
+    <result column="if_disability" property="ifDisability" jdbcType="VARCHAR" />
     <result column="disability_number" property="disabilityNumber" jdbcType="VARCHAR" />
     <result column="not_in_school_reason" property="notInSchoolReason" jdbcType="VARCHAR" />
     <result column="poor_type" property="poorType" jdbcType="VARCHAR" />
@@ -90,7 +90,7 @@
   <sql id="Base_Column_List" >
     id, province, county, village, cun, name, id_card, six_fifteen, head_of_house_num, 
     head_of_house_name, head_of_house_tel, school, study_level, grade, clazz, student_number, 
-    study_way, "if_disability", disability_number, not_in_school_reason, poor_type, 
+    study_way, if_disability, disability_number, not_in_school_reason, poor_type,
     if_village, if_county, if_province, this_enjoy, account
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mizhi.yxd.entity.SubPoorExample" >
@@ -135,10 +135,10 @@
       this_enjoy, account)
     values (#{id,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{county,jdbcType=VARCHAR}, 
       #{village,jdbcType=VARCHAR}, #{cun,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{idCard,jdbcType=VARCHAR}, #{sixFifteen,jdbcType=INTEGER}, #{headOfHouseNum,jdbcType=VARCHAR}, 
+      #{idCard,jdbcType=VARCHAR}, #{sixFifteen,jdbcType=VARCHAR}, #{headOfHouseNum,jdbcType=VARCHAR}, 
       #{headOfHouseName,jdbcType=VARCHAR}, #{headOfHouseTel,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
       #{studyLevel,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{clazz,jdbcType=VARCHAR}, 
-      #{studentNumber,jdbcType=VARCHAR}, #{studyWay,jdbcType=VARCHAR}, #{ifDisability,jdbcType=INTEGER}, 
+      #{studentNumber,jdbcType=VARCHAR}, #{studyWay,jdbcType=VARCHAR}, #{ifDisability,jdbcType=VARCHAR}, 
       #{disabilityNumber,jdbcType=VARCHAR}, #{notInSchoolReason,jdbcType=VARCHAR}, #{poorType,jdbcType=VARCHAR}, 
       #{ifVillage,jdbcType=VARCHAR}, #{ifCounty,jdbcType=VARCHAR}, #{ifProvince,jdbcType=VARCHAR}, 
       #{thisEnjoy,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR})
@@ -248,7 +248,7 @@
         #{idCard,jdbcType=VARCHAR},
       </if>
       <if test="sixFifteen != null" >
-        #{sixFifteen,jdbcType=INTEGER},
+        #{sixFifteen,jdbcType=VARCHAR},
       </if>
       <if test="headOfHouseNum != null" >
         #{headOfHouseNum,jdbcType=VARCHAR},
@@ -278,7 +278,7 @@
         #{studyWay,jdbcType=VARCHAR},
       </if>
       <if test="ifDisability != null" >
-        #{ifDisability,jdbcType=INTEGER},
+        #{ifDisability,jdbcType=VARCHAR},
       </if>
       <if test="disabilityNumber != null" >
         #{disabilityNumber,jdbcType=VARCHAR},
@@ -321,10 +321,10 @@
     <foreach collection="list" item="item" index="index" separator=",">
       (#{item.id,jdbcType=VARCHAR}, #{item.province,jdbcType=VARCHAR}, #{item.county,jdbcType=VARCHAR},
       #{item.village,jdbcType=VARCHAR}, #{item.cun,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR},
-      #{item.idCard,jdbcType=VARCHAR}, #{item.sixFifteen,jdbcType=INTEGER}, #{item.headOfHouseNum,jdbcType=VARCHAR},
+      #{item.idCard,jdbcType=VARCHAR}, #{item.sixFifteen,jdbcType=VARCHAR}, #{item.headOfHouseNum,jdbcType=VARCHAR},
       #{item.headOfHouseName,jdbcType=VARCHAR}, #{item.headOfHouseTel,jdbcType=VARCHAR}, #{item.school,jdbcType=VARCHAR},
       #{item.studyLevel,jdbcType=VARCHAR}, #{item.grade,jdbcType=VARCHAR}, #{item.clazz,jdbcType=VARCHAR},
-      #{item.studentNumber,jdbcType=VARCHAR}, #{item.studyWay,jdbcType=VARCHAR}, #{item.ifDisability,jdbcType=INTEGER},
+      #{item.studentNumber,jdbcType=VARCHAR}, #{item.studyWay,jdbcType=VARCHAR}, #{item.ifDisability,jdbcType=VARCHAR},
       #{item.disabilityNumber,jdbcType=VARCHAR}, #{item.notInSchoolReason,jdbcType=VARCHAR}, #{item.poorType,jdbcType=VARCHAR},
       #{item.ifVillage,jdbcType=VARCHAR}, #{item.ifCounty,jdbcType=VARCHAR}, #{item.ifProvince,jdbcType=VARCHAR},
       #{item.thisEnjoy,jdbcType=VARCHAR}, #{item.account,jdbcType=VARCHAR})
@@ -338,7 +338,7 @@
     </if>
   </select>
 
-  <select id="selectByCondition" resultType="com.mizhi.yxd.entity.SubPoor">
+  <select id="selectByCondition" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from sub_poor
@@ -387,7 +387,7 @@
         id_card = #{record.idCard,jdbcType=VARCHAR},
       </if>
       <if test="record.sixFifteen != null" >
-        six_fifteen = #{record.sixFifteen,jdbcType=INTEGER},
+        six_fifteen = #{record.sixFifteen,jdbcType=VARCHAR},
       </if>
       <if test="record.headOfHouseNum != null" >
         head_of_house_num = #{record.headOfHouseNum,jdbcType=VARCHAR},
@@ -417,7 +417,7 @@
         study_way = #{record.studyWay,jdbcType=VARCHAR},
       </if>
       <if test="record.ifDisability != null" >
-        "if_disability" = #{record.ifDisability,jdbcType=INTEGER},
+        "if_disability" = #{record.ifDisability,jdbcType=VARCHAR},
       </if>
       <if test="record.disabilityNumber != null" >
         disability_number = #{record.disabilityNumber,jdbcType=VARCHAR},
@@ -457,7 +457,7 @@
       cun = #{record.cun,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       id_card = #{record.idCard,jdbcType=VARCHAR},
-      six_fifteen = #{record.sixFifteen,jdbcType=INTEGER},
+      six_fifteen = #{record.sixFifteen,jdbcType=VARCHAR},
       head_of_house_num = #{record.headOfHouseNum,jdbcType=VARCHAR},
       head_of_house_name = #{record.headOfHouseName,jdbcType=VARCHAR},
       head_of_house_tel = #{record.headOfHouseTel,jdbcType=VARCHAR},
@@ -467,7 +467,7 @@
       clazz = #{record.clazz,jdbcType=VARCHAR},
       student_number = #{record.studentNumber,jdbcType=VARCHAR},
       study_way = #{record.studyWay,jdbcType=VARCHAR},
-      "if_disability" = #{record.ifDisability,jdbcType=INTEGER},
+      "if_disability" = #{record.ifDisability,jdbcType=VARCHAR},
       disability_number = #{record.disabilityNumber,jdbcType=VARCHAR},
       not_in_school_reason = #{record.notInSchoolReason,jdbcType=VARCHAR},
       poor_type = #{record.poorType,jdbcType=VARCHAR},
@@ -502,7 +502,7 @@
         id_card = #{idCard,jdbcType=VARCHAR},
       </if>
       <if test="sixFifteen != null" >
-        six_fifteen = #{sixFifteen,jdbcType=INTEGER},
+        six_fifteen = #{sixFifteen,jdbcType=VARCHAR},
       </if>
       <if test="headOfHouseNum != null" >
         head_of_house_num = #{headOfHouseNum,jdbcType=VARCHAR},
@@ -532,7 +532,7 @@
         study_way = #{studyWay,jdbcType=VARCHAR},
       </if>
       <if test="ifDisability != null" >
-        "if_disability" = #{ifDisability,jdbcType=INTEGER},
+        "if_disability" = #{ifDisability,jdbcType=VARCHAR},
       </if>
       <if test="disabilityNumber != null" >
         disability_number = #{disabilityNumber,jdbcType=VARCHAR},
@@ -569,7 +569,7 @@
       cun = #{cun,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       id_card = #{idCard,jdbcType=VARCHAR},
-      six_fifteen = #{sixFifteen,jdbcType=INTEGER},
+      six_fifteen = #{sixFifteen,jdbcType=VARCHAR},
       head_of_house_num = #{headOfHouseNum,jdbcType=VARCHAR},
       head_of_house_name = #{headOfHouseName,jdbcType=VARCHAR},
       head_of_house_tel = #{headOfHouseTel,jdbcType=VARCHAR},
@@ -579,7 +579,7 @@
       clazz = #{clazz,jdbcType=VARCHAR},
       student_number = #{studentNumber,jdbcType=VARCHAR},
       study_way = #{studyWay,jdbcType=VARCHAR},
-      "if_disability" = #{ifDisability,jdbcType=INTEGER},
+      "if_disability" = #{ifDisability,jdbcType=VARCHAR},
       disability_number = #{disabilityNumber,jdbcType=VARCHAR},
       not_in_school_reason = #{notInSchoolReason,jdbcType=VARCHAR},
       poor_type = #{poorType,jdbcType=VARCHAR},

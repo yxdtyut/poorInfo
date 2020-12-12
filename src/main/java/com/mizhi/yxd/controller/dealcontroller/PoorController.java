@@ -8,6 +8,7 @@ import com.mizhi.yxd.service.PoorService;
 import com.mizhi.yxd.tools.BeanUtils;
 import com.mizhi.yxd.tools.ExcelUtils;
 import com.mizhi.yxd.tools.Layui;
+import com.mizhi.yxd.validate.ValueValidate;
 import com.mizhi.yxd.vo.PoorExportVo;
 import com.mizhi.yxd.vo.PoorVo;
 import com.mizhi.yxd.vo.UpdatePoorVo;
@@ -42,6 +43,7 @@ public class PoorController {
     @PostMapping("/import")
     public Result<String> importExcel(MultipartFile file, HttpSession httpSession) throws IOException {
         List<PoorExportVo> exportVoList = ExcelUtils.importExcel(file, PoorExportVo.class);
+        exportVoList.stream().forEach(poorExportVo -> poorExportVo.validate());
         final List<SubPoor> poors = BeanUtils.copyProperties(exportVoList, SubPoor.class);
         log.info("import, poor:{}", JSON.toJSONString(poors));
         log.info("ready to save poor message, account:{}", JSON.toJSONString(httpSession.getAttribute("account")));
@@ -73,7 +75,9 @@ public class PoorController {
     @PutMapping("/update")
     public Result<String> updatePoorInfo(UpdatePoorVo updatePoorVo, HttpSession httpSession) {
         log.info("update poor vo:{}", JSON.toJSONString(updatePoorVo));
+        ValueValidate.validate(updatePoorVo);
         updatePoorVo.setAccount((String) httpSession.getAttribute("account"));
+        updatePoorVo.setField(ValueValidate.map.get(updatePoorVo.getField()));
         poorService.updateByField(updatePoorVo);
         return Result.success("success");
     }

@@ -1,6 +1,9 @@
 package com.mizhi.yxd.vo;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import com.mizhi.yxd.exception.GlobleException;
+import com.mizhi.yxd.result.CodeMsg;
+import com.mizhi.yxd.tools.ValidateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,7 +37,7 @@ public class PoorExportVo {
     private String idCard;
 
     @Excel(name = "是否6-15周岁", width = 15)
-    private Integer sixFifteen;
+    private String sixFifteen;
 
     @Excel(name = "户编号", width = 15)
     private String headOfHouseNum;
@@ -64,7 +67,7 @@ public class PoorExportVo {
     private String studyWay;
 
     @Excel(name = "是否残疾生", width = 15)
-    private Integer ifDisability;
+    private String ifDisability;
 
     @Excel(name = "残疾生证号", width = 15)
     private String disabilityNumber;
@@ -86,4 +89,26 @@ public class PoorExportVo {
 
     @Excel(name = "本学期是否享受米脂资助", width = 15)
     private String thisEnjoy;
+
+    public void validate() {
+        String errorMsg = "信息输入有误，姓名:" + name + ",身份证:" + idCard;
+        if (null == name || null == idCard) {
+            throw new GlobleException(CodeMsg.NAME_IDCARD_NULL);
+        }
+        if (null != sixFifteen && (!"是".equals(sixFifteen) && !"否".equals(sixFifteen))) {
+            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:是否5-15周岁字段只能写是或者否"));
+        }
+
+        if (!ValidateUtils.checkIdCard(idCard)) {
+            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg));
+        }
+
+        if (null != ifDisability && (!"是".equals(ifDisability) && !"否".equals(ifDisability))) {
+            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:是否残疾生字段只能写是或者否"));
+        }
+
+        if (null != thisEnjoy && (!"是".equals(thisEnjoy) && !"否".equals(thisEnjoy))) {
+            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:本学期是否享受米脂资助只能写是或者否"));
+        }
+    }
 }
