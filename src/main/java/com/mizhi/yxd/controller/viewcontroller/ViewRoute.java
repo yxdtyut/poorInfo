@@ -45,6 +45,11 @@ public class ViewRoute {
         return "teacherInfo";
     }
 
+    @RequestMapping("/poorInfo/add")
+    public String poorInfoAdd() {
+        return "poorInfoAdd";
+    }
+
     @RequestMapping("/poorInfo")
     public String poorInfo() {
         return "poorInfo";

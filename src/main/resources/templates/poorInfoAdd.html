@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>贫困库添加页面</title>
+
+
+    
+    <link rel="stylesheet" href="/Sys/css/layui.css">
+    <link rel="stylesheet" href="/Sys/css/sign.css">
+    
+    <link rel="stylesheet" href="/Sys/js/css/modules/layui-icon-extend/iconfont.css">
+     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/Sys/css/font.css">
+	<link rel="stylesheet" href="/Sys/css/xadmin.css">
+	
+	
+<script type="text/javascript"
+	src="/Sys/js/jquery-3.3.1.min.js"></script>
+    <script src="/Sys/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+
+
+</head>
+<body class="layui-unselect lau-sign-body" style="padding-top: 0px " >
+
+<form action="" class="layui-form">
+
+    <div class="layui-form-item" >
+         <div class="layui-inline">
+            <label class="layui-form-label" >省市</label>
+            <div class="layui-input-block">
+                <input type="text" name="province" placeholder="请输入省市" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">区县</label>
+            <div class="layui-input-block">
+                <input type="text" name="county" placeholder="请输入区县" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" >乡镇</label>
+            <div class="layui-input-block">
+                <input type="text" name="village" placeholder="请输入乡镇" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label" >村组（社区）</label>
+            <div class="layui-input-block">
+                <input type="text" name="cun" placeholder="请输入村组（社区）" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" >姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label" >身份证号码</label>
+            <div class="layui-input-block">
+                <input type="text" name="idCard" placeholder="请输入身份证号码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">是否6-15周岁</label>
+            <div class="layui-input-block" style="margin-right: 50px">
+                <input type="radio" name="sixFifteen" value="是" title="是" checked="">
+                <input type="radio" name="sixFifteen" value="否" title="否">
+            </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label" >户编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="headOfHouseNum" placeholder="请输入户编号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" >户主姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="headOfHouseName" placeholder="请输入户主姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label" >联系电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="headOfHouseTel" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" >学校全称</label>
+            <div class="layui-input-block">
+                <input type="text" name="school" placeholder="请输入学校全称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label" >学段</label>
+            <div class="layui-input-block">
+                <input type="text" name="studyLevel" placeholder="请输入学段" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" >年级</label>
+            <div class="layui-input-block">
+                <input type="text" name="grade" placeholder="请输入年级" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label" >班级</label>
+            <div class="layui-input-block">
+                <input type="text" name="班级" placeholder="请输入班级" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" >学籍号</label>
+            <div class="layui-input-block">
+                <input type="text" name="studentNumber" placeholder="请输入学籍号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label" >就读方式</label>
+            <div class="layui-input-block">
+                <input type="text" name="班级" placeholder="请输入就读方式" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">是否残疾生</label>
+            <div class="layui-input-block" style="margin-right: 50px">
+                <input type="radio" name="ifDisability" value="是" title="是" checked="">
+                <input type="radio" name="ifDisability" value="否" title="否">
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label" >残疾生证号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="disabilityNumber" placeholder="请输入残疾生证号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+         </div>
+    </div>
+
+
+    <div class="layui-form-item lau-sign-other" style="margin-top: 20px;text-align:center">
+        <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="register" style="margin-right: 100px">提交</button>
+    </div>
+
+</form>
+
+</body>
+<script src="/Sys/lib/layui/layui.js"></script>
+<script>
+   $(function(){
+	  var imgpath;	  
+		var   url= 'registerStuDeal'
+	   layui.use('upload', function(){
+		   var $ = layui.jquery
+		   ,upload = layui.upload;
+		   //普通图片上传
+		   var uploadInst = upload.render({
+		     elem: '#test1'
+		     ,url: 'uploadImg'
+		    ,field:"photo"  //默认是file
+		     ,before: function(obj){
+		       //预读本地文件示例，不支持ie8
+		       obj.preview(function(index, file, result){
+		         $('#demo1').attr('src', result); //图片链接（base64）
+		       });
+		     }
+		     ,done: function(res){
+		       //如果上传失败
+		       if(res.code > 0){
+		         return layer.msg('上传失败');
+		       }
+		      imgpath=res.data;
+		       
+		     }
+		     ,error: function(){
+		       //演示失败状态，并实现重传
+		       var demoText = $('#demoText');
+		       demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+		       demoText.find('.demo-reload').on('click', function(){
+		         uploadInst.upload();
+		       });
+		     }
+		   });
+   });
+	   
+	   
+	   layui.use('form', function() {
+           var form = layui.form;
+          
+           //监听提交
+           form.on('submit(register)', function(data) {
+               var loginjson= JSON.stringify(data.field);
+               var logindata=JSON.parse(loginjson);
+				logindata.photo=imgpath;
+				data=JSON.stringify(logindata)
+				$.ajax({
+	               	 url : url,
+	                 data : data,
+	                 type:'POST',
+	                 dateType:'json', 
+	                 contentType : 'application/json',
+	                 success:function(data){
+	                	if(data=="success"){
+	                		layer.msg("注册成功！",function(){
+	                            
+	                        });
+	                	}
+	                 },
+	                 error:function(args){
+	                	 layer.msg("账号已经存在或者信息未填完整，注册失败！",function(){
+	                         
+	                     });
+	                 }
+	               	});
+              		
+           });
+       });   
+   });
+   
+</script>
+</html>
