@@ -59,9 +59,10 @@
          </div>
       
           <xblock >
-            <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-            <button class="layui-btn layui-btn-danger" id="importData"><i class="layui-icon"></i>导入</button>
-            <button class="layui-btn" onclick="stuPoor()"><i class="layui-icon"></i>添加</button>
+              <button class="layui-btn  layui-btn-normal" onclick="downloadTemplate()">下载模板</button>
+              <button class="layui-btn" onclick="addPoor()"><i class="layui-icon"></i>添加</button>
+              <button class="layui-btn layui-btn-danger" id="importData"><i class="layui-icon"></i>导入</button>
+              <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
           </xblock>
         <table id="poorTable" lay-filter="poorTable"></table>
   
@@ -182,6 +183,10 @@
       })
   });
 
+  function downloadTemplate() {
+      window.open("/poor/download");
+  }
+
   function deletePoorInfo(poorId){
       $.ajax({
           type:"delete",
@@ -230,8 +235,7 @@
       });
     }
 
-  function stuPoor(){
-	  	
+  function addPoor(){
     	layer.open(
                 {
                     type: 2,
