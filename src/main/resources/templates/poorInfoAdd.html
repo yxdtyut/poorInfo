@@ -83,6 +83,7 @@
                 <input type="radio" name="sixFifteen" value="是" title="是" checked="">
                 <input type="radio" name="sixFifteen" value="否" title="否">
             </div>
+        </div>
 
         <div class="layui-inline">
             <label class="layui-form-label" >户编号</label>
@@ -135,7 +136,7 @@
         <div class="layui-inline">
             <label class="layui-form-label" >班级</label>
             <div class="layui-input-block">
-                <input type="text" name="班级" placeholder="请输入班级" autocomplete="off" class="layui-input">
+                <input type="text" name="clazz" placeholder="请输入班级" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -151,7 +152,7 @@
         <div class="layui-inline">
             <label class="layui-form-label" >就读方式</label>
             <div class="layui-input-block">
-                <input type="text" name="班级" placeholder="请输入就读方式" autocomplete="off" class="layui-input">
+                <input type="text" name="studyWay" placeholder="请输入就读方式" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -173,53 +174,65 @@
          </div>
     </div>
 
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" >不在校原因</label>
+            <div class="layui-input-block">
+                <input type="text" name="notInSchoolReason" placeholder="请输入不在校原因" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label" >贫困类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="poorType" placeholder="请输入贫困类型" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" >镇内/镇外</label>
+            <div class="layui-input-block">
+                <input type="text" name="ifVillage" placeholder="请输入镇内/镇外" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label" >县内/县外</label>
+            <div class="layui-input-block">
+                <input type="text" name="ifCounty" placeholder="请输入县内/县外" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" >省内/省外</label>
+            <div class="layui-input-block">
+                <input type="text" name="ifProvince" placeholder="请输入省内/省外" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">本学期是否享受米脂资助</label>
+            <div class="layui-input-block" style="margin-right: 50px">
+                <input type="radio" name="thisEnjoy" value="是" title="是" checked="">
+                <input type="radio" name="thisEnjoy" value="否" title="否">
+            </div>
+        </div>
+    </div>
+
 
     <div class="layui-form-item lau-sign-other" style="margin-top: 20px;text-align:center">
         <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="register" style="margin-right: 100px">提交</button>
     </div>
-
 </form>
 
 </body>
 <script src="/Sys/lib/layui/layui.js"></script>
 <script>
    $(function(){
-	  var imgpath;	  
-		var   url= 'registerStuDeal'
-	   layui.use('upload', function(){
-		   var $ = layui.jquery
-		   ,upload = layui.upload;
-		   //普通图片上传
-		   var uploadInst = upload.render({
-		     elem: '#test1'
-		     ,url: 'uploadImg'
-		    ,field:"photo"  //默认是file
-		     ,before: function(obj){
-		       //预读本地文件示例，不支持ie8
-		       obj.preview(function(index, file, result){
-		         $('#demo1').attr('src', result); //图片链接（base64）
-		       });
-		     }
-		     ,done: function(res){
-		       //如果上传失败
-		       if(res.code > 0){
-		         return layer.msg('上传失败');
-		       }
-		      imgpath=res.data;
-		       
-		     }
-		     ,error: function(){
-		       //演示失败状态，并实现重传
-		       var demoText = $('#demoText');
-		       demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-		       demoText.find('.demo-reload').on('click', function(){
-		         uploadInst.upload();
-		       });
-		     }
-		   });
-   });
-	   
-	   
 	   layui.use('form', function() {
            var form = layui.form;
           
@@ -227,25 +240,24 @@
            form.on('submit(register)', function(data) {
                var loginjson= JSON.stringify(data.field);
                var logindata=JSON.parse(loginjson);
-				logindata.photo=imgpath;
 				data=JSON.stringify(logindata)
 				$.ajax({
-	               	 url : url,
+	               	 url : "/poor/add",
 	                 data : data,
 	                 type:'POST',
 	                 dateType:'json', 
 	                 contentType : 'application/json',
 	                 success:function(data){
-	                	if(data=="success"){
-	                		layer.msg("注册成功！",function(){
-	                            
+	                	if(data.code=="200"){
+	                		layer.msg("添加成功！",function(){
+	                            window.parent.layer.closeAll();
 	                        });
-	                	}
+	                	} else {
+                            layer.msg(data.msg,{icon:5,offset:"auto",time:2000});
+                        }
 	                 },
 	                 error:function(args){
-	                	 layer.msg("账号已经存在或者信息未填完整，注册失败！",function(){
-	                         
-	                     });
+	                	 layer.msg(data.msg,{icon:5,offset:"auto",time:2000});
 	                 }
 	               	});
               		

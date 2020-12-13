@@ -339,6 +339,27 @@
     </foreach>
   </insert>
 
+  <insert id="insertPoorInfo">
+    insert into sub_poor (id, province, county,
+    village, cun, name,
+    id_card, six_fifteen, head_of_house_num,
+    head_of_house_name, head_of_house_tel, school,
+    study_level, grade, clazz,
+    student_number, study_way, if_disability,
+    disability_number, not_in_school_reason, poor_type,
+    if_village, if_county, if_province,
+    this_enjoy, account) values
+    (#{item.id,jdbcType=VARCHAR}, #{item.province,jdbcType=VARCHAR}, #{item.county,jdbcType=VARCHAR},
+      #{item.village,jdbcType=VARCHAR}, #{item.cun,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR},
+      #{item.idCard,jdbcType=VARCHAR}, #{item.sixFifteen,jdbcType=VARCHAR}, #{item.headOfHouseNum,jdbcType=VARCHAR},
+      #{item.headOfHouseName,jdbcType=VARCHAR}, #{item.headOfHouseTel,jdbcType=VARCHAR}, #{item.school,jdbcType=VARCHAR},
+      #{item.studyLevel,jdbcType=VARCHAR}, #{item.grade,jdbcType=VARCHAR}, #{item.clazz,jdbcType=VARCHAR},
+      #{item.studentNumber,jdbcType=VARCHAR}, #{item.studyWay,jdbcType=VARCHAR}, #{item.ifDisability,jdbcType=VARCHAR},
+      #{item.disabilityNumber,jdbcType=VARCHAR}, #{item.notInSchoolReason,jdbcType=VARCHAR}, #{item.poorType,jdbcType=VARCHAR},
+      #{item.ifVillage,jdbcType=VARCHAR}, #{item.ifCounty,jdbcType=VARCHAR}, #{item.ifProvince,jdbcType=VARCHAR},
+      #{item.thisEnjoy,jdbcType=VARCHAR}, #{item.account,jdbcType=VARCHAR})
+  </insert>
+
   <select id="countByExample" parameterType="com.mizhi.yxd.entity.SubPoorExample" resultType="java.lang.Integer" >
     select count(*) from sub_poor
     <if test="_parameter != null" >

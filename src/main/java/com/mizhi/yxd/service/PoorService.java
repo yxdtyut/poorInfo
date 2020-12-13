@@ -4,6 +4,7 @@ import com.mizhi.yxd.entity.SubPoor;
 import com.mizhi.yxd.request.PoorRequest;
 import com.mizhi.yxd.vo.UpdatePoorVo;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -23,4 +24,8 @@ public interface PoorService {
     int deletePoorInfo(String id);
 
     int deleteByPoorIds(List<String> data);
+
+    void insertPoorInfo(SubPoor subPoor);
+
+    void checkIdcardExist(List<SubPoor> poors, HttpSession httpSession);
 }

@@ -24,6 +24,7 @@ public class CodeMsg {
     public static final CodeMsg DISABILITY_NOT_RIGHT = new CodeMsg(600104, "是否残疾生字段只能写是或者否");
     public static final CodeMsg ENJOY_NOT_RIGHT = new CodeMsg(600105, "本学期是否享受米脂资助只能写是或者否");
     public static final CodeMsg IMPORT_VALIDATE_ERROR = new CodeMsg(600106, "导入校验失败");
+    public static final CodeMsg IDCARD_EXIST_ERROR = new CodeMsg(600106, "该身份证用户已存在!");
 
     private Integer code;
     private String msg;

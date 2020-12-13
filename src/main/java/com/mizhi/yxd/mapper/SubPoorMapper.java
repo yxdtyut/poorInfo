@@ -42,4 +42,6 @@ public interface SubPoorMapper {
     void updateByField(@Param("poor") UpdatePoorVo updatePoorVo);
 
     int deleteByPoorIds(@Param("list") List<String> data);
+
+    void insertPoorInfo(@Param("item") SubPoor subPoor);
 }

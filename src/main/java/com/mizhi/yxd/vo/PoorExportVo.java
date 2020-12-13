@@ -100,7 +100,7 @@ public class PoorExportVo {
         }
 
         if (!ValidateUtils.checkIdCard(idCard)) {
-            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg));
+            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，身份证信息有误!"));
         }
 
         if (null != ifDisability && (!"是".equals(ifDisability) && !"否".equals(ifDisability))) {
