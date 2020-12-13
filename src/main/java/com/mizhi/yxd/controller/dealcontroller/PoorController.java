@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -96,13 +97,10 @@ public class PoorController {
 
     @PostMapping("/deletes")
     public Result<Integer> deletePoolInfos(String nums) {
-        String[] str = nums.split(",");
-        List<String> data = new ArrayList<String>();
-        for (int i = 0; i < str.length; i++) {
-            data.add(str[i]);
-        }
+        String[] strings = nums.split(",");
+        List<String> data = Arrays.asList(strings);
         int count = 0;
-        if (data.size() > 0) {
+        if (data.size() > 0 && !data.contains("")) {
             count = poorService.deleteByPoorIds(data);
         }
         return Result.success(count);
@@ -132,5 +130,19 @@ public class PoorController {
                 newFileName.getBytes("gbk"), "iso-8859-1"));
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
                 headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/export")
+    public void exportPoorInfo(@RequestParam String nums, HttpSession httpSession, HttpServletResponse response) throws IOException {
+        PoorRequest request = new PoorRequest();
+        request.setAccount((String) httpSession.getAttribute("account"));
+        String[] strings = nums.split(",");
+        List<String> data = Arrays.asList(strings);
+        if (data.size() > 0 && !data.contains("")) {
+            request.setIds(data);
+        }
+        List<SubPoor> subPoors = poorService.findByCondition(request);
+        List<PoorExportVo> poorExportVos = BeanUtils.copyProperties(subPoors, PoorExportVo.class);
+        ExcelUtils.exportExcel(poorExportVos, null, "sheet1", PoorExportVo.class, "贫困库信息", true, response);
     }
 }

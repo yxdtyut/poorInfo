@@ -378,6 +378,12 @@
     <if test="poor.idcard != null and poor.idcard != ''">
       and id_card=#{poor.idcard}
     </if>
+    <if test="poor.ids != null and poor.ids.size > 0">
+      and id in
+      <foreach collection="poor.ids" item="id" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
   </select>
   <select id="findCountByCondition" resultType="java.lang.Integer">
     select count(1)

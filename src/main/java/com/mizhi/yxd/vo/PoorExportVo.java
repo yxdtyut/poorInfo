@@ -33,7 +33,7 @@ public class PoorExportVo {
     @Excel(name = "姓名", width = 15)
     private String name;
 
-    @Excel(name = "身份证号码", width = 15)
+    @Excel(name = "身份证号码", width = 20)
     private String idCard;
 
     @Excel(name = "是否6-15周岁", width = 15)
@@ -60,7 +60,7 @@ public class PoorExportVo {
     @Excel(name = "班级", width = 15)
     private String clazz;
 
-    @Excel(name = "学籍号", width = 15)
+    @Excel(name = "学籍号", width = 20)
     private String studentNumber;
 
     @Excel(name = "就读方式", width = 15)

@@ -61,7 +61,8 @@
           <xblock >
               <button class="layui-btn  layui-btn-normal" onclick="downloadTemplate()">下载模板</button>
               <button class="layui-btn" onclick="addPoor()"><i class="layui-icon"></i>添加</button>
-              <button class="layui-btn layui-btn-danger" id="importData"><i class="layui-icon"></i>导入</button>
+              <button class="layui-btn layui-btn-warm" id="importData">导入</button>
+              <button class="layui-btn layui-btn-warm" id="exportData" onclick="exportTable()">导出</button>
               <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
           </xblock>
         <table id="poorTable" lay-filter="poorTable"></table>
@@ -250,11 +251,16 @@
                     	window.location.reload(); //刷新父页面
                     }
                 });
-    	 
     }
 
   function exportTable(){
-	  location.href="/Sys/export";  
+      var table = layui.table
+      var checkStatus = table.checkStatus('poorInfo');
+      var nums="";
+      for(var i=0;i<checkStatus.data.length;i++){
+          nums += checkStatus.data[i].id+",";
+      }
+      location.href = "/poor/export?nums="+nums;
   }
   
 

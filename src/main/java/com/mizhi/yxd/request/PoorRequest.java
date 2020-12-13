@@ -2,6 +2,8 @@ package com.mizhi.yxd.request;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author yangxudong
  * @description:
@@ -12,4 +14,5 @@ public class PoorRequest {
     private String account;
     private String username;
     private String idcard;
+    private List<String> ids;
 }
