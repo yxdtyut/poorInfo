@@ -71,6 +71,7 @@
   </body>
   
   <script type="text/html" id="poorBar">
+      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="add">添加至资助库</a>
       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
   </script>
   
@@ -121,8 +122,8 @@
               ,{field:'ifVillage', title:'镇内/镇外', width:documentWidth*10/150, edit:"text"}
               ,{field:'ifCounty', title:'县内/县外', width:documentWidth*10/150, edit:"text"}
               ,{field:'ifProvince', title:'省内/省外', width:documentWidth*10/150, edit:"text"}
-              ,{field:'thisEnjoy', title:'本学期是否享受米脂资助', width:documentWidth*10/50, edit:"text"}
-              ,{field:'operation',title:'操作',toolbar: '#poorBar'}
+              ,{field:'thisEnjoy', title:'本学期是否享受米脂资助', width:documentWidth*10/70, edit:"text"}
+              ,{field:'operation',title:'操作',toolbar: '#poorBar',  width:documentWidth*10/100}
           ]
         	  ]
       });
@@ -178,14 +179,38 @@
           var data = obj.data;
           if(obj.event === 'del'){
               layer.confirm('真的删除['+data.name+']么', function(index){
-                  deletePoorInfo(data.id);//alert(data.id);
+                  deletePoorInfo(data.id);
               });
+          }
+          if(obj.event === 'add') {
+              addSubsidize(data.id);
           }
       })
   });
 
   function downloadTemplate() {
       window.open("/poor/download");
+  }
+
+  function addSubsidize(poorId) {
+      layer.open(
+          {
+              type: 2,
+              title: '添加资助信息页面',
+              skin: 'layui-layer-lan',
+              shadeClose: false,
+              shade: 0.8,
+              area:  ['450px', '450px'],
+              resize:true,
+              content:'/Sys/subsidize',
+              success: function(layero, index){
+                  var iframeWin = window[layero.find('iframe')[0]['name']];
+                  iframeWin.hello(poorId);
+              },
+              end: function(){
+                  window.location.reload(); //刷新父页面
+              }
+          });
   }
 
   function deletePoorInfo(poorId){
