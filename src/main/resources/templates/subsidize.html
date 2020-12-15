@@ -30,16 +30,24 @@
 
     <div class="layui-form-item" >
          <div class="layui-inline">
-            <label class="layui-form-label" >省市</label>
+            <label class="layui-form-label" >资助项目</label>
             <div class="layui-input-block">
-                <input type="text" name="province" placeholder="请输入省市" autocomplete="off" class="layui-input">
+                <input type="hidden" id="poorId" name="poorId" autocomplete="off" class="layui-input">
+                <input type="text" name="subsidizeProject" placeholder="请输入资助项目" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-inline">
-            <label class="layui-form-label">区县</label>
+            <label class="layui-form-label">资助金额</label>
             <div class="layui-input-block">
-                <input type="text" name="county" placeholder="请输入区县" autocomplete="off" class="layui-input">
+                <input type="text" name="subsidizeMoney" lay-verify="number" placeholder="请输入资助金额" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">营养餐金额</label>
+            <div class="layui-input-block">
+                <input type="text" name="nutrimealMoney" lay-verify="number" placeholder="请输入营养餐金额" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -60,11 +68,18 @@
           
            //监听提交
            form.on('submit(register)', function(data) {
+               // 单击之后提交按钮不可选,防止重复提交
+               var DISABLED = 'layui-btn-disabled';
+               // 增加样式
+               $('.layui-btn-normal').addClass(DISABLED);
+               // 增加属性
+               $('.layui-btn-normal').attr('disabled', 'disabled');
+
                var loginjson= JSON.stringify(data.field);
                var logindata=JSON.parse(loginjson);
 				data=JSON.stringify(logindata)
 				$.ajax({
-	               	 url : "/poor/add",
+	               	 url : "/subsidize/add",
 	                 data : data,
 	                 type:'POST',
 	                 dateType:'json', 
@@ -76,10 +91,14 @@
 	                        });
 	                	} else {
                             layer.msg(data.msg,{icon:5,offset:"auto",time:2000});
+                            $('.layui-btn-normal').removeClass(DISABLED);
+                            $('.layui-btn-normal').removeAttr('disabled');
                         }
 	                 },
 	                 error:function(args){
 	                	 layer.msg(data.msg,{icon:5,offset:"auto",time:2000});
+                         $('.layui-btn-normal').removeClass(DISABLED);
+                         $('.layui-btn-normal').removeAttr('disabled');
 	                 }
 	               	});
               		
@@ -87,9 +106,8 @@
        });   
    });
 
-   function hello(id) {
-       poorId = id;
-       alert("hello" + poorId);
+   function setPoorId(id) {
+       $("#poorId").attr("value", id);
    }
    
 </script>

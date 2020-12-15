@@ -23,8 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSON;
 import com.mizhi.yxd.entity.Admin;
 import com.mizhi.yxd.service.AdminService;
-import com.mizhi.yxd.service.StuService;
-import com.mizhi.yxd.service.TeacherService;
 
 import cn.hutool.crypto.SecureUtil;
 
@@ -36,11 +34,6 @@ public class LoginResgisterDeal {
 	@Autowired
 	AdminService adminService;
 
-	@Autowired
-	StuService stuService;
-
-	@Autowired
-	TeacherService teacherService;
 
     @ResponseBody
 	@RequestMapping(value = "/dealLogin")
@@ -79,31 +72,4 @@ public class LoginResgisterDeal {
 		}
 		return Result.success("success");
 	}
-	
-	@RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
-	public @ResponseBody Object updatePersonal(@RequestParam("photo") MultipartFile file, HttpServletRequest request)
-			throws IllegalStateException, IOException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-
-		String imgAbsolutePath = MyTool.SaveImg(file, MyTool.getImg(), name);
-		map.put("code", 0);
-		map.put("message", "上传成功");
-		map.put("data", name);
-		return map;
-	}
-	
-	@RequestMapping(value = "/registerTeaDeal")
-	@ResponseBody
-	public String registerTeaDeal(@RequestBody Map map) {
-		System.out.println("teacher psw:"+map.get("psw"));
-		map.put("psw", SecureUtil.md5(map.get("psw").toString()));
-		
-		if (teacherService.addTeacher(map) > 0) {
-			return "success";
-		}
-
-		return "failure";
-	}
-
 }

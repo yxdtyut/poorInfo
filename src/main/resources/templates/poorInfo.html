@@ -205,7 +205,7 @@
               content:'/Sys/subsidize',
               success: function(layero, index){
                   var iframeWin = window[layero.find('iframe')[0]['name']];
-                  iframeWin.hello(poorId);
+                  iframeWin.setPoorId(poorId);
               },
               end: function(){
                   window.location.reload(); //刷新父页面
