@@ -7,6 +7,39 @@
     <result column="subsidize_money" property="subsidizeMoney" jdbcType="DECIMAL" />
     <result column="nutrimeal_money" property="nutrimealMoney" jdbcType="DECIMAL" />
   </resultMap>
+
+  <resultMap id="combinationMap" type="com.mizhi.yxd.entity.SubsidizeAndPoor" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="county" property="county" jdbcType="VARCHAR" />
+    <result column="village" property="village" jdbcType="VARCHAR" />
+    <result column="cun" property="cun" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="id_card" property="idCard" jdbcType="VARCHAR" />
+    <result column="six_fifteen" property="sixFifteen" jdbcType="VARCHAR" />
+    <result column="head_of_house_num" property="headOfHouseNum" jdbcType="VARCHAR" />
+    <result column="head_of_house_name" property="headOfHouseName" jdbcType="VARCHAR" />
+    <result column="head_of_house_tel" property="headOfHouseTel" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="study_level" property="studyLevel" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="clazz" property="clazz" jdbcType="VARCHAR" />
+    <result column="student_number" property="studentNumber" jdbcType="VARCHAR" />
+    <result column="study_way" property="studyWay" jdbcType="VARCHAR" />
+    <result column="if_disability" property="ifDisability" jdbcType="VARCHAR" />
+    <result column="disability_number" property="disabilityNumber" jdbcType="VARCHAR" />
+    <result column="not_in_school_reason" property="notInSchoolReason" jdbcType="VARCHAR" />
+    <result column="poor_type" property="poorType" jdbcType="VARCHAR" />
+    <result column="if_village" property="ifVillage" jdbcType="VARCHAR" />
+    <result column="if_county" property="ifCounty" jdbcType="VARCHAR" />
+    <result column="if_province" property="ifProvince" jdbcType="VARCHAR" />
+    <result column="this_enjoy" property="thisEnjoy" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="subsidize_project" property="subsidizeProject" jdbcType="VARCHAR" />
+    <result column="subsidize_money" property="subsidizeMoney" jdbcType="DECIMAL" />
+    <result column="nutrimeal_money" property="nutrimealMoney" jdbcType="DECIMAL" />
+  </resultMap>
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -65,9 +98,18 @@
       </foreach>
     </where>
   </sql>
+
   <sql id="Base_Column_List" >
     poor_id, subsidize_project, subsidize_money, nutrimeal_money
   </sql>
+
+  <sql id="Combination_List" >
+    id, province, county, village, cun, name, id_card, six_fifteen, head_of_house_num,
+    head_of_house_name, head_of_house_tel, school, study_level, grade, clazz, student_number,
+    study_way, if_disability, disability_number, not_in_school_reason, poor_type,
+    if_village, if_county, if_province, this_enjoy, account, subsidize_project, subsidize_money, nutrimeal_money
+  </sql>
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mizhi.yxd.entity.SubSubsidizeExample" >
     select
     <if test="distinct" >
@@ -141,6 +183,46 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+
+    <select id="findByCondition" resultMap="combinationMap">
+      select
+      <include refid="Combination_List" />
+      from sub_poor as poor inner join sub_subsidize as subsidize
+      on poor.id = subsidize.poor_id
+      where poor.account = #{poor.account}
+      <if test="poor.username != null and poor.username != ''">
+        and poor.name like  concat(concat('%',#{poor.username}),'%')
+      </if>
+      <if test="poor.idcard != null and poor.idcard != ''">
+        and poor.id_card=#{poor.idcard}
+      </if>
+      <if test="poor.ids != null and poor.ids.size > 0">
+        and poor.id in
+        <foreach collection="poor.ids" item="id" open="(" close=")" separator=",">
+          #{id}
+        </foreach>
+      </if>
+    </select>
+
+  <select id="findCountByCondition" resultType="java.lang.Integer">
+    select count(1)
+    from sub_poor as poor inner join sub_subsidize as subsidize
+    on poor.id = subsidize.poor_id
+    where poor.account = #{poor.account}
+    <if test="poor.username != null and poor.username != ''">
+      and poor.name like  concat(concat('%',#{poor.username}),'%')
+    </if>
+    <if test="poor.idcard != null and poor.idcard != ''">
+      and poor.id_card=#{poor.idcard}
+    </if>
+    <if test="poor.ids != null and poor.ids.size > 0">
+      and poor.id in
+      <foreach collection="poor.ids" item="id" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
+  </select>
+
   <update id="updateByExampleSelective" parameterType="map" >
     update sub_subsidize
     <set >

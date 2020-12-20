@@ -2,6 +2,8 @@ package com.mizhi.yxd.mapper;
 
 import com.mizhi.yxd.entity.SubSubsidize;
 import com.mizhi.yxd.entity.SubSubsidizeExample;
+import com.mizhi.yxd.entity.SubsidizeAndPoor;
+import com.mizhi.yxd.request.PoorRequest;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,4 +32,8 @@ public interface SubSubsidizeMapper {
     int updateByPrimaryKeySelective(SubSubsidize record);
 
     int updateByPrimaryKey(SubSubsidize record);
+
+    List<SubsidizeAndPoor> findByCondition(@Param("poor") PoorRequest poorRequest);
+
+    int findCountByCondition(@Param("poor") PoorRequest poorRequest);
 }

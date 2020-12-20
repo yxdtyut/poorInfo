@@ -1,12 +1,16 @@
 package com.mizhi.yxd.service.impl;
 
 import com.mizhi.yxd.entity.SubSubsidize;
+import com.mizhi.yxd.entity.SubsidizeAndPoor;
 import com.mizhi.yxd.exception.GlobleException;
 import com.mizhi.yxd.mapper.SubSubsidizeMapper;
+import com.mizhi.yxd.request.PoorRequest;
 import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.service.SubsidizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author yangxudong
@@ -25,5 +29,15 @@ public class SubsidizeServiceImpl implements SubsidizeService {
             throw new GlobleException(CodeMsg.SUBSIDIZE_EXIST_ERROR);
         }
         subSubsidizeMapper.insert(subSubsidize);
+    }
+
+    @Override
+    public List<SubsidizeAndPoor> findByCondition(PoorRequest poorRequest) {
+        return subSubsidizeMapper.findByCondition(poorRequest);
+    }
+
+    @Override
+    public int findCountByCondition(PoorRequest poorRequest) {
+        return subSubsidizeMapper.findCountByCondition(poorRequest);
     }
 }
