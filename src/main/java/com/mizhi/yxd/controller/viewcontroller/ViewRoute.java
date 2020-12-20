@@ -58,4 +58,9 @@ public class ViewRoute {
     public String subsidizeInfo() {
         return "subsidizeInfo";
     }
+
+    @RequestMapping("/studentInfo")
+    public String studentInfo() {
+        return "studentInfo";
+    }
 }

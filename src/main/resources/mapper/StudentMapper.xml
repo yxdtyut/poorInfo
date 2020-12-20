@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mizhi.yxd.mapper.StudentMapper" >
+
+  <sql id="Base_Column_List" >
+    id, school, clazz, student_name, id_card, sex, student_number, school_uniforms, model, homework, study_tool, remark
+  </sql>
+  <select id="findByCondition" resultType="com.mizhi.yxd.entity.SubUser">
+    select
+    <include refid="Base_Column_List" /> from sub_user
+    <if test="student.username != null and student.username != ''">
+      and student_name=#{student.username}
+    </if>
+    <if test="student.school != null and student.school != ''">
+      and school=#{student.school}
+    </if>
+    <if test="student.clazz != null and student.clazz != ''">
+      and clazz=#{student.clazz}
+    </if>
+    <if test="student.studentNumber != null and student.studentNumber != ''">
+      and student_number=#{student.studentNumber}
+    </if>
+    <if test="student.idcard != null and student.idcard != ''">
+      and id_card=#{student.idcard}
+    </if>
+    <if test="student.ids != null and student.ids.size > 0">
+      and id in
+      <foreach collection="student.ids" item="id" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
+  </select>
+  <select id="findCountByCondition" resultType="java.lang.Integer">
+    select count(*) from sub_user
+    <if test="student.username != null and student.username != ''">
+      and student_name=#{student.username}
+    </if>
+    <if test="student.school != null and student.school != ''">
+      and school=#{student.school}
+    </if>
+    <if test="student.clazz != null and student.clazz != ''">
+      and clazz=#{student.clazz}
+    </if>
+    <if test="student.studentNumber != null and student.studentNumber != ''">
+      and student_number=#{student.studentNumber}
+    </if>
+    <if test="student.idcard != null and student.idcard != ''">
+      and id_card=#{student.idcard}
+    </if>
+    <if test="student.ids != null and student.ids.size > 0">
+      and id in
+      <foreach collection="student.ids" item="id" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
+  </select>
+</mapper>
