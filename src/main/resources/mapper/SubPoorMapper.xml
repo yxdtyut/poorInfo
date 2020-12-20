@@ -378,6 +378,18 @@
     <if test="poor.idcard != null and poor.idcard != ''">
       and id_card=#{poor.idcard}
     </if>
+    <if test="poor.province != null and poor.province != ''">
+      and province=#{poor.province}
+    </if>
+    <if test="poor.county != null and poor.county != ''">
+      and county=#{poor.county}
+    </if>
+    <if test="poor.village != null and poor.village != ''">
+      and village=#{poor.village}
+    </if>
+    <if test="poor.cun != null and poor.cun != ''">
+      and cun=#{poor.cun}
+    </if>
     <if test="poor.ids != null and poor.ids.size > 0">
       and id in
       <foreach collection="poor.ids" item="id" open="(" close=")" separator=",">

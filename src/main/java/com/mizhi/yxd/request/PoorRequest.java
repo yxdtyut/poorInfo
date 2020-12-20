@@ -13,6 +13,10 @@ import java.util.List;
 public class PoorRequest {
     private String account;
     private String username;
+    private String province;
+    private String county;
+    private String village;
+    private String cun;
     private String idcard;
     private List<String> ids;
 }

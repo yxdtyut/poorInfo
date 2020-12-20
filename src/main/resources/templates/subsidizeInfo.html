@@ -54,7 +54,24 @@
              <div class="layui-inline">
                  <input class="layui-input" name="idCard" id="idcard" autocomplete="off">
              </div>
+             省市：
+             <div class="layui-inline">
+                 <input class="layui-input" name="province" id="province" autocomplete="off">
+             </div>
+             区县：
+             <div class="layui-inline">
+                 <input class="layui-input" name="county" id="county" autocomplete="off">
+             </div>
+             乡镇：
+             <div class="layui-inline">
+                 <input class="layui-input" name="village" id="village" autocomplete="off">
+             </div>
+             村组（社区）：
+             <div class="layui-inline">
+                 <input class="layui-input" name="cun" id="cun" autocomplete="off">
+             </div>
               <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
+             <button class="layui-btn" id="clear" onclick="selectClear()">清空</button>
             </div>
          </div>
       
@@ -132,6 +149,10 @@
         reload: function(){
           var username = $('#username');
           var idcard = $('#idcard');
+            var province = $('#province');
+            var county = $('#county');
+            var village = $('#village');
+            var cun = $('#cun');
           // 执行重载
           table.reload('subsidizeInfo', {
             page: {
@@ -140,7 +161,11 @@
         url:'/subsidize/subsidizeInfo'
             ,where: {
                 username: username.val(),
-                idcard: idcard.val()
+                idcard: idcard.val(),
+                  province: province.val(),
+                  county: county.val(),
+                  village: village.val(),
+                  cun: cun.val()
             }
             ,method:'post'
           });
@@ -240,6 +265,15 @@
           nums += checkStatus.data[i].id+",";
       }
       location.href = "/poor/export?nums="+nums;
+  }
+
+  function selectClear() {
+      $('#username').val(null);
+      $('#idcard').val(null);
+      $('#province').val(null);
+      $('#county').val(null);
+      $('#village').val(null);
+      $('#cun').val(null);
   }
 </script>  
   
