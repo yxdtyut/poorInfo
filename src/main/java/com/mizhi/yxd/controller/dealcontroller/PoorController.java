@@ -143,6 +143,6 @@ public class PoorController {
         }
         List<SubPoor> subPoors = poorService.findByCondition(request);
         List<PoorExportVo> poorExportVos = BeanUtils.copyProperties(subPoors, PoorExportVo.class);
-        ExcelUtils.exportExcel(poorExportVos, null, "sheet1", PoorExportVo.class, "贫困库信息", true, response);
+        ExcelUtils.exportExcel(poorExportVos, null, "贫困库", PoorExportVo.class, "贫困库信息", true, response);
     }
 }

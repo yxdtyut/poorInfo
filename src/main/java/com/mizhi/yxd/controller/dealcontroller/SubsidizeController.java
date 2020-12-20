@@ -10,9 +10,12 @@ import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.result.Result;
 import com.mizhi.yxd.service.PoorService;
 import com.mizhi.yxd.service.SubsidizeService;
+import com.mizhi.yxd.tools.ExcelUtils;
 import com.mizhi.yxd.tools.Layui;
 import com.mizhi.yxd.validate.ValueValidate;
 import com.mizhi.yxd.vo.CreateSubsidizeVo;
+import com.mizhi.yxd.vo.PoorExportVo;
+import com.mizhi.yxd.vo.SubsidizeExportVo;
 import com.mizhi.yxd.vo.UpdatePoorVo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +25,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -118,5 +123,19 @@ public class SubsidizeController {
             poorService.updateByField(updatePoorVo);
         }
         return Result.success("success");
+    }
+
+    @GetMapping("/export")
+    public void exportPoorInfo(@RequestParam String nums, HttpSession httpSession, HttpServletResponse response) throws IOException {
+        PoorRequest request = new PoorRequest();
+        request.setAccount((String) httpSession.getAttribute("account"));
+        String[] strings = nums.split(",");
+        List<String> data = Arrays.asList(strings);
+        if (data.size() > 0 && !data.contains("")) {
+            request.setIds(data);
+        }
+        List<SubsidizeAndPoor> subSubsidizes = subsidizeService.findByCondition(request);
+        List<SubsidizeExportVo> poorExportVos = com.mizhi.yxd.tools.BeanUtils.copyProperties(subSubsidizes, SubsidizeExportVo.class);
+        ExcelUtils.exportExcel(poorExportVos, null, "资助库", SubsidizeExportVo.class, "资助库信息", true, response);
     }
 }

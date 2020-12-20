@@ -259,12 +259,12 @@
 
   function exportTable(){
       var table = layui.table
-      var checkStatus = table.checkStatus('poorInfo');
+      var checkStatus = table.checkStatus('subsidizeInfo');
       var nums="";
       for(var i=0;i<checkStatus.data.length;i++){
           nums += checkStatus.data[i].id+",";
       }
-      location.href = "/poor/export?nums="+nums;
+      location.href = "/subsidize/export?nums="+nums;
   }
 
   function selectClear() {
