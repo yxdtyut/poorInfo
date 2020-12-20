@@ -25,4 +25,6 @@ public interface StudentService {
     int deleteByPoorIds(List<String> data);
 
     void updateByField(UpdatePoorVo updatePoorVo);
+
+    void insertBatch(List<SubUser> users);
 }

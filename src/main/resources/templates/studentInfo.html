@@ -112,7 +112,8 @@
              {type: 'checkbox',width:documentWidth*4/100} 
               ,{type:'numbers',title:'序号', width:documentWidth*10/100, sort: true}
               ,{field:'school', title:'学校全称', width:documentWidth*8/100, edit:"text"}
-              ,{field:'clazz',title:'年级',width:documentWidth*8/100, edit:"text"}
+              ,{field:'grade',title:'年级',width:documentWidth*8/100, edit:"text"}
+              ,{field:'clazz',title:'班级',width:documentWidth*8/100, edit:"text"}
               ,{field:'studentName', title:'姓名', width:documentWidth*10/100, edit:"text"}
               ,{field:'idCard', title:'身份证号码', width:documentWidth*10/80, edit:"false"}
               ,{field:'sex', title:'性别', width:documentWidth*10/100, edit:"text"}
@@ -266,7 +267,7 @@
       for(var i=0;i<checkStatus.data.length;i++){
           nums += checkStatus.data[i].id+",";
       }
-      location.href = "/Student/export?nums="+nums;
+      location.href = "/student/export?nums="+nums;
   }
   
 
@@ -276,7 +277,7 @@
        var uploadInst = upload.render({
         elem: '#importData'
         , exts: "xls|xlsx|xlsm"
-        ,url: '/Student/import'
+        ,url: '/student/import'
            ,done: function (data) {
                if (data.code == 200) {
                    layer.msg('导入成功！',{icon:6,offset:"auto",time:1000});//提示框

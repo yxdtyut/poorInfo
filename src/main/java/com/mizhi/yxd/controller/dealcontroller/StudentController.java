@@ -3,12 +3,16 @@ package com.mizhi.yxd.controller.dealcontroller;
 import com.alibaba.fastjson.JSON;
 import com.mizhi.yxd.entity.SubPoor;
 import com.mizhi.yxd.entity.SubUser;
+import com.mizhi.yxd.request.PoorRequest;
 import com.mizhi.yxd.request.StudentRequest;
 import com.mizhi.yxd.result.Result;
 import com.mizhi.yxd.service.StudentService;
+import com.mizhi.yxd.tools.BeanUtils;
+import com.mizhi.yxd.tools.ExcelUtils;
 import com.mizhi.yxd.tools.Layui;
 import com.mizhi.yxd.validate.ValueValidate;
 import com.mizhi.yxd.vo.PoorExportVo;
+import com.mizhi.yxd.vo.StudentExportVo;
 import com.mizhi.yxd.vo.UpdatePoorVo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +24,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -104,5 +110,30 @@ public class StudentController {
         updatePoorVo.setField(ValueValidate.studentMap.get(updatePoorVo.getField()));
         studentService.updateByField(updatePoorVo);
         return Result.success("success");
+    }
+
+    @PostMapping("/import")
+    public Result<String> importExcel(MultipartFile file, HttpSession httpSession) throws IOException {
+        List<StudentExportVo> exportVoList = ExcelUtils.importExcel(file, StudentExportVo.class);
+        exportVoList.stream().forEach(studentExportVo -> studentExportVo.validate());
+        final List<SubUser> users = BeanUtils.copyProperties(exportVoList, SubUser.class);
+        log.info("import, student:{}", JSON.toJSONString(users));
+        studentService.checkIdcardExist(users);
+        studentService.insertBatch(users);
+        log.info("import message success");
+        return Result.success("success");
+    }
+
+    @GetMapping("/export")
+    public void exportPoorInfo(@RequestParam String nums, HttpServletResponse response) throws IOException {
+        StudentRequest request = new StudentRequest();
+        String[] strings = nums.split(",");
+        List<String> data = Arrays.asList(strings);
+        if (data.size() > 0 && !data.contains("")) {
+            request.setIds(data);
+        }
+        List<SubUser> subUsers = studentService.findByCondition(request);
+        List<StudentExportVo> studentExportVos = BeanUtils.copyProperties(subUsers, StudentExportVo.class);
+        ExcelUtils.exportExcel(studentExportVos, null, "在校学生", StudentExportVo.class, "在校学生信息", true, response);
     }
 }

@@ -17,6 +17,14 @@
     (#{user.id},#{user.school},#{user.grade},#{user.clazz},#{user.studentName},#{user.idCard},#{user.sex},#{user.studentNumber},#{user.schoolUniforms},#{user.model},#{user.homework},#{user.studyTool},#{user.remark})
   </insert>
 
+  <insert id="insertBatch">
+     insert into sub_user(id, school, grade, clazz, student_name, id_card, sex, student_number, school_uniforms, model, homework, study_tool, remark)
+    values
+    <foreach collection="list" item="user" separator="," index="index">
+      (#{user.id},#{user.school},#{user.grade},#{user.clazz},#{user.studentName},#{user.idCard},#{user.sex},#{user.studentNumber},#{user.schoolUniforms},#{user.model},#{user.homework},#{user.studyTool},#{user.remark})
+    </foreach>
+  </insert>
+
   <update id="updateByField">
         update sub_user set ${poor.field} = #{poor.value} where id = #{poor.id}
   </update>

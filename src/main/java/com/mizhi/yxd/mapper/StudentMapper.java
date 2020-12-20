@@ -28,4 +28,6 @@ public interface StudentMapper {
     int deleteByPoorIds(@Param("list") List<String> data);
 
     void updateByField(@Param("poor") UpdatePoorVo updatePoorVo);
+
+    void insertBatch(@Param("list") List<SubUser> users);
 }

@@ -69,4 +69,10 @@ public class StudentServiceImpl implements StudentService {
     public void updateByField(UpdatePoorVo updatePoorVo) {
         studentMapper.updateByField(updatePoorVo);
     }
+
+    @Override
+    public void insertBatch(List<SubUser> users) {
+        users.stream().forEach(user -> user.setId(SnowflakeIdWorker.primaryKey()));
+        studentMapper.insertBatch(users);
+    }
 }
