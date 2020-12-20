@@ -33,6 +33,12 @@
             <label class="layui-form-label" >资助项目</label>
             <div class="layui-input-block">
                 <input type="hidden" id="poorId" name="poorId" autocomplete="off" class="layui-input">
+                <input type="hidden" id="username" name="username" autocomplete="off" class="layui-input">
+                <input type="hidden" id="idcard" name="idcard" autocomplete="off" class="layui-input">
+                <input type="hidden" id="province" name="province" autocomplete="off" class="layui-input">
+                <input type="hidden" id="county" name="county" autocomplete="off" class="layui-input">
+                <input type="hidden" id="village" name="village" autocomplete="off" class="layui-input">
+                <input type="hidden" id="cun" name="cun" autocomplete="off" class="layui-input">
                 <input type="text" name="subsidizeProject" placeholder="请输入资助项目" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -108,6 +114,15 @@
 
    function setPoorId(id) {
        $("#poorId").attr("value", id);
+   }
+
+   function condition(username, idcard, province, county, village, cun) {
+       $("#username").attr("value", username);
+       $("#idcard").attr("value", idcard);
+       $("#province").attr("value", province);
+       $("#county").attr("value", county);
+       $("#village").attr("value", village);
+       $("#cun").attr("value", cun);
    }
    
 </script>

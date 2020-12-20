@@ -41,4 +41,6 @@ public interface SubSubsidizeMapper {
     int deleteByPoorIds(@Param("list") List<String> data);
 
     void updateByField(@Param("poor") UpdatePoorVo updatePoorVo);
+
+    void createSubsidizeBatch(@Param("list") List<SubSubsidize> subSubsidizes);
 }

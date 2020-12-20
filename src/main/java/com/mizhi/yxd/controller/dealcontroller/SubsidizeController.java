@@ -1,9 +1,12 @@
 package com.mizhi.yxd.controller.dealcontroller;
 
 import com.alibaba.fastjson.JSON;
+import com.mizhi.yxd.entity.SubPoor;
 import com.mizhi.yxd.entity.SubSubsidize;
 import com.mizhi.yxd.entity.SubsidizeAndPoor;
+import com.mizhi.yxd.exception.GlobleException;
 import com.mizhi.yxd.request.PoorRequest;
+import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.result.Result;
 import com.mizhi.yxd.service.PoorService;
 import com.mizhi.yxd.service.SubsidizeService;
@@ -13,6 +16,8 @@ import com.mizhi.yxd.vo.CreateSubsidizeVo;
 import com.mizhi.yxd.vo.UpdatePoorVo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +27,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author yangxudong
@@ -40,10 +46,30 @@ public class SubsidizeController {
     private PoorService poorService;
 
     @PostMapping("/add")
-    public Result<String> createSubsidize(@RequestBody CreateSubsidizeVo createSubsidizeVo) {
-        SubSubsidize subSubsidize = new SubSubsidize();
-        BeanUtils.copyProperties(createSubsidizeVo, subSubsidize);
-        subsidizeService.createSubsidize(subSubsidize);
+    public Result<String> createSubsidize(@RequestBody CreateSubsidizeVo createSubsidizeVo, HttpSession httpSession) {
+        if (StringUtils.isNotEmpty(createSubsidizeVo.getPoorId())) {
+            SubSubsidize subSubsidize = new SubSubsidize();
+            BeanUtils.copyProperties(createSubsidizeVo, subSubsidize);
+            subsidizeService.createSubsidize(subSubsidize);
+        } else {
+            PoorRequest poorRequest = new PoorRequest();
+            BeanUtils.copyProperties(createSubsidizeVo, poorRequest);
+            poorRequest.setAccount((String) httpSession.getAttribute("account"));
+            List<SubPoor> subPoors = poorService.findByCondition(poorRequest);
+            if (CollectionUtils.isNotEmpty(subPoors)) {
+                List<SubSubsidize> subSubsidizes = subPoors.stream().map(subPoor -> {
+                    SubSubsidize subSubsidize = new SubSubsidize();
+                    subSubsidize.setNutrimealMoney(createSubsidizeVo.getNutrimealMoney());
+                    subSubsidize.setSubsidizeMoney(createSubsidizeVo.getSubsidizeMoney());
+                    subSubsidize.setSubsidizeProject(createSubsidizeVo.getSubsidizeProject());
+                    subSubsidize.setPoorId(subPoor.getId());
+                    return subSubsidize;
+                }).collect(Collectors.toList());
+                subsidizeService.createSubsidizeBatch(subSubsidizes);
+            } else {
+                throw new GlobleException(CodeMsg.THERE_IS_NO_COUNT_ERROR);
+            }
+        }
         return Result.success("success");
     }
 

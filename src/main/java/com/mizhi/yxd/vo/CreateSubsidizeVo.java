@@ -12,6 +12,12 @@ import java.math.BigDecimal;
 @Data
 public class CreateSubsidizeVo {
     private String poorId;
+    private String username;
+    private String idcard;
+    private String province;
+    private String county;
+    private String village;
+    private String cun;
 
     private String subsidizeProject;
 

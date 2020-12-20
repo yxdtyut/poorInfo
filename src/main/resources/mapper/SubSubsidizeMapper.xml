@@ -185,6 +185,15 @@
       </if>
     </trim>
   </insert>
+
+  <insert id="createSubsidizeBatch">
+    insert into sub_subsidize  (poor_id, subsidize_project, subsidize_money,
+      nutrimeal_money) values
+      <foreach collection="list" item="subsidize"  separator=",">
+        (#{subsidize.poorId}, #{subsidize.subsidizeProject}, #{subsidize.subsidizeMoney}, #{subsidize.nutrimealMoney})
+      </foreach>
+  </insert>
+
   <select id="countByExample" parameterType="com.mizhi.yxd.entity.SubSubsidizeExample" resultType="java.lang.Integer" >
     select count(*) from sub_subsidize
     <if test="_parameter != null" >

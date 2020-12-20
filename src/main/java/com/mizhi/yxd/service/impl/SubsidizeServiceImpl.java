@@ -56,4 +56,9 @@ public class SubsidizeServiceImpl implements SubsidizeService {
     public void updateByField(UpdatePoorVo updatePoorVo) {
         subSubsidizeMapper.updateByField(updatePoorVo);
     }
+
+    @Override
+    public void createSubsidizeBatch(List<SubSubsidize> subSubsidizes) {
+        subSubsidizeMapper.createSubsidizeBatch(subSubsidizes);
+    }
 }

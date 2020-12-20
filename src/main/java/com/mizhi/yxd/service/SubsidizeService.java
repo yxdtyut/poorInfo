@@ -24,4 +24,6 @@ public interface SubsidizeService {
     int deleteByPoorIds(List<String> data);
 
     void updateByField(UpdatePoorVo updatePoorVo);
+
+    void createSubsidizeBatch(List<SubSubsidize> subSubsidizes);
 }
