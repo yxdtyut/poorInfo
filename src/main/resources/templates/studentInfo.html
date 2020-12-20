@@ -83,7 +83,7 @@
     </div>   
   </body>
   
-  <script type="text/html" id="StudentBar">
+  <script type="text/html" id="studentBar">
       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
   </script>
   
@@ -95,7 +95,7 @@
       var table = layui.table;
       table.render({
           elem: '#StudentTable'  //绑定table表格
-          ,id:'StudentInfo'
+          ,id:'studentInfo'
           ,method:'post'
           ,url: '/student/studentInfo' //后台springmvc接收路径
           ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
@@ -114,15 +114,15 @@
               ,{field:'school', title:'学校全称', width:documentWidth*8/100, edit:"text"}
               ,{field:'clazz',title:'年级',width:documentWidth*8/100, edit:"text"}
               ,{field:'studentName', title:'姓名', width:documentWidth*10/100, edit:"text"}
-              ,{field:'idCard', title:'身份证号码', width:documentWidth*10/100, edit:"false"}
+              ,{field:'idCard', title:'身份证号码', width:documentWidth*10/80, edit:"false"}
               ,{field:'sex', title:'性别', width:documentWidth*10/100, edit:"text"}
               ,{field:'studentNumber', title:'学籍号', width:documentWidth*10/100, edit:"text"}
               ,{field:'schoolUniforms', title:'是否享受校服', width:documentWidth*10/80, edit:"text"}
               ,{field:'model', title:'型号', width:documentWidth*10/100, edit:"text"}
               ,{field:'homework', title:'是否享受作业本', width:documentWidth*10/100, edit:"text"}
               ,{field:'studyTool', title:'是否享受学具', width:documentWidth*10/100, edit:"text"}
-              ,{field:'remark', title:'备注', width:documentWidth*10/100, edit:"text"}
-              ,{field:'operation',title:'操作',toolbar: '#StudentBar',  width:documentWidth*10/100}
+              ,{field:'remark', title:'备注', width:documentWidth*10/50, edit:"text"}
+              ,{field:'operation',title:'操作',toolbar: '#studentBar',  width:documentWidth*10/100}
           ]
         	  ]
       });
@@ -134,20 +134,19 @@
           var idcard = $('#idcard');
           var school = $('#school');
           var clazz = $('#clazz');
-          var village = $('#village');
+          var studentNumber = $('#studentNumber');
           // 执行重载
-          table.reload('StudentInfo', {
+          table.reload('studentInfo', {
             page: {
               curr: 1 //重新从第 1 页开始
             },
-        url:'/Student/StudentInfo'
+        url:'/student/studentInfo'
             ,where: {
-                username: username.val(),
-                idcard: idcard.val(),
-                province: province.val(),
-                county: county.val(),
-                village: village.val(),
-                cun: cun.val()
+                username: username.val().replace(/(^\s*)|(\s*$)/g, ""),
+                idcard: idcard.val().replace(/(^\s*)|(\s*$)/g, ""),
+                  school: school.val().replace(/(^\s*)|(\s*$)/g, ""),
+                  clazz: clazz.val().replace(/(^\s*)|(\s*$)/g, ""),
+                  studentNumber: studentNumber.val().replace(/(^\s*)|(\s*$)/g, ""),
             }
             ,method:'post'
           });
@@ -195,7 +194,7 @@
   });
 
   function downloadTemplate() {
-      window.open("/Student/download");
+      window.open("/student/download");
   }
 
   function deleteStudentInfo(StudentId){
@@ -218,7 +217,7 @@
   function delAll (argument) {
 	  layui.use('table',function(){
 	  var table = layui.table
-	  var checkStatus = table.checkStatus('StudentInfo');
+	  var checkStatus = table.checkStatus('studentInfo');
 	  if(checkStatus.data.length==0){
 			parent.layer.msg('请先选择要删除的数据行！', {icon: 2});
 			return ;
@@ -265,7 +264,7 @@
 
   function exportTable(){
       var table = layui.table
-      var checkStatus = table.checkStatus('StudentInfo');
+      var checkStatus = table.checkStatus('studentInfo');
       var nums="";
       for(var i=0;i<checkStatus.data.length;i++){
           nums += checkStatus.data[i].id+",";

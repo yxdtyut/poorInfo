@@ -162,12 +162,12 @@
             },
         url:'/poor/poorInfo'
             ,where: {
-                username: username.val(),
-                idcard: idcard.val(),
-                province: province.val(),
-                county: county.val(),
-                village: village.val(),
-                cun: cun.val()
+                username: username.val().replace(/(^\s*)|(\s*$)/g, ""),
+                idcard: idcard.val().replace(/(^\s*)|(\s*$)/g, ""),
+                province: province.val().replace(/(^\s*)|(\s*$)/g, ""),
+                county: county.val().replace(/(^\s*)|(\s*$)/g, ""),
+                village: village.val().replace(/(^\s*)|(\s*$)/g, ""),
+                cun: cun.val().replace(/(^\s*)|(\s*$)/g, "")
             }
             ,method:'post'
           });
@@ -240,11 +240,11 @@
   }
 
   function addSusidizeByCondition() {
-      var username = $('#username').val();
-      var idcard = $('#idcard').val();
-      var province = $('#province').val();
-      var county = $('#county').val();
-      var village = $('#village').val();
+      var username = $('#username').val().replace(/(^\s*)|(\s*$)/g, "");
+      var idcard = $('#idcard').val().replace(/(^\s*)|(\s*$)/g, "");
+      var province = $('#province').val().replace(/(^\s*)|(\s*$)/g, "");
+      var county = $('#county').val().replace(/(^\s*)|(\s*$)/g, "");
+      var village = $('#village').val().replace(/(^\s*)|(\s*$)/g, "");
       var cun = $('#cun').val();
       layer.confirm('当前条件:[姓名:'+username+'], [身份证:'+idcard+'], [省市:'+province+'], [区县:'+county+'], [乡镇:'+village+'], [村组（社区）:'+cun+'] ', function(index){
           layer.open(

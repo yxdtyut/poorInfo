@@ -160,12 +160,12 @@
             },
         url:'/subsidize/subsidizeInfo'
             ,where: {
-                username: username.val(),
-                idcard: idcard.val(),
-                  province: province.val(),
-                  county: county.val(),
-                  village: village.val(),
-                  cun: cun.val()
+                username: username.val().replace(/(^\s*)|(\s*$)/g, ""),
+                idcard: idcard.val().replace(/(^\s*)|(\s*$)/g, ""),
+                  province: province.val().replace(/(^\s*)|(\s*$)/g, ""),
+                  county: county.val().replace(/(^\s*)|(\s*$)/g, ""),
+                  village: village.val().replace(/(^\s*)|(\s*$)/g, ""),
+                  cun: cun.val().replace(/(^\s*)|(\s*$)/g, "")
             }
             ,method:'post'
           });

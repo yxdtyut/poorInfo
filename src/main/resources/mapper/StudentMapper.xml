@@ -18,7 +18,7 @@
   </insert>
   <select id="findByCondition" resultType="com.mizhi.yxd.entity.SubUser">
     select <include refid="Base_Entity"/>
-     from sub_user
+     from sub_user where 1 = 1
     <if test="student.username != null and student.username != ''">
       and student_name=#{student.username}
     </if>
@@ -42,7 +42,7 @@
     </if>
   </select>
   <select id="findCountByCondition" resultType="java.lang.Integer">
-    select count(*) from sub_user
+    select count(*) from sub_user where 1 = 1
     <if test="student.username != null and student.username != ''">
       and student_name=#{student.username}
     </if>
