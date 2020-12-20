@@ -4,6 +4,7 @@ import com.mizhi.yxd.exception.GlobleException;
 import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.tools.ValidateUtils;
 import com.mizhi.yxd.vo.UpdatePoorVo;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import java.util.Map;
  */
 public class ValueValidate {
     public static Map<String, String> map = new HashMap<>();
+    public static Map<String, String> studentMap = new HashMap<>();
     public static List<String> subsidizeList = new ArrayList<>();
 
     static {
@@ -52,6 +54,20 @@ public class ValueValidate {
         subsidizeList.add("subsidize_project");
         subsidizeList.add("subsidize_money");
         subsidizeList.add("nutrimeal_money");
+
+        studentMap.put("id", "id");
+        studentMap.put("school", "school");
+        studentMap.put("grade", "grade");
+        studentMap.put("clazz", "clazz");
+        studentMap.put("studentName", "student_name");
+        studentMap.put("idCard", "id_card");
+        studentMap.put("sex", "sex");
+        studentMap.put("studentNumber", "student_number");
+        studentMap.put("schoolUniforms", "school_uniforms");
+        studentMap.put("model", "model");
+        studentMap.put("homework", "homework");
+        studentMap.put("studyTool", "study_tool");
+        studentMap.put("remark", "remark");
     }
 
     public static void validate(UpdatePoorVo poolVo) {
@@ -80,6 +96,30 @@ public class ValueValidate {
 
         if ("nutrimealMoney".equals(feild) && !value.matches("([1-9]\\d*\\.?\\d*)|(0\\.\\d*[1-9])")) {
             throw new GlobleException(CodeMsg.DECIMAL_NOT_RIGHT_ERROR);
+        }
+    }
+
+    public static void validateStudent(UpdatePoorVo poolVo) {
+        String feild = poolVo.getField();
+        String value = poolVo.getValue().trim();
+        if ("schoolUniforms".equals(feild) && (!"是".equals(value) && !"否".equals(value))) {
+            throw new GlobleException(CodeMsg.SCHOOLUNIFORMS_NOT_RIGHT);
+        }
+
+        if ("idCard".equals(feild) && !ValidateUtils.checkIdCard(value)) {
+            throw new GlobleException(CodeMsg.IDCARD_NOT_RIGHT);
+        }
+
+        if ("sex".equals(feild) && (!"女".equals(value) && !"男".equals(value))) {
+            throw new GlobleException(CodeMsg.SEX_NOT_RIGHT);
+        }
+
+        if ("homework".equals(feild) && (!"是".equals(value) && !"否".equals(value))) {
+            throw new GlobleException(CodeMsg.HOMEWORK_NOT_RIGHT);
+        }
+
+        if ("studyTool".equals(feild) && (!"是".equals(value) && !"否".equals(value))) {
+            throw new GlobleException(CodeMsg.STUDY_TOOL_NOT_RIGHT);
         }
     }
 

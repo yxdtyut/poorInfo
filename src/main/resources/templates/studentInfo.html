@@ -78,7 +78,7 @@
               <button class="layui-btn layui-btn-warm" id="exportData" onclick="exportTable()">导出</button>
               <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
           </xblock>
-        <table id="StudentTable" lay-filter="StudentTable"></table>
+        <table id="studentTable" lay-filter="studentTable"></table>
   
     </div>   
   </body>
@@ -94,7 +94,7 @@
   layui.use('table', function(){
       var table = layui.table;
       table.render({
-          elem: '#StudentTable'  //绑定table表格
+          elem: '#studentTable'  //绑定table表格
           ,id:'studentInfo'
           ,method:'post'
           ,url: '/student/studentInfo' //后台springmvc接收路径
@@ -158,11 +158,11 @@
         active[type] ? active[type].call(this) : '';
       });
 
-      table.on('edit(StudentTable)', function (obj) {
+      table.on('edit(studentTable)', function (obj) {
           var data = obj.data;
           $.ajax({
               type:"put",
-              url:"/Student/update",
+              url:"/student/update",
               async:true,
               data:{
                   field:obj.field,
@@ -180,15 +180,12 @@
           });
       })
 
-      table.on('tool(StudentTable)', function (obj) {
+      table.on('tool(studentTable)', function (obj) {
           var data = obj.data;
           if(obj.event === 'del'){
-              layer.confirm('真的删除['+data.name+']么', function(index){
+              layer.confirm('真的删除['+data.studentName+']么', function(index){
                   deleteStudentInfo(data.id);
               });
-          }
-          if(obj.event === 'add') {
-              addSubsidize(data.id);
           }
       })
   });
@@ -197,10 +194,10 @@
       window.open("/student/download");
   }
 
-  function deleteStudentInfo(StudentId){
+  function deleteStudentInfo(studentId){
       $.ajax({
           type:"delete",
-          url:"/Student/delete/"+StudentId,
+          url:"/student/delete/"+studentId,
           async:true,
           dataType:"json",
           success:function(data){
@@ -230,7 +227,7 @@
 		parent.layer.msg('删除中...', {icon: 16,shade: 0.3,time:3000});
 
 		$.ajax({
-			url:'/Student/deletes',
+			url:'/student/deletes',
 			data:{'nums':nums},
 			type:'post',
 			success:function(data){

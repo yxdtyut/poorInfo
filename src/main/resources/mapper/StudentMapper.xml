@@ -16,6 +16,22 @@
     values
     (#{user.id},#{user.school},#{user.grade},#{user.clazz},#{user.studentName},#{user.idCard},#{user.sex},#{user.studentNumber},#{user.schoolUniforms},#{user.model},#{user.homework},#{user.studyTool},#{user.remark})
   </insert>
+
+  <update id="updateByField">
+        update sub_user set ${poor.field} = #{poor.value} where id = #{poor.id}
+  </update>
+
+  <delete id="deleteStudentById">
+    delete from sub_user where id = #{id}
+  </delete>
+
+  <delete id="deleteByPoorIds">
+    delete from sub_user where id in
+    <foreach collection="list" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+  </delete>
+
   <select id="findByCondition" resultType="com.mizhi.yxd.entity.SubUser">
     select <include refid="Base_Entity"/>
      from sub_user where 1 = 1

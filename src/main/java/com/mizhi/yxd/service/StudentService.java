@@ -2,6 +2,7 @@ package com.mizhi.yxd.service;
 
 import com.mizhi.yxd.entity.SubUser;
 import com.mizhi.yxd.request.StudentRequest;
+import com.mizhi.yxd.vo.UpdatePoorVo;
 
 import java.util.List;
 
@@ -18,4 +19,10 @@ public interface StudentService {
     void insertPoorInfo(SubUser subUser);
 
     void checkIdcardExist(List<SubUser> subUsers);
+
+    int deleteStudentById(String id);
+
+    int deleteByPoorIds(List<String> data);
+
+    void updateByField(UpdatePoorVo updatePoorVo);
 }

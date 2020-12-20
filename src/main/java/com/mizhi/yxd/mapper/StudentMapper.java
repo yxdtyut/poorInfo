@@ -2,6 +2,7 @@ package com.mizhi.yxd.mapper;
 
 import com.mizhi.yxd.entity.SubUser;
 import com.mizhi.yxd.request.StudentRequest;
+import com.mizhi.yxd.vo.UpdatePoorVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +22,10 @@ public interface StudentMapper {
     void insertStudentInfo(@Param("user") SubUser subUser);
 
     List<SubUser> quaryAll();
+
+    int deleteStudentById(@Param("id") String id);
+
+    int deleteByPoorIds(@Param("list") List<String> data);
+
+    void updateByField(@Param("poor") UpdatePoorVo updatePoorVo);
 }

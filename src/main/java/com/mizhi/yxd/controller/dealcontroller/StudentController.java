@@ -7,7 +7,9 @@ import com.mizhi.yxd.request.StudentRequest;
 import com.mizhi.yxd.result.Result;
 import com.mizhi.yxd.service.StudentService;
 import com.mizhi.yxd.tools.Layui;
+import com.mizhi.yxd.validate.ValueValidate;
 import com.mizhi.yxd.vo.PoorExportVo;
+import com.mizhi.yxd.vo.UpdatePoorVo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -75,5 +77,32 @@ public class StudentController {
                 newFileName.getBytes("gbk"), "iso-8859-1"));
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
                 headers, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public Result<Integer> deletePoorInfo(@PathVariable String id) {
+        log.info("delete student info, id:{}", id);
+        int count = studentService.deleteStudentById(id);
+        return Result.success(count);
+    }
+
+    @PostMapping("/deletes")
+    public Result<Integer> deletePoolInfos(String nums) {
+        String[] strings = nums.split(",");
+        List<String> data = Arrays.asList(strings);
+        int count = 0;
+        if (data.size() > 0 && !data.contains("")) {
+            count = studentService.deleteByPoorIds(data);
+        }
+        return Result.success(count);
+    }
+
+    @PutMapping("/update")
+    public Result<String> updatePoorInfo(UpdatePoorVo updatePoorVo) {
+        log.info("update student vo:{}", JSON.toJSONString(updatePoorVo));
+        ValueValidate.validateStudent(updatePoorVo);
+        updatePoorVo.setField(ValueValidate.studentMap.get(updatePoorVo.getField()));
+        studentService.updateByField(updatePoorVo);
+        return Result.success("success");
     }
 }

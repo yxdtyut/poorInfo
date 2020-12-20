@@ -7,6 +7,7 @@ import com.mizhi.yxd.request.StudentRequest;
 import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.service.StudentService;
 import com.mizhi.yxd.tools.SnowflakeIdWorker;
+import com.mizhi.yxd.vo.UpdatePoorVo;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,5 +53,20 @@ public class StudentServiceImpl implements StudentService {
                 }
             });
         }
+    }
+
+    @Override
+    public int deleteStudentById(String id) {
+        return studentMapper.deleteStudentById(id);
+    }
+
+    @Override
+    public int deleteByPoorIds(List<String> data) {
+        return studentMapper.deleteByPoorIds(data);
+    }
+
+    @Override
+    public void updateByField(UpdatePoorVo updatePoorVo) {
+        studentMapper.updateByField(updatePoorVo);
     }
 }
