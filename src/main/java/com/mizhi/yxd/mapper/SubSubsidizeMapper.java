@@ -4,6 +4,7 @@ import com.mizhi.yxd.entity.SubSubsidize;
 import com.mizhi.yxd.entity.SubSubsidizeExample;
 import com.mizhi.yxd.entity.SubsidizeAndPoor;
 import com.mizhi.yxd.request.PoorRequest;
+import com.mizhi.yxd.vo.UpdatePoorVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -36,4 +37,8 @@ public interface SubSubsidizeMapper {
     List<SubsidizeAndPoor> findByCondition(@Param("poor") PoorRequest poorRequest);
 
     int findCountByCondition(@Param("poor") PoorRequest poorRequest);
+
+    int deleteByPoorIds(@Param("list") List<String> data);
+
+    void updateByField(@Param("poor") UpdatePoorVo updatePoorVo);
 }

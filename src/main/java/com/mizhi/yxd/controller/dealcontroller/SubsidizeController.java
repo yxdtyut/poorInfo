@@ -5,9 +5,12 @@ import com.mizhi.yxd.entity.SubSubsidize;
 import com.mizhi.yxd.entity.SubsidizeAndPoor;
 import com.mizhi.yxd.request.PoorRequest;
 import com.mizhi.yxd.result.Result;
+import com.mizhi.yxd.service.PoorService;
 import com.mizhi.yxd.service.SubsidizeService;
 import com.mizhi.yxd.tools.Layui;
+import com.mizhi.yxd.validate.ValueValidate;
 import com.mizhi.yxd.vo.CreateSubsidizeVo;
+import com.mizhi.yxd.vo.UpdatePoorVo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -15,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +35,9 @@ import java.util.Map;
 public class SubsidizeController {
     @Autowired
     private SubsidizeService subsidizeService;
+
+    @Autowired
+    private PoorService poorService;
 
     @PostMapping("/add")
     public Result<String> createSubsidize(@RequestBody CreateSubsidizeVo createSubsidizeVo) {
@@ -53,5 +60,37 @@ public class SubsidizeController {
         int total = subsidizeService.findCountByCondition(poorRequest);
         Layui l = Layui.data(total, subSubsidizes);
         return JSON.toJSON(l);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public Result<Integer> deleteSubsidizeInfo(@PathVariable String id) {
+        log.info("delete poor info, id:{}", id);
+        int count = subsidizeService.deleteSubsidizeInfo(id);
+        return Result.success(count);
+    }
+
+    @PostMapping("/deletes")
+    public Result<Integer> deletePoolInfos(String nums) {
+        String[] strings = nums.split(",");
+        List<String> data = Arrays.asList(strings);
+        int count = 0;
+        if (data.size() > 0 && !data.contains("")) {
+            count = subsidizeService.deleteByPoorIds(data);
+        }
+        return Result.success(count);
+    }
+
+    @PutMapping("/update")
+    public Result<String> updatePoorInfo(UpdatePoorVo updatePoorVo, HttpSession httpSession) {
+        log.info("update subsidize vo:{}", JSON.toJSONString(updatePoorVo));
+        ValueValidate.validate(updatePoorVo);
+        updatePoorVo.setAccount((String) httpSession.getAttribute("account"));
+        updatePoorVo.setField(ValueValidate.map.get(updatePoorVo.getField()));
+        if (ValueValidate.ifSubsidize(updatePoorVo)) {
+            subsidizeService.updateByField(updatePoorVo);
+        } else {
+            poorService.updateByField(updatePoorVo);
+        }
+        return Result.success("success");
     }
 }

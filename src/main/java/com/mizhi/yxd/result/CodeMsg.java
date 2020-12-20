@@ -26,6 +26,7 @@ public class CodeMsg {
     public static final CodeMsg IMPORT_VALIDATE_ERROR = new CodeMsg(600106, "导入校验失败");
     public static final CodeMsg IDCARD_EXIST_ERROR = new CodeMsg(600107, "该身份证用户已存在!");
     public static final CodeMsg SUBSIDIZE_EXIST_ERROR = new CodeMsg(600108, "该生已经是被资助学生!");
+    public static final CodeMsg DECIMAL_NOT_RIGHT_ERROR = new CodeMsg(600109, "请填写数字!");
 
     private Integer code;
     private String msg;

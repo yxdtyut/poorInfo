@@ -140,6 +140,14 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+
+  <delete id="deleteByPoorIds">
+    delete from sub_subsidize where poor_id in
+    <foreach collection="list" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+  </delete>
+
   <insert id="insert" parameterType="com.mizhi.yxd.entity.SubSubsidize" >
     insert into sub_subsidize (poor_id, subsidize_project, subsidize_money, 
       nutrimeal_money)
@@ -274,5 +282,9 @@
       subsidize_money = #{subsidizeMoney,jdbcType=DECIMAL},
       nutrimeal_money = #{nutrimealMoney,jdbcType=DECIMAL}
     where poor_id = #{poorId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByField">
+    update sub_subsidize set ${poor.field} = #{poor.value} where poor_id = #{poor.id}
   </update>
 </mapper>

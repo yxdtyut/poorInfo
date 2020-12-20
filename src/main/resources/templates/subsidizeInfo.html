@@ -59,9 +59,6 @@
          </div>
       
           <xblock >
-              <button class="layui-btn  layui-btn-normal" onclick="downloadTemplate()">下载模板</button>
-              <button class="layui-btn" onclick="addPoor()"><i class="layui-icon"></i>添加</button>
-              <button class="layui-btn layui-btn-warm" id="importData">导入</button>
               <button class="layui-btn layui-btn-warm" id="exportData" onclick="exportTable()">导出</button>
               <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
           </xblock>
@@ -71,7 +68,6 @@
   </body>
   
   <script type="text/html" id="subsidizeBar">
-      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="add">添加至资助库</a>
       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
   </script>
   
@@ -100,7 +96,7 @@
              {type: 'checkbox',width:documentWidth*4/100} 
               ,{type:'numbers',title:'序号', width:documentWidth*10/100, sort: true}
               ,{field:'name', title:'姓名', width:documentWidth*10/100, edit:"text"}
-              ,{field:'idCard', title:'身份证号码', width:documentWidth*10/80, edit:"text"}
+              ,{field:'idCard', title:'身份证号码', width:documentWidth*10/80, edit:"false"}
               ,{field:'subsidizeProject', title:'资助项目', width:documentWidth*8/100, edit:"text"}
               ,{field:'subsidizeMoney', title:'资助金额', width:documentWidth*8/100, edit:"text"}
               ,{field:'nutrimealMoney', title:'营养餐金额', width:documentWidth*8/100, edit:"text"}
@@ -156,11 +152,11 @@
         active[type] ? active[type].call(this) : '';
       });
 
-      table.on('edit(poorTable)', function (obj) {
+      table.on('edit(subsidizeTable)', function (obj) {
           var data = obj.data;
           $.ajax({
               type:"put",
-              url:"/poor/update",
+              url:"/subsidize/update",
               async:true,
               data:{
                   field:obj.field,
@@ -178,48 +174,20 @@
           });
       })
 
-      table.on('tool(poorTable)', function (obj) {
+      table.on('tool(subsidizeTable)', function (obj) {
           var data = obj.data;
           if(obj.event === 'del'){
               layer.confirm('真的删除['+data.name+']么', function(index){
-                  deletePoorInfo(data.id);
+                  deleteSubsidizeInfo(data.id);
               });
-          }
-          if(obj.event === 'add') {
-              addSubsidize(data.id);
           }
       })
   });
 
-  function downloadTemplate() {
-      window.open("/poor/download");
-  }
-
-  function addSubsidize(poorId) {
-      layer.open(
-          {
-              type: 2,
-              title: '添加资助信息页面',
-              skin: 'layui-layer-lan',
-              shadeClose: false,
-              shade: 0.8,
-              area:  ['450px', '450px'],
-              resize:true,
-              content:'/Sys/subsidize',
-              success: function(layero, index){
-                  var iframeWin = window[layero.find('iframe')[0]['name']];
-                  iframeWin.setPoorId(poorId);
-              },
-              end: function(){
-                  window.location.reload(); //刷新父页面
-              }
-          });
-  }
-
-  function deletePoorInfo(poorId){
+  function deleteSubsidizeInfo(poorId){
       $.ajax({
           type:"delete",
-          url:"/poor/delete/"+poorId,
+          url:"/subsidize/delete/"+poorId,
           async:true,
           dataType:"json",
           success:function(data){
@@ -236,7 +204,7 @@
   function delAll (argument) {
 	  layui.use('table',function(){
 	  var table = layui.table
-	  var checkStatus = table.checkStatus('poorInfo');
+	  var checkStatus = table.checkStatus('subsidizeInfo');
 	  if(checkStatus.data.length==0){
 			parent.layer.msg('请先选择要删除的数据行！', {icon: 2});
 			return ;
@@ -249,7 +217,7 @@
 		parent.layer.msg('删除中...', {icon: 16,shade: 0.3,time:3000});
 
 		$.ajax({
-			url:'/poor/deletes',
+			url:'/subsidize/deletes',
 			data:{'nums':nums},
 			type:'post',
 			success:function(data){
@@ -264,23 +232,6 @@
       });
     }
 
-  function addPoor(){
-    	layer.open(
-                {
-                    type: 2,
-                    title: '增加页面',
-                    skin: 'layui-layer-lan',
-                    shadeClose: false,
-                    shade: 0.8,
-                    area:  ['700px', '450px'],
-                    resize:true,
-                    content:'/Sys/poorInfo/add',
-                    end: function(){
-                    	window.location.reload(); //刷新父页面
-                    }
-                });
-    }
-
   function exportTable(){
       var table = layui.table
       var checkStatus = table.checkStatus('poorInfo');
@@ -290,26 +241,6 @@
       }
       location.href = "/poor/export?nums="+nums;
   }
-  
-
-  layui.use(['form','layer','table','upload'], function(){
-      var table = layui.table
-      ,form = layui.form,upload = layui.upload;
-       var uploadInst = upload.render({
-        elem: '#importData'
-        , exts: "xls|xlsx|xlsm"
-        ,url: '/poor/import'
-           ,done: function (data) {
-               if (data.code == 200) {
-                   layer.msg('导入成功！',{icon:6,offset:"auto",time:1000});//提示框
-                   layer._delay(location.reload(),2000)
-               } else {
-                   layer.msg('导入失败,' + data.msg,{icon:6,offset:"auto",time:3000});//提示框
-               }
-           }
-      });
-  })
-
 </script>  
   
 </html>

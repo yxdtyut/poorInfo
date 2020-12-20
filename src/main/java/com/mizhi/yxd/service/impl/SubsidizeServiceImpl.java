@@ -7,6 +7,7 @@ import com.mizhi.yxd.mapper.SubSubsidizeMapper;
 import com.mizhi.yxd.request.PoorRequest;
 import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.service.SubsidizeService;
+import com.mizhi.yxd.vo.UpdatePoorVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +40,20 @@ public class SubsidizeServiceImpl implements SubsidizeService {
     @Override
     public int findCountByCondition(PoorRequest poorRequest) {
         return subSubsidizeMapper.findCountByCondition(poorRequest);
+    }
+
+    @Override
+    public int deleteSubsidizeInfo(String id) {
+        return subSubsidizeMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int deleteByPoorIds(List<String> data) {
+        return subSubsidizeMapper.deleteByPoorIds(data);
+    }
+
+    @Override
+    public void updateByField(UpdatePoorVo updatePoorVo) {
+        subSubsidizeMapper.updateByField(updatePoorVo);
     }
 }
