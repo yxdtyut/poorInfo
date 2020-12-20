@@ -7,6 +7,7 @@ import com.mizhi.yxd.tools.ValidateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @program: subsidize
@@ -92,10 +93,10 @@ public class PoorExportVo {
 
     public void validate() {
         String errorMsg = "信息输入有误，姓名:" + name + ",身份证:" + idCard;
-        if (null == name || null == idCard) {
+        if (StringUtils.isEmpty(name) || StringUtils.isEmpty(idCard)) {
             throw new GlobleException(CodeMsg.NAME_IDCARD_NULL);
         }
-        if (null != sixFifteen && (!"是".equals(sixFifteen) && !"否".equals(sixFifteen))) {
+        if (StringUtils.isNotEmpty(sixFifteen)  && (!"是".equals(sixFifteen) && !"否".equals(sixFifteen))) {
             throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:是否5-15周岁字段只能写是或者否"));
         }
 
@@ -103,11 +104,11 @@ public class PoorExportVo {
             throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，身份证信息有误!"));
         }
 
-        if (null != ifDisability && (!"是".equals(ifDisability) && !"否".equals(ifDisability))) {
+        if (StringUtils.isNotEmpty(ifDisability) && (!"是".equals(ifDisability) && !"否".equals(ifDisability))) {
             throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:是否残疾生字段只能写是或者否"));
         }
 
-        if (null != thisEnjoy && (!"是".equals(thisEnjoy) && !"否".equals(thisEnjoy))) {
+        if (StringUtils.isNotEmpty(thisEnjoy) && (!"是".equals(thisEnjoy) && !"否".equals(thisEnjoy))) {
             throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:本学期是否享受米脂资助只能写是或者否"));
         }
     }

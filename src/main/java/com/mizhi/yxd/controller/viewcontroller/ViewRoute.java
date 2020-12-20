@@ -63,4 +63,9 @@ public class ViewRoute {
     public String studentInfo() {
         return "studentInfo";
     }
+
+    @RequestMapping("/studentInfo/add")
+    public String studentInfoAdd() {
+        return "studentInfoAdd";
+    }
 }

@@ -77,7 +77,6 @@
               <button class="layui-btn layui-btn-warm" id="importData">导入</button>
               <button class="layui-btn layui-btn-warm" id="exportData" onclick="exportTable()">导出</button>
               <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-              <button class="layui-btn layui-btn-normal" id="addSusidizeByCondition" onclick="addSusidizeByCondition()">根据条件添加资助库</button>
           </xblock>
         <table id="StudentTable" lay-filter="StudentTable"></table>
   
@@ -85,7 +84,6 @@
   </body>
   
   <script type="text/html" id="StudentBar">
-      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="add">添加至资助库</a>
       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
   </script>
   
@@ -115,7 +113,7 @@
               ,{type:'numbers',title:'序号', width:documentWidth*10/100, sort: true}
               ,{field:'school', title:'学校全称', width:documentWidth*8/100, edit:"text"}
               ,{field:'clazz',title:'年级',width:documentWidth*8/100, edit:"text"}
-              ,{field:'studentName', title:'姓名', width:documentWidth*10/100, edit:"false"}
+              ,{field:'studentName', title:'姓名', width:documentWidth*10/100, edit:"text"}
               ,{field:'idCard', title:'身份证号码', width:documentWidth*10/100, edit:"false"}
               ,{field:'sex', title:'性别', width:documentWidth*10/100, edit:"text"}
               ,{field:'studentNumber', title:'学籍号', width:documentWidth*10/100, edit:"text"}
@@ -200,56 +198,6 @@
       window.open("/Student/download");
   }
 
-  function addSubsidize(StudentId) {
-      layer.open(
-          {
-              type: 2,
-              title: '添加资助信息页面',
-              skin: 'layui-layer-lan',
-              shadeClose: false,
-              shade: 0.8,
-              area:  ['450px', '450px'],
-              resize:true,
-              content:'/Sys/subsidize',
-              success: function(layero, index){
-                  var iframeWin = window[layero.find('iframe')[0]['name']];
-                  iframeWin.setStudentId(StudentId);
-              },
-              end: function(){
-                  window.location.reload(); //刷新父页面
-              }
-          });
-  }
-
-  function addSusidizeByCondition() {
-      var username = $('#username').val();
-      var idcard = $('#idcard').val();
-      var province = $('#province').val();
-      var county = $('#county').val();
-      var village = $('#village').val();
-      var cun = $('#cun').val();
-      layer.confirm('当前条件:[姓名:'+username+'], [身份证:'+idcard+'], [省市:'+province+'], [区县:'+county+'], [乡镇:'+village+'], [村组（社区）:'+cun+'] ', function(index){
-          layer.open(
-              {
-                  type: 2,
-                  title: '添加资助信息页面',
-                  skin: 'layui-layer-lan',
-                  shadeClose: false,
-                  shade: 0.8,
-                  area:  ['450px', '450px'],
-                  resize:true,
-                  content:'/Sys/subsidize',
-                  success: function(layero, index){
-                      var iframeWin = window[layero.find('iframe')[0]['name']];
-                      iframeWin.condition(username, idcard, province, county, village, cun);
-                  },
-                  end: function(){
-                      window.location.reload(); //刷新父页面
-                  }
-              });
-      })
-  }
-
   function deleteStudentInfo(StudentId){
       $.ajax({
           type:"delete",
@@ -308,7 +256,7 @@
                     shade: 0.8,
                     area:  ['700px', '450px'],
                     resize:true,
-                    content:'/Sys/StudentInfo/add',
+                    content:'/Sys/studentInfo/add',
                     end: function(){
                     	window.location.reload(); //刷新父页面
                     }

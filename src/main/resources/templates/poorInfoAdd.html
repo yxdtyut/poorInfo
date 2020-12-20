@@ -241,6 +241,12 @@
                var loginjson= JSON.stringify(data.field);
                var logindata=JSON.parse(loginjson);
 				data=JSON.stringify(logindata)
+               // 单击之后提交按钮不可选,防止重复提交
+               var DISABLED = 'layui-btn-disabled';
+               // 增加样式
+               $('.layui-btn-normal').addClass(DISABLED);
+               // 增加属性
+               $('.layui-btn-normal').attr('disabled', 'disabled');
 				$.ajax({
 	               	 url : "/poor/add",
 	                 data : data,
@@ -254,10 +260,14 @@
 	                        });
 	                	} else {
                             layer.msg(data.msg,{icon:5,offset:"auto",time:2000});
+                            $('.layui-btn-normal').removeClass(DISABLED);
+                            $('.layui-btn-normal').removeAttr('disabled');
                         }
 	                 },
 	                 error:function(args){
 	                	 layer.msg(data.msg,{icon:5,offset:"auto",time:2000});
+                         $('.layui-btn-normal').removeClass(DISABLED);
+                         $('.layui-btn-normal').removeAttr('disabled');
 	                 }
 	               	});
               		

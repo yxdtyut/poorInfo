@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>贫困库添加页面</title>
+
+
+    
+    <link rel="stylesheet" href="/Sys/css/layui.css">
+    <link rel="stylesheet" href="/Sys/css/sign.css">
+    
+    <link rel="stylesheet" href="/Sys/js/css/modules/layui-icon-extend/iconfont.css">
+     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/Sys/css/font.css">
+	<link rel="stylesheet" href="/Sys/css/xadmin.css">
+	
+	
+<script type="text/javascript"
+	src="/Sys/js/jquery-3.3.1.min.js"></script>
+    <script src="/Sys/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+
+
+</head>
+<body class="layui-unselect lau-sign-body" style="padding-top: 0px " >
+
+<form action="" class="layui-form">
+
+    <div class="layui-form-item" >
+         <div class="layui-inline">
+            <label class="layui-form-label" >学校全称</label>
+            <div class="layui-input-block">
+                <input type="text" name="school" placeholder="请输入学校全称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">年级</label>
+            <div class="layui-input-block">
+                <input type="text" name="grade" placeholder="请输入年级" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" >班级</label>
+            <div class="layui-input-block">
+                <input type="text" name="clazz" placeholder="请输入班级" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label" >姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="studentName" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" >身份证号码</label>
+            <div class="layui-input-block">
+                <input type="text" name="idCard" placeholder="请输入身份证号码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block" style="margin-right: 50px">
+                <input type="radio" name="sex" value="男" title="男" checked="">
+                <input type="radio" name="sex" value="女" title="女">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" >学籍号</label>
+            <div class="layui-input-block">
+                <input type="text" name="studentNumber" placeholder="请输入学籍号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">是否享受校服</label>
+            <div class="layui-input-block" style="margin-right: 50px">
+                <input type="radio" name="schoolUniforms" value="是" title="是" checked="">
+                <input type="radio" name="schoolUniforms" value="否" title="否">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" >型号</label>
+            <div class="layui-input-block">
+                <input type="text" name="model" placeholder="请输入型号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">是否享受作业本</label>
+            <div class="layui-input-block" style="margin-right: 50px">
+                <input type="radio" name="homework" value="是" title="是" checked="">
+                <input type="radio" name="homework" value="否" title="否">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">是否享受学具</label>
+            <div class="layui-input-block" style="margin-right: 50px">
+                <input type="radio" name="studyTool" value="是" title="是" checked="">
+                <input type="radio" name="studyTool" value="否" title="否">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label" >备注</label>
+            <div class="layui-input-block">
+                <input type="text" name="remark" placeholder="请输入备注" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item lau-sign-other" style="margin-top: 20px;text-align:center">
+        <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="register" style="margin-right: 100px">提交</button>
+    </div>
+</form>
+
+</body>
+<script src="/Sys/lib/layui/layui.js"></script>
+<script>
+   $(function(){
+	   layui.use('form', function() {
+           var form = layui.form;
+          
+           //监听提交
+           form.on('submit(register)', function(data) {
+               var loginjson= JSON.stringify(data.field);
+               var logindata=JSON.parse(loginjson);
+               data=JSON.stringify(logindata)
+               // 单击之后提交按钮不可选,防止重复提交
+               var DISABLED = 'layui-btn-disabled';
+               // 增加样式
+               $('.layui-btn-normal').addClass(DISABLED);
+               // 增加属性
+               $('.layui-btn-normal').attr('disabled', 'disabled');
+               $.ajax({
+	               	 url : "/student/add",
+	                 data : data,
+	                 type:'POST',
+	                 dateType:'json', 
+	                 contentType : 'application/json',
+	                 success:function(data){
+	                	if(data.code=="200"){
+	                		layer.msg("添加成功！",function(){
+	                            window.parent.layer.closeAll();
+	                        });
+	                	} else {
+                            layer.msg(data.msg,{icon:5,offset:"auto",time:2000});
+                            $('.layui-btn-normal').removeClass(DISABLED);
+                            $('.layui-btn-normal').removeAttr('disabled');
+                        }
+	                 },
+	                 error:function(args){
+	                	 layer.msg(data.msg,{icon:5,offset:"auto",time:2000});
+                         $('.layui-btn-normal').removeClass(DISABLED);
+                         $('.layui-btn-normal').removeAttr('disabled');
+	                 }
+	               	});
+              		
+           });
+       });   
+   });
+   
+</script>
+</html>

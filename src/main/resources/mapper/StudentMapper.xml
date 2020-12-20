@@ -3,11 +3,22 @@
 <mapper namespace="com.mizhi.yxd.mapper.StudentMapper" >
 
   <sql id="Base_Column_List" >
-    id, school, clazz, student_name, id_card, sex, student_number, school_uniforms, model, homework, study_tool, remark
+    id, school, grade, clazz, student_name, id_card, sex, student_number, school_uniforms, model, homework, study_tool, remark
   </sql>
+
+  <sql id="Base_Entity">
+    id, school, grade, clazz, student_name as studentName,id_card idCard, sex, student_number as studentNumber,
+    school_uniforms schoolUniforms,model, homework, study_tool studyTool, remark
+  </sql>
+
+  <insert id="insertStudentInfo">
+    insert into sub_user(id, school, grade, clazz, student_name, id_card, sex, student_number, school_uniforms, model, homework, study_tool, remark)
+    values
+    (#{user.id},#{user.school},#{user.grade},#{user.clazz},#{user.studentName},#{user.idCard},#{user.sex},#{user.studentNumber},#{user.schoolUniforms},#{user.model},#{user.homework},#{user.studyTool},#{user.remark})
+  </insert>
   <select id="findByCondition" resultType="com.mizhi.yxd.entity.SubUser">
-    select
-    <include refid="Base_Column_List" /> from sub_user
+    select <include refid="Base_Entity"/>
+     from sub_user
     <if test="student.username != null and student.username != ''">
       and student_name=#{student.username}
     </if>
@@ -53,5 +64,10 @@
         #{id}
       </foreach>
     </if>
+  </select>
+
+  <select id="quaryAll" resultType="com.mizhi.yxd.entity.SubUser">
+    select
+    <include refid="Base_Entity" /> from sub_user
   </select>
 </mapper>

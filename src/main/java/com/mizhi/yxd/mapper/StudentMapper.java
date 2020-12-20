@@ -17,4 +17,8 @@ public interface StudentMapper {
     List<SubUser> findByCondition(@Param("student") StudentRequest studentRequest);
 
     int findCountByCondition(@Param("student") StudentRequest studentRequest);
+
+    void insertStudentInfo(@Param("user") SubUser subUser);
+
+    List<SubUser> quaryAll();
 }

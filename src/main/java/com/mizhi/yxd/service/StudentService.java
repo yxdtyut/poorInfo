@@ -14,4 +14,8 @@ public interface StudentService {
     List<SubUser> findByCondition(StudentRequest studentRequest);
 
     int findCountByCondition(StudentRequest studentRequest);
+
+    void insertPoorInfo(SubUser subUser);
+
+    void checkIdcardExist(List<SubUser> subUsers);
 }

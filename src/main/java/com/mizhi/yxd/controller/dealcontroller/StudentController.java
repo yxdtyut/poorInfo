@@ -4,22 +4,18 @@ import com.alibaba.fastjson.JSON;
 import com.mizhi.yxd.entity.SubPoor;
 import com.mizhi.yxd.entity.SubUser;
 import com.mizhi.yxd.request.StudentRequest;
+import com.mizhi.yxd.result.Result;
 import com.mizhi.yxd.service.StudentService;
 import com.mizhi.yxd.tools.Layui;
+import com.mizhi.yxd.vo.PoorExportVo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -48,5 +44,15 @@ public class StudentController {
         int total = studentService.findCountByCondition(studentRequest);
         Layui l = Layui.data(total, subUsers);
         return JSON.toJSON(l);
+    }
+
+    @PostMapping("/add")
+    public Result<String> addPoorInfo(@RequestBody SubUser subUser) {
+        log.info("add student:{}", JSON.toJSONString(subUser));
+        subUser.validate();
+        studentService.checkIdcardExist(Arrays.asList(subUser));
+        studentService.insertPoorInfo(subUser);
+        log.info("add student success");
+        return Result.success("success");
     }
 }
