@@ -80,6 +80,12 @@
 
             //监听提交
             form.on('submit(register)', function (data) {
+                // 单击之后提交按钮不可选,防止重复提交
+                var DISABLED = 'layui-btn-disabled';
+                // 增加样式
+                $('.layui-btn-normal').addClass(DISABLED);
+                // 增加属性
+                $('.layui-btn-normal').attr('disabled', 'disabled');
                 var loginjson = JSON.stringify(data.field);
                 var logindata = JSON.parse(loginjson);
                 data = JSON.stringify(logindata)
@@ -98,13 +104,16 @@
                             layui.use('layer', function () {
                                 var layer = layui.layer;
                                 layer.msg(data.msg);
+                                $('.layui-btn-normal').removeClass(DISABLED);
+                                $('.layui-btn-normal').removeAttr('disabled');
                             });
                         }
 
                     },
                     error: function (args) {
                         layer.msg("账号已经存在或者信息未填完整，注册失败！", function () {
-
+                            $('.layui-btn-normal').removeClass(DISABLED);
+                            $('.layui-btn-normal').removeAttr('disabled');
                         });
                     }
                 });
