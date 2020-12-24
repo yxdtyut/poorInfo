@@ -26,10 +26,7 @@
     <body>
     <div class="x-body layui-anim layui-anim-up">
         <blockquote class="layui-elem-quote">欢迎：<span
-					th:text="${session.name}"></span><img
-					th:src="@{/uploads/{filename}(filename=${session.photo})}"
-					th:if="${session.account!='admin'}" /> <img
-					th:src="@{/Sys/images/my1.png}" th:if="${session.account=='admin'}" />
+					th:text="${session.name}"></span>
           当前日期:[[${#dates.format(new java.util.Date().getTime(), 'yyyy-MM-dd')}]]</blockquote>
         米脂县学生资助和后勤服务中心于2020年9月由米脂县学生资助中心和米脂县中小学后勤服务中心组建而成，为米脂县教育和体育局下属事业单位，正科建制，核定事业编制11人，其中主任1名，副主任2名。负责全县学生资助事务的保障工作，开展生源地信用助学贷款申请、审核、发放、回收工作；指导各学校实施营养改善计划工作；负责全县各中小学(幼儿园)学校后勤服务保障工作；协助主管部门研究出台地方学生资助政策，制定相关资助管理办法；承办县教育和体育局交办的其他服务性工作。
     </body>
