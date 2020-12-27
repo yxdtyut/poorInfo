@@ -3,25 +3,25 @@
 <mapper namespace="com.mizhi.yxd.mapper.StudentMapper" >
 
   <sql id="Base_Column_List" >
-    id, school, grade, clazz, student_name, id_card, sex, student_number, school_uniforms, model, homework, study_tool, remark
+    id, school, grade, clazz, student_name, id_card, sex, student_number, school_uniforms, model, homework, study_tool, build_card, remark
   </sql>
 
   <sql id="Base_Entity">
     id, school, grade, clazz, student_name as studentName,id_card idCard, sex, student_number as studentNumber,
-    school_uniforms schoolUniforms,model, homework, study_tool studyTool, remark
+    school_uniforms schoolUniforms,model, homework, study_tool studyTool, build_card buildCard, remark
   </sql>
 
   <insert id="insertStudentInfo">
-    insert into sub_user(id, school, grade, clazz, student_name, id_card, sex, student_number, school_uniforms, model, homework, study_tool, remark)
+    insert into sub_user(id, school, grade, clazz, student_name, id_card, sex, student_number, school_uniforms, model, homework, study_tool, build_card, remark)
     values
-    (#{user.id},#{user.school},#{user.grade},#{user.clazz},#{user.studentName},#{user.idCard},#{user.sex},#{user.studentNumber},#{user.schoolUniforms},#{user.model},#{user.homework},#{user.studyTool},#{user.remark})
+    (#{user.id},#{user.school},#{user.grade},#{user.clazz},#{user.studentName},#{user.idCard},#{user.sex},#{user.studentNumber},#{user.schoolUniforms},#{user.model},#{user.homework},#{user.studyTool},#{user.buildCard},#{user.remark})
   </insert>
 
   <insert id="insertBatch">
-     insert into sub_user(id, school, grade, clazz, student_name, id_card, sex, student_number, school_uniforms, model, homework, study_tool, remark)
+     insert into sub_user(id, school, grade, clazz, student_name, id_card, sex, student_number, school_uniforms, model, homework, study_tool, build_card, remark)
     values
     <foreach collection="list" item="user" separator="," index="index">
-      (#{user.id},#{user.school},#{user.grade},#{user.clazz},#{user.studentName},#{user.idCard},#{user.sex},#{user.studentNumber},#{user.schoolUniforms},#{user.model},#{user.homework},#{user.studyTool},#{user.remark})
+      (#{user.id},#{user.school},#{user.grade},#{user.clazz},#{user.studentName},#{user.idCard},#{user.sex},#{user.studentNumber},#{user.schoolUniforms},#{user.model},#{user.homework},#{user.studyTool},#{user.buildCard},#{user.remark})
     </foreach>
   </insert>
 

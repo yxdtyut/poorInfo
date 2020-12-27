@@ -178,14 +178,28 @@
         <div class="layui-inline">
             <label class="layui-form-label" >不在校原因</label>
             <div class="layui-input-block">
-                <input type="text" name="notInSchoolReason" placeholder="请输入不在校原因" autocomplete="off" class="layui-input">
+                <select name="notInSchoolReason">
+                    <option value="">---请选择---</option>
+                    <option value="免予入学">免予入学</option>
+                    <option value="送教上门">送教上门</option>
+                    <option value="休学">休学</option>
+                    <option value="延缓入学">延缓入学</option>
+                    <option value="初中已毕业">初中已毕业</option>
+                </select>
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label" >贫困类型</label>
             <div class="layui-input-block">
-                <input type="text" name="poorType" placeholder="请输入贫困类型" autocomplete="off" class="layui-input">
+                <select name="poorType">
+                    <option value="">---请选择---</option>
+                    <option value="建档立卡学生">建档立卡学生</option>
+                    <option value="家庭经济困难残疾学生">家庭经济困难残疾学生</option>
+                    <option value="城乡低保特困学生">城乡低保特困学生</option>
+                    <option value="农村特困求助供养学生">农村特困求助供养学生</option>
+                    <option value="孤儿">孤儿</option>
+                </select>
             </div>
         </div>
     </div>

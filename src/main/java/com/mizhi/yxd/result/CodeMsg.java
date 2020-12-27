@@ -32,6 +32,7 @@ public class CodeMsg {
     public static final CodeMsg HOMEWORK_NOT_RIGHT = new CodeMsg(600112, "是否享受作业本数据不正确");
     public static final CodeMsg STUDY_TOOL_NOT_RIGHT = new CodeMsg(600113, "是否享受学具数据不正确");
     public static final CodeMsg SEX_NOT_RIGHT = new CodeMsg(600114, "是否享受学具数据不正确");
+    public static final CodeMsg DUILD_CARD_NOT_RIGHT = new CodeMsg(600115, "是否建档立卡数据不正确");
 
     private Integer code;
     private String msg;

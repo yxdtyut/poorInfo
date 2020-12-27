@@ -1,0 +1,1 @@
+alter table `sub_user` add  build_card varchar(5) not null comment '是否建档立卡';

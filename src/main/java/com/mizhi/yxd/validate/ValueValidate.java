@@ -67,6 +67,7 @@ public class ValueValidate {
         studentMap.put("model", "model");
         studentMap.put("homework", "homework");
         studentMap.put("studyTool", "study_tool");
+        studentMap.put("duildCard", "build_card");
         studentMap.put("remark", "remark");
     }
 
@@ -120,6 +121,10 @@ public class ValueValidate {
 
         if ("studyTool".equals(feild) && (!"是".equals(value) && !"否".equals(value))) {
             throw new GlobleException(CodeMsg.STUDY_TOOL_NOT_RIGHT);
+        }
+
+        if ("duildCard".equals(feild) && (!"是".equals(value) && !"否".equals(value))) {
+            throw new GlobleException(CodeMsg.DUILD_CARD_NOT_RIGHT);
         }
     }
 
