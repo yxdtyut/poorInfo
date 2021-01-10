@@ -126,7 +126,7 @@ public class PoorController {
 
     @RequestMapping(value = "/download", method = RequestMethod.GET)
     public ResponseEntity<byte[]> downloadTemp(HttpServletRequest request) throws IOException{
-        String filename = "贫困库模板.xlsx";
+        String filename = "poor.xlsx";
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletResponse response = requestAttributes.getResponse();
         // 设置信息给客户端不解析
