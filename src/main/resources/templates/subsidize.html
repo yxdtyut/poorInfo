@@ -35,6 +35,8 @@
                 <input type="hidden" id="poorId" name="poorId" autocomplete="off" class="layui-input">
                 <input type="hidden" id="username" name="username" autocomplete="off" class="layui-input">
                 <input type="hidden" id="idcard" name="idcard" autocomplete="off" class="layui-input">
+                <input type="hidden" id="semester" name="semester" autocomplete="off" class="layui-input">
+                <input type="hidden" id="studyLevel" name="studyLevel" autocomplete="off" class="layui-input">
                 <input type="hidden" id="province" name="province" autocomplete="off" class="layui-input">
                 <input type="hidden" id="county" name="county" autocomplete="off" class="layui-input">
                 <input type="hidden" id="village" name="village" autocomplete="off" class="layui-input">
@@ -116,9 +118,11 @@
        $("#poorId").attr("value", id);
    }
 
-   function condition(username, idcard, province, county, village, cun) {
+   function condition(username, idcard,semester,studyLevel, province, county, village, cun) {
        $("#username").attr("value", username);
        $("#idcard").attr("value", idcard);
+       $("#semester").attr("value", semester);
+       $("#studyLevel").attr("value", studyLevel);
        $("#province").attr("value", province);
        $("#county").attr("value", county);
        $("#village").attr("value", village);

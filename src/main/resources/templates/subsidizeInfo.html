@@ -47,7 +47,7 @@
       <div class="layui-row">
          <div class="searchTable" style="margin-bottom: 20px">
              学期：
-             <div class="layui-inline">
+             <div class="layui-inline"  style="margin-bottom: 20px">
                  <select name="semester" id="semester" style="width: 110px;height: 38px">
                      <option value="2021春" selected>2021春</option>
                      <option value="2021秋">2021秋</option>
@@ -82,34 +82,40 @@
                  </select>
              </div>
              姓名：
-             <div class="layui-inline">
+             <div class="layui-inline" style="margin-bottom: 20px">
                  <input class="layui-input" name="username" id="username" autocomplete="off" style="width: 100px;">
              </div>
              身份证：
-             <div class="layui-inline">
+             <div class="layui-inline" style="margin-bottom: 20px">
                  <input class="layui-input" name="idCard" id="idcard" autocomplete="off">
              </div>
              学段：
-             <div class="layui-inline">
+             <div class="layui-inline" style="margin-bottom: 20px">
                  <input class="layui-input" name="studyLevel" id="studyLevel" autocomplete="off">
              </div>
              省市：
-             <div class="layui-inline">
+             <div class="layui-inline" style="margin-bottom: 20px">
                  <input class="layui-input" name="province" id="province" autocomplete="off"  style="width: 100px;">
              </div>
              区县：
-             <div class="layui-inline">
+             <div class="layui-inline" style="margin-bottom: 20px">
                  <input class="layui-input" name="county" id="county" autocomplete="off"  style="width: 100px;">
              </div>
              乡镇：
-             <div class="layui-inline">
+             <div class="layui-inline" style="margin-bottom: 20px">
                  <input class="layui-input" name="village" id="village" autocomplete="off"  style="width: 100px;">
              </div>
              村组（社区）：
-             <div class="layui-inline">
+             <div class="layui-inline" style="margin-bottom: 20px">
                  <input class="layui-input" name="cun" id="cun" autocomplete="off"  style="width: 100px;">
              </div>
-              <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
+             <br/>
+             本学期是否享受米脂资助：
+             <div class="layui-inline">
+                 <input type="radio" value="是"  name="thisEnjoy" checked="checked">是
+                 <input type="radio"  value="否" name="thisEnjoy" >否
+             </div>
+             <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
              <button class="layui-btn" id="clear" onclick="selectClear()">清空</button>
             </div>
          </div>
@@ -195,6 +201,7 @@
             var county = $('#county');
             var village = $('#village');
             var cun = $('#cun');
+            var thisEnjoy = $("input[name='thisEnjoy']:checked");
           // 执行重载
           table.reload('subsidizeInfo', {
             page: {
@@ -209,7 +216,8 @@
                   province: province.val().replace(/(^\s*)|(\s*$)/g, ""),
                   county: county.val().replace(/(^\s*)|(\s*$)/g, ""),
                   village: village.val().replace(/(^\s*)|(\s*$)/g, ""),
-                  cun: cun.val().replace(/(^\s*)|(\s*$)/g, "")
+                  cun: cun.val().replace(/(^\s*)|(\s*$)/g, ""),
+                  thisEnjoy: thisEnjoy.val().replace(/(^\s*)|(\s*$)/g, "")
             }
             ,method:'post'
           });

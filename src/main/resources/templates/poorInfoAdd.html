@@ -27,44 +27,47 @@
 <body class="layui-unselect lau-sign-body" style="padding-top: 0px " >
 
 <form action="" class="layui-form">
-
     <div class="layui-form-item" >
         <div class="layui-inline">
             <label class="layui-form-label" >学段</label>
-            <select name="semester" id="semester" style="width: 110px;height: 38px">
-                <option value="2021春" selected>2021春</option>
-                <option value="2021秋">2021秋</option>
-                <option value="2022春">2022春</option>
-                <option value="2022秋">2022秋</option>
-                <option value="2023春">2023春</option>
-                <option value="2023秋">2023秋</option>
-                <option value="2024春">2024春</option>
-                <option value="2024秋">2024秋</option>
-                <option value="2025春">2025春</option>
-                <option value="2025秋">2025秋</option>
-                <option value="2026春">2026春</option>
-                <option value="2026秋">2026秋</option>
-                <option value="2027春">2027春</option>
-                <option value="2027秋">2027秋</option>
-                <option value="2028春">2028春</option>
-                <option value="2028秋">2028秋</option>
-                <option value="2029春">2029春</option>
-                <option value="2029秋">2029秋</option>
-                <option value="2030春">2030春</option>
-                <option value="2030秋">2030秋</option>
-                <option value="2031春">2031春</option>
-                <option value="2031秋">2031秋</option>
-                <option value="2032春">2032春</option>
-                <option value="2032秋">2032秋</option>
-                <option value="2033春">2033春</option>
-                <option value="2033秋">2033秋</option>
-                <option value="2034春">2034春</option>
-                <option value="2034秋">2034秋</option>
-                <option value="2035春">2035春</option>
-                <option value="2035秋">2035秋</option>
-            </select>
+            <div class="layui-input-block">
+                <select name="semester" id="semester" style="width: 110px;height: 38px">
+                    <option value="2021春" selected>2021春</option>
+                    <option value="2021秋">2021秋</option>
+                    <option value="2022春">2022春</option>
+                    <option value="2022秋">2022秋</option>
+                    <option value="2023春">2023春</option>
+                    <option value="2023秋">2023秋</option>
+                    <option value="2024春">2024春</option>
+                    <option value="2024秋">2024秋</option>
+                    <option value="2025春">2025春</option>
+                    <option value="2025秋">2025秋</option>
+                    <option value="2026春">2026春</option>
+                    <option value="2026秋">2026秋</option>
+                    <option value="2027春">2027春</option>
+                    <option value="2027秋">2027秋</option>
+                    <option value="2028春">2028春</option>
+                    <option value="2028秋">2028秋</option>
+                    <option value="2029春">2029春</option>
+                    <option value="2029秋">2029秋</option>
+                    <option value="2030春">2030春</option>
+                    <option value="2030秋">2030秋</option>
+                    <option value="2031春">2031春</option>
+                    <option value="2031秋">2031秋</option>
+                    <option value="2032春">2032春</option>
+                    <option value="2032秋">2032秋</option>
+                    <option value="2033春">2033春</option>
+                    <option value="2033秋">2033秋</option>
+                    <option value="2034春">2034春</option>
+                    <option value="2034秋">2034秋</option>
+                    <option value="2035春">2035春</option>
+                    <option value="2035秋">2035秋</option>
+                </select>
+            </div>
         </div>
+    </div>
 
+    <div class="layui-form-item" >
          <div class="layui-inline">
             <label class="layui-form-label" >省市</label>
             <div class="layui-input-block">
@@ -163,7 +166,18 @@
         <div class="layui-inline">
             <label class="layui-form-label" >学段</label>
             <div class="layui-input-block">
-                <input type="text" name="studyLevel" placeholder="请输入学段" autocomplete="off" class="layui-input">
+                <select name="studyLevel">
+                    <option value="">---请选择---</option>
+                    <option value="学前">学前</option>
+                    <option value="小学">小学</option>
+                    <option value="初中">初中</option>
+                    <option value="普高（高中）">普高（高中）</option>
+                    <option value="中职">中职</option>
+                    <option value="大专（高职）">大专（高职）</option>
+                    <option value="本科">本科</option>
+                    <option value="研究生">研究生</option>
+                    <option value="博士">博士</option>
+                </select>
             </div>
         </div>
     </div>

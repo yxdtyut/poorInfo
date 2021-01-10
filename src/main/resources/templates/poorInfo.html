@@ -286,11 +286,13 @@
   function addSusidizeByCondition() {
       var username = $('#username').val().replace(/(^\s*)|(\s*$)/g, "");
       var idcard = $('#idcard').val().replace(/(^\s*)|(\s*$)/g, "");
+      var semester = $('#semester').val().replace(/(^\s*)|(\s*$)/g, "");
+      var studyLevel = $('#studyLevel').val().replace(/(^\s*)|(\s*$)/g, "");
       var province = $('#province').val().replace(/(^\s*)|(\s*$)/g, "");
       var county = $('#county').val().replace(/(^\s*)|(\s*$)/g, "");
       var village = $('#village').val().replace(/(^\s*)|(\s*$)/g, "");
       var cun = $('#cun').val();
-      layer.confirm('当前条件:[姓名:'+username+'], [身份证:'+idcard+'], [省市:'+province+'], [区县:'+county+'], [乡镇:'+village+'], [村组（社区）:'+cun+'] ', function(index){
+      layer.confirm('当前条件:[学期:'+semester+'],[姓名:'+username+'], [身份证:'+idcard+'], [学段:'+studyLevel+'] , [省市:'+province+'], [区县:'+county+'], [乡镇:'+village+'], [村组（社区）:'+cun+'] ', function(index){
           layer.open(
               {
                   type: 2,
@@ -303,7 +305,7 @@
                   content:'/Sys/subsidize',
                   success: function(layero, index){
                       var iframeWin = window[layero.find('iframe')[0]['name']];
-                      iframeWin.condition(username, idcard, province, county, village, cun);
+                      iframeWin.condition(username, idcard,semester,studyLevel,  province, county, village, cun);
                   },
                   end: function(){
                       window.location.reload(); //刷新父页面
