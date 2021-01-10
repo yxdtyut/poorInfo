@@ -45,45 +45,49 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-         <div class="searchTable" style="margin-bottom: 20px">
+        <div class="searchTable" style="margin-bottom: 20px">
               姓名：
               <div class="layui-inline">
-                <input class="layui-input" name="username" id="username" autocomplete="off">
+                <input class="layui-input" name="username" id="username" autocomplete="off" style="width: 100px;">
               </div>
              身份证：
              <div class="layui-inline">
                  <input class="layui-input" name="idCard" id="idcard" autocomplete="off">
              </div>
+             学段：
+             <div class="layui-inline">
+                 <input class="layui-input" name="studyLevel" id="studyLevel" autocomplete="off">
+             </div>
              省市：
              <div class="layui-inline">
-                 <input class="layui-input" name="province" id="province" autocomplete="off">
+                 <input class="layui-input" name="province" id="province" autocomplete="off"  style="width: 100px;">
              </div>
              区县：
              <div class="layui-inline">
-                 <input class="layui-input" name="county" id="county" autocomplete="off">
+                 <input class="layui-input" name="county" id="county" autocomplete="off"  style="width: 100px;">
              </div>
              乡镇：
              <div class="layui-inline">
-                 <input class="layui-input" name="village" id="village" autocomplete="off">
+                 <input class="layui-input" name="village" id="village" autocomplete="off"  style="width: 100px;">
              </div>
              村组（社区）：
              <div class="layui-inline">
-                 <input class="layui-input" name="cun" id="cun" autocomplete="off">
+                 <input class="layui-input" name="cun" id="cun" autocomplete="off"  style="width: 100px;">
              </div>
               <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
-             <button class="layui-btn" id="clear" onclick="selectClear()">清空</button>
-            </div>
-         </div>
+              <button class="layui-btn" id="clear" onclick="selectClear()">清空</button>
+        </div>
+      </div>
       
-          <xblock >
-              <button class="layui-btn  layui-btn-normal" onclick="downloadTemplate()">下载模板</button>
-              <button class="layui-btn" onclick="addPoor()"><i class="layui-icon"></i>添加</button>
-              <button class="layui-btn layui-btn-warm" id="importData">导入</button>
-              <button class="layui-btn layui-btn-warm" id="exportData" onclick="exportTable()">导出</button>
-              <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-              <button class="layui-btn layui-btn-normal" id="addSusidizeByCondition" onclick="addSusidizeByCondition()">根据条件添加资助库</button>
-          </xblock>
-        <table id="poorTable" lay-filter="poorTable"></table>
+      <xblock >
+          <button class="layui-btn  layui-btn-normal" onclick="downloadTemplate()">下载模板</button>
+          <button class="layui-btn" onclick="addPoor()"><i class="layui-icon"></i>添加</button>
+          <button class="layui-btn layui-btn-warm" id="importData">导入</button>
+          <button class="layui-btn layui-btn-warm" id="exportData" onclick="exportTable()">导出</button>
+          <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+          <button class="layui-btn layui-btn-normal" id="addSusidizeByCondition" onclick="addSusidizeByCondition()">根据条件添加资助库</button>
+      </xblock>
+    <table id="poorTable" lay-filter="poorTable"></table>
   
     </div>   
   </body>
@@ -126,6 +130,7 @@
               ,{field:'sixFifteen', title:'是否6-15周岁', width:documentWidth*10/100, edit:"text"}
               ,{field:'headOfHouseNum', title:'户编号', width:documentWidth*10/100, edit:"text"}
               ,{field:'headOfHouseName', title:'户主姓名', width:documentWidth*10/100, edit:"text"}
+              ,{field:'headOfHouseIdCard', title:'户主身份证号码', width:documentWidth*10/80, edit:"text"}
               ,{field:'headOfHouseTel', title:'联系电话', width:documentWidth*10/100, edit:"text"}
               ,{field:'school', title:'学校全称', width:documentWidth*10/100, edit:"text"}
               ,{field:'studyLevel', title:'学段', width:documentWidth*10/100, edit:"text"}
@@ -137,9 +142,9 @@
               ,{field:'disabilityNumber', title:'残疾生证号', width:documentWidth*10/100, edit:"text"}
               ,{field:'notInSchoolReason', title:'不在校原因', width:documentWidth*10/100, edit:"text"}
               ,{field:'poorType', title:'贫困类型', width:documentWidth*10/70, edit:"text"}
-              ,{field:'ifVillage', title:'镇内/镇外', width:documentWidth*10/150, edit:"text"}
-              ,{field:'ifCounty', title:'县内/县外', width:documentWidth*10/150, edit:"text"}
-              ,{field:'ifProvince', title:'省内/省外', width:documentWidth*10/150, edit:"text"}
+              ,{field:'ifVillage', title:'镇内就读/镇外就读', width:documentWidth*10/150, edit:"text"}
+              ,{field:'ifCounty', title:'县内就读/县外就读', width:documentWidth*10/150, edit:"text"}
+              ,{field:'ifProvince', title:'省内就读/省外就读', width:documentWidth*10/150, edit:"text"}
               ,{field:'thisEnjoy', title:'本学期是否享受米脂资助', width:documentWidth*10/70, edit:"text"}
               ,{field:'operation',title:'操作',toolbar: '#poorBar',  width:documentWidth*10/100}
           ]
@@ -151,6 +156,7 @@
         reload: function(){
           var username = $('#username');
           var idcard = $('#idcard');
+          var studyLevel = $('#studyLevel');
           var province = $('#province');
           var county = $('#county');
           var village = $('#village');
@@ -164,6 +170,7 @@
             ,where: {
                 username: username.val().replace(/(^\s*)|(\s*$)/g, ""),
                 idcard: idcard.val().replace(/(^\s*)|(\s*$)/g, ""),
+                studyLevel: studyLevel.val().replace(/(^\s*)|(\s*$)/g, ""),
                 province: province.val().replace(/(^\s*)|(\s*$)/g, ""),
                 county: county.val().replace(/(^\s*)|(\s*$)/g, ""),
                 village: village.val().replace(/(^\s*)|(\s*$)/g, ""),

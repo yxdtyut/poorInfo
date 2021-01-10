@@ -18,5 +18,6 @@ public class PoorRequest {
     private String village;
     private String cun;
     private String idcard;
+    private String studyLevel;
     private List<String> ids;
 }

@@ -31,6 +31,8 @@ public class PoorVo {
 
     private String headOfHouseName;
 
+    private String headOfHouseIdCard;
+
     private String headOfHouseTel;
 
     private String school;

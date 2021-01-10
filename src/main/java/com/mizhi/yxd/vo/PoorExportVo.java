@@ -46,6 +46,9 @@ public class PoorExportVo {
     @Excel(name = "户主姓名", width = 15)
     private String headOfHouseName;
 
+    @Excel(name = "户主身份证号码", width = 15)
+    private String headOfHouseIdCard;
+
     @Excel(name = "联系电话", width = 15)
     private String headOfHouseTel;
 
@@ -102,6 +105,10 @@ public class PoorExportVo {
 
         if (!ValidateUtils.checkIdCard(idCard)) {
             throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，身份证信息有误!"));
+        }
+
+        if (StringUtils.isNotEmpty(headOfHouseIdCard) && !ValidateUtils.checkIdCard(headOfHouseIdCard)) {
+            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，户主身份证信息有误!"));
         }
 
         if (StringUtils.isNotEmpty(ifDisability) && (!"是".equals(ifDisability) && !"否".equals(ifDisability))) {

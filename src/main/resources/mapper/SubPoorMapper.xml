@@ -12,6 +12,7 @@
     <result column="six_fifteen" property="sixFifteen" jdbcType="VARCHAR" />
     <result column="head_of_house_num" property="headOfHouseNum" jdbcType="VARCHAR" />
     <result column="head_of_house_name" property="headOfHouseName" jdbcType="VARCHAR" />
+    <result column="head_of_house_id_card" property="headOfHouseIdCard" jdbcType="VARCHAR" />
     <result column="head_of_house_tel" property="headOfHouseTel" jdbcType="VARCHAR" />
     <result column="school" property="school" jdbcType="VARCHAR" />
     <result column="study_level" property="studyLevel" jdbcType="VARCHAR" />
@@ -89,7 +90,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, province, county, village, cun, name, id_card, six_fifteen, head_of_house_num, 
-    head_of_house_name, head_of_house_tel, school, study_level, grade, clazz, student_number, 
+    head_of_house_name, head_of_house_id_card, head_of_house_tel, school, study_level, grade, clazz, student_number,
     study_way, if_disability, disability_number, not_in_school_reason, poor_type,
     if_village, if_county, if_province, this_enjoy, account
   </sql>
@@ -135,7 +136,7 @@
     insert into sub_poor (id, province, county, 
       village, cun, name, 
       id_card, six_fifteen, head_of_house_num, 
-      head_of_house_name, head_of_house_tel, school, 
+      head_of_house_name, head_of_house_id_card, head_of_house_tel, school,
       study_level, grade, clazz, 
       student_number, study_way, if_disability,
       disability_number, not_in_school_reason, poor_type, 
@@ -144,7 +145,7 @@
     values (#{id,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{county,jdbcType=VARCHAR}, 
       #{village,jdbcType=VARCHAR}, #{cun,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{idCard,jdbcType=VARCHAR}, #{sixFifteen,jdbcType=VARCHAR}, #{headOfHouseNum,jdbcType=VARCHAR}, 
-      #{headOfHouseName,jdbcType=VARCHAR}, #{headOfHouseTel,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
+      #{headOfHouseName,jdbcType=VARCHAR},#{headOfHouseIdCard,jdbcType=VARCHAR}, #{headOfHouseTel,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR},
       #{studyLevel,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{clazz,jdbcType=VARCHAR}, 
       #{studentNumber,jdbcType=VARCHAR}, #{studyWay,jdbcType=VARCHAR}, #{ifDisability,jdbcType=VARCHAR}, 
       #{disabilityNumber,jdbcType=VARCHAR}, #{notInSchoolReason,jdbcType=VARCHAR}, #{poorType,jdbcType=VARCHAR}, 
@@ -183,6 +184,9 @@
       </if>
       <if test="headOfHouseName != null" >
         head_of_house_name,
+      </if>
+      <if test="headOfHouseIdCard != null" >
+        head_of_house_id_card,
       </if>
       <if test="headOfHouseTel != null" >
         head_of_house_tel,
@@ -264,6 +268,9 @@
       <if test="headOfHouseName != null" >
         #{headOfHouseName,jdbcType=VARCHAR},
       </if>
+      <if test="headOfHouseIdCard != null" >
+        #{headOfHouseIdCard,jdbcType=VARCHAR},
+      </if>
       <if test="headOfHouseTel != null" >
         #{headOfHouseTel,jdbcType=VARCHAR},
       </if>
@@ -319,7 +326,7 @@
     insert into sub_poor (id, province, county,
     village, cun, name,
     id_card, six_fifteen, head_of_house_num,
-    head_of_house_name, head_of_house_tel, school,
+    head_of_house_name,head_of_house_id_card, head_of_house_tel, school,
     study_level, grade, clazz,
     student_number, study_way, if_disability,
     disability_number, not_in_school_reason, poor_type,
@@ -330,7 +337,7 @@
       (#{item.id,jdbcType=VARCHAR}, #{item.province,jdbcType=VARCHAR}, #{item.county,jdbcType=VARCHAR},
       #{item.village,jdbcType=VARCHAR}, #{item.cun,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR},
       #{item.idCard,jdbcType=VARCHAR}, #{item.sixFifteen,jdbcType=VARCHAR}, #{item.headOfHouseNum,jdbcType=VARCHAR},
-      #{item.headOfHouseName,jdbcType=VARCHAR}, #{item.headOfHouseTel,jdbcType=VARCHAR}, #{item.school,jdbcType=VARCHAR},
+      #{item.headOfHouseName,jdbcType=VARCHAR},#{item.headOfHouseIdCard,jdbcType=VARCHAR}, #{item.headOfHouseTel,jdbcType=VARCHAR}, #{item.school,jdbcType=VARCHAR},
       #{item.studyLevel,jdbcType=VARCHAR}, #{item.grade,jdbcType=VARCHAR}, #{item.clazz,jdbcType=VARCHAR},
       #{item.studentNumber,jdbcType=VARCHAR}, #{item.studyWay,jdbcType=VARCHAR}, #{item.ifDisability,jdbcType=VARCHAR},
       #{item.disabilityNumber,jdbcType=VARCHAR}, #{item.notInSchoolReason,jdbcType=VARCHAR}, #{item.poorType,jdbcType=VARCHAR},
@@ -343,7 +350,7 @@
     insert into sub_poor (id, province, county,
     village, cun, name,
     id_card, six_fifteen, head_of_house_num,
-    head_of_house_name, head_of_house_tel, school,
+    head_of_house_name,head_of_house_id_card, head_of_house_tel, school,
     study_level, grade, clazz,
     student_number, study_way, if_disability,
     disability_number, not_in_school_reason, poor_type,
@@ -352,7 +359,7 @@
     (#{item.id,jdbcType=VARCHAR}, #{item.province,jdbcType=VARCHAR}, #{item.county,jdbcType=VARCHAR},
       #{item.village,jdbcType=VARCHAR}, #{item.cun,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR},
       #{item.idCard,jdbcType=VARCHAR}, #{item.sixFifteen,jdbcType=VARCHAR}, #{item.headOfHouseNum,jdbcType=VARCHAR},
-      #{item.headOfHouseName,jdbcType=VARCHAR}, #{item.headOfHouseTel,jdbcType=VARCHAR}, #{item.school,jdbcType=VARCHAR},
+      #{item.headOfHouseName,jdbcType=VARCHAR},#{item.headOfHouseIdCard,jdbcType=VARCHAR}, #{item.headOfHouseTel,jdbcType=VARCHAR}, #{item.school,jdbcType=VARCHAR},
       #{item.studyLevel,jdbcType=VARCHAR}, #{item.grade,jdbcType=VARCHAR}, #{item.clazz,jdbcType=VARCHAR},
       #{item.studentNumber,jdbcType=VARCHAR}, #{item.studyWay,jdbcType=VARCHAR}, #{item.ifDisability,jdbcType=VARCHAR},
       #{item.disabilityNumber,jdbcType=VARCHAR}, #{item.notInSchoolReason,jdbcType=VARCHAR}, #{item.poorType,jdbcType=VARCHAR},
@@ -377,6 +384,9 @@
     </if>
     <if test="poor.idcard != null and poor.idcard != ''">
       and id_card=#{poor.idcard}
+    </if>
+    <if test="poor.studyLevel != null and poor.studyLevel != ''">
+      and study_level=#{poor.studyLevel}
     </if>
     <if test="poor.province != null and poor.province != ''">
       and province=#{poor.province}
@@ -441,6 +451,9 @@
       </if>
       <if test="record.headOfHouseName != null" >
         head_of_house_name = #{record.headOfHouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headOfHouseIdCard != null" >
+        head_of_house_id_card = #{record.headOfHouseIdCard,jdbcType=VARCHAR},
       </if>
       <if test="record.headOfHouseTel != null" >
         head_of_house_tel = #{record.headOfHouseTel,jdbcType=VARCHAR},
@@ -507,6 +520,7 @@
       six_fifteen = #{record.sixFifteen,jdbcType=VARCHAR},
       head_of_house_num = #{record.headOfHouseNum,jdbcType=VARCHAR},
       head_of_house_name = #{record.headOfHouseName,jdbcType=VARCHAR},
+      head_of_house_id_card = #{record.headOfHouseIdCard,jdbcType=VARCHAR},
       head_of_house_tel = #{record.headOfHouseTel,jdbcType=VARCHAR},
       school = #{record.school,jdbcType=VARCHAR},
       study_level = #{record.studyLevel,jdbcType=VARCHAR},
@@ -556,6 +570,9 @@
       </if>
       <if test="headOfHouseName != null" >
         head_of_house_name = #{headOfHouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="headOfHouseIdCard != null" >
+        head_of_house_id_card = #{headOfHouseIdCard,jdbcType=VARCHAR},
       </if>
       <if test="headOfHouseTel != null" >
         head_of_house_tel = #{headOfHouseTel,jdbcType=VARCHAR},
@@ -619,6 +636,7 @@
       six_fifteen = #{sixFifteen,jdbcType=VARCHAR},
       head_of_house_num = #{headOfHouseNum,jdbcType=VARCHAR},
       head_of_house_name = #{headOfHouseName,jdbcType=VARCHAR},
+      head_of_house_id_card = #{headOfHouseIdCard,jdbcType=VARCHAR},
       head_of_house_tel = #{headOfHouseTel,jdbcType=VARCHAR},
       school = #{school,jdbcType=VARCHAR},
       study_level = #{studyLevel,jdbcType=VARCHAR},
