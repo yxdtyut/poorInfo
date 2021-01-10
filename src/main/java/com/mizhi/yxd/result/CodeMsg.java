@@ -16,6 +16,9 @@ public class CodeMsg {
     /**用户模块.5001xx*/
     public static final CodeMsg USER_OR_PWD_NOT_RIGHT = new CodeMsg(500100, "用户或密码不正确");
     public static final CodeMsg USER_ALREADY_REGIST = new CodeMsg(500101, "用户已经被注册");
+    public static final CodeMsg ACCOUNT_IS_NULL = new CodeMsg(500102, "登录名称为空");
+    public static final CodeMsg PSW_IS_NULL = new CodeMsg(500103, "密码为空");
+    public static final CodeMsg NAME_IS_NULL = new CodeMsg(500104, "用户名称为空");
 
     /**校验模块.6001xx*/
     public static final CodeMsg NAME_IDCARD_NULL = new CodeMsg(600101, "学期或者姓名或身份证为空");

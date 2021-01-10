@@ -1,5 +1,7 @@
 package com.mizhi.yxd.controller.dealcontroller;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -7,18 +9,19 @@ import javax.servlet.http.HttpSession;
 import com.mizhi.yxd.exception.GlobleException;
 import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.result.Result;
+import com.mizhi.yxd.tools.BeanUtils;
+import com.mizhi.yxd.tools.ExcelUtils;
+import com.mizhi.yxd.vo.AccountExportVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.alibaba.fastjson.JSON;
 import com.mizhi.yxd.entity.Admin;
 import com.mizhi.yxd.service.AdminService;
 
 import cn.hutool.crypto.SecureUtil;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/Sys")
@@ -64,6 +67,19 @@ public class LoginResgisterDeal {
 		if (adminService.registUser(map) > 0) {
 			return Result.success("success");
 		}
+		return Result.success("success");
+	}
+
+	@PostMapping(value = "/importAccount")
+	@ResponseBody
+	public Result<String> importExcel(MultipartFile file) throws IOException {
+		List<AccountExportVo> exportVoList = ExcelUtils.importExcel(file, AccountExportVo.class);
+		exportVoList.stream().forEach(accountExportVo -> accountExportVo.validate());
+		final List<Admin> accounts = BeanUtils.copyProperties(exportVoList, Admin.class);
+		log.info("import account:{}", JSON.toJSONString(accounts));
+		adminService.checkAccountExist(accounts);
+		adminService.insertBatch(accounts);
+		log.info("import account success");
 		return Result.success("success");
 	}
 }

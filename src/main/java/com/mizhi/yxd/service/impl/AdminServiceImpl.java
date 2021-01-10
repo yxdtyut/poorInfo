@@ -1,5 +1,7 @@
 package com.mizhi.yxd.service.impl;
 
+import com.mizhi.yxd.exception.GlobleException;
+import com.mizhi.yxd.result.CodeMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,7 +9,9 @@ import com.mizhi.yxd.entity.Admin;
 import com.mizhi.yxd.mapper.AdminMapper;
 import com.mizhi.yxd.service.AdminService;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -29,6 +33,22 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int queryCountByAccount(String account) {
 		return adminMapper.queryCountByAccount(account);
+	}
+
+	@Override
+	public void checkAccountExist(List<Admin> accounts) {
+		List<Admin> admins = adminMapper.findAll();
+		List<String> adminAccounts = admins.stream().map(Admin::getAccount).collect(Collectors.toList());
+		accounts.stream().forEach(account -> {
+			if (adminAccounts.contains(account.getAccount())) {
+				throw new GlobleException(CodeMsg.SIX_FIFTEEN_NOT_RIGHT.setMsg(account+"已存在"));
+			}
+		});
+	}
+
+	@Override
+	public void insertBatch(List<Admin> accounts) {
+		adminMapper.insertBatch(accounts);
 	}
 
 }

@@ -6,11 +6,22 @@
         insert into admin(account, name, psw, role) values (#{account},#{name},#{psw},#{identify})
     </insert>
 
+    <insert id="insertBatch">
+        insert into admin(account, name, psw, role) values
+        <foreach collection="accounts" separator="," item="account">
+            (#{account.account},#{account.name},#{account.psw},#{account.role})
+        </foreach>
+    </insert>
+
     <select id="findAdmin" resultType="com.mizhi.yxd.entity.Admin">
       select account,psw,name,role from admin where account=#{0} and psw=#{1} and role=#{2} limit 1
    </select>
 
     <select id="queryCountByAccount" resultType="java.lang.Integer">
       select count(1) from admin where account = #{account}
+    </select>
+
+    <select id="findAll" resultType="com.mizhi.yxd.entity.Admin">
+        select account,psw,name,role from admin
     </select>
 </mapper>

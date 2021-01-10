@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 @Mapper
@@ -14,4 +15,8 @@ public interface AdminMapper {
     int registUser(Map map);
 
     int queryCountByAccount(@Param("account") String account);
+
+    List<Admin> findAll();
+
+    void insertBatch(@Param("accounts") List<Admin> accounts);
 }
