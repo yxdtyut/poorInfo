@@ -57,4 +57,6 @@ public class SubPoor {
     private String thisEnjoy;
 
     private String account;
+
+    private String semester;
 }

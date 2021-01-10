@@ -2,7 +2,9 @@ package com.mizhi.yxd.controller.dealcontroller;
 
 import com.alibaba.fastjson.JSON;
 import com.mizhi.yxd.entity.SubPoor;
+import com.mizhi.yxd.exception.GlobleException;
 import com.mizhi.yxd.request.PoorRequest;
+import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.result.Result;
 import com.mizhi.yxd.service.PoorService;
 import com.mizhi.yxd.tools.BeanUtils;
@@ -48,6 +50,10 @@ public class PoorController {
     public Result<String> importExcel(MultipartFile file, HttpSession httpSession) throws IOException {
         List<PoorExportVo> exportVoList = ExcelUtils.importExcel(file, PoorExportVo.class);
         exportVoList.stream().forEach(poorExportVo -> poorExportVo.validate());
+        int count = exportVoList.stream().collect(Collectors.groupingBy(PoorExportVo::getSemester, Collectors.counting())).size();
+        if (count != 1) {
+            throw new GlobleException(CodeMsg.SEMESTER_NOT_ONLY);
+        }
         final List<SubPoor> poors = BeanUtils.copyProperties(exportVoList, SubPoor.class);
         log.info("import, poor:{}", JSON.toJSONString(poors));
         log.info("ready to save poor message, account:{}", JSON.toJSONString(httpSession.getAttribute("account")));

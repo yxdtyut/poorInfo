@@ -18,7 +18,11 @@ import org.apache.commons.lang3.StringUtils;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class PoorExportVo {
+    @Excel(name = "学期", width = 15)
+    private String semester;
+
     @Excel(name = "省市", width = 15)
     private String province;
 
@@ -96,7 +100,7 @@ public class PoorExportVo {
 
     public void validate() {
         String errorMsg = "信息输入有误，姓名:" + name + ",身份证:" + idCard;
-        if (StringUtils.isEmpty(name) || StringUtils.isEmpty(idCard)) {
+        if (StringUtils.isEmpty(name) || StringUtils.isEmpty(idCard) || StringUtils.isEmpty(semester)) {
             throw new GlobleException(CodeMsg.NAME_IDCARD_NULL);
         }
         if (StringUtils.isNotEmpty(sixFifteen)  && (!"是".equals(sixFifteen) && !"否".equals(sixFifteen))) {

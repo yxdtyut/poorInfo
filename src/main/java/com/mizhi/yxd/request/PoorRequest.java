@@ -19,5 +19,6 @@ public class PoorRequest {
     private String cun;
     private String idcard;
     private String studyLevel;
+    private String semester = "2021春";
     private List<String> ids;
 }

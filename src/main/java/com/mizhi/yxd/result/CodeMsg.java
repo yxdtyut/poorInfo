@@ -18,7 +18,7 @@ public class CodeMsg {
     public static final CodeMsg USER_ALREADY_REGIST = new CodeMsg(500101, "用户已经被注册");
 
     /**校验模块.6001xx*/
-    public static final CodeMsg NAME_IDCARD_NULL = new CodeMsg(600101, "存在姓名或身份证为空");
+    public static final CodeMsg NAME_IDCARD_NULL = new CodeMsg(600101, "学期或者姓名或身份证为空");
     public static final CodeMsg SIX_FIFTEEN_NOT_RIGHT = new CodeMsg(600102, "是否6-15周岁字段只能写是或者否");
     public static final CodeMsg IDCARD_NOT_RIGHT = new CodeMsg(600103, "身份证格式有误");
     public static final CodeMsg DISABILITY_NOT_RIGHT = new CodeMsg(600104, "是否残疾生字段只能写是或者否");
@@ -34,6 +34,7 @@ public class CodeMsg {
     public static final CodeMsg SEX_NOT_RIGHT = new CodeMsg(600114, "是否享受学具数据只能写是或者否");
     public static final CodeMsg DUILD_CARD_NOT_RIGHT = new CodeMsg(600115, "是否建档立卡数据只能写是或者否");
     public static final CodeMsg HEAD_OF_IDCARD_NOT_RIGHT = new CodeMsg(600116, "户主身份证格式有误");
+    public static final CodeMsg SEMESTER_NOT_ONLY = new CodeMsg(600117, "学段不唯一");
 
     private Integer code;
     private String msg;
