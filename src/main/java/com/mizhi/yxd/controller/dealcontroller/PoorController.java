@@ -72,6 +72,7 @@ public class PoorController {
         Map<String, Object> map = new HashMap<>();
         map.put("start", start);
         map.put("pagesize", lim);
+        poorRequest.initSemester();
         poorRequest.setAccount((String) httpSession.getAttribute("account"));
         List<SubPoor> subPoors = poorService.findByCondition(poorRequest);
         int total = poorService.findCountByCondition(poorRequest);

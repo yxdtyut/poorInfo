@@ -1,6 +1,7 @@
 package com.mizhi.yxd.request;
 
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -20,6 +21,12 @@ public class PoorRequest {
     private String idcard;
     private String studyLevel;
     private String thisEnjoy;
-    private String semester = "2021春";
+    private String semester;
     private List<String> ids;
+
+    public void initSemester() {
+        if (StringUtils.isEmpty(this.semester)) {
+            this.semester = "2021春";
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.mizhi.yxd.vo;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import com.mizhi.yxd.entity.SubPoor;
 import com.mizhi.yxd.exception.GlobleException;
 import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.tools.ValidateUtils;
@@ -18,7 +19,6 @@ import org.apache.commons.lang3.StringUtils;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class PoorExportVo {
     @Excel(name = "学期", width = 15)
     private String semester;
@@ -122,5 +122,12 @@ public class PoorExportVo {
         if (StringUtils.isNotEmpty(thisEnjoy) && (!"是".equals(thisEnjoy) && !"否".equals(thisEnjoy))) {
             throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:本学期是否享受米脂资助只能写是或者否"));
         }
+    }
+
+    public SubPoor transforToPoor() {
+        return new SubPoor(province, county, village, cun, name, idCard, sixFifteen, headOfHouseNum,
+                headOfHouseName, headOfHouseIdCard, headOfHouseTel, school, studyLevel, grade, clazz,
+                studentNumber, studyWay, ifDisability, disabilityNumber, notInSchoolReason, poorType,
+                ifVillage, ifCounty, ifProvince, thisEnjoy, null, semester);
     }
 }

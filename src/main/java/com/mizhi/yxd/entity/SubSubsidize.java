@@ -42,4 +42,13 @@ public class SubSubsidize {
     public void setNutrimealMoney(BigDecimal nutrimealMoney) {
         this.nutrimealMoney = nutrimealMoney;
     }
+
+    public SubSubsidize(String subsidizeProject, BigDecimal subsidizeMoney, BigDecimal nutrimealMoney) {
+        this.subsidizeProject = subsidizeProject;
+        this.subsidizeMoney = subsidizeMoney;
+        this.nutrimealMoney = nutrimealMoney;
+    }
+
+    public SubSubsidize() {
+    }
 }

@@ -47,7 +47,7 @@
       <div class="layui-row">
          <div class="searchTable" style="margin-bottom: 20px">
              学期：
-             <div class="layui-inline"  style="margin-bottom: 20px">
+             <div class="layui-inline">
                  <select name="semester" id="semester" style="width: 110px;height: 38px">
                      <option value="2021春" selected>2021春</option>
                      <option value="2021秋">2021秋</option>
@@ -82,38 +82,40 @@
                  </select>
              </div>
              姓名：
-             <div class="layui-inline" style="margin-bottom: 20px">
+             <div class="layui-inline">
                  <input class="layui-input" name="username" id="username" autocomplete="off" style="width: 100px;">
              </div>
              身份证：
-             <div class="layui-inline" style="margin-bottom: 20px">
+             <div class="layui-inline">
                  <input class="layui-input" name="idCard" id="idcard" autocomplete="off">
              </div>
              学段：
-             <div class="layui-inline" style="margin-bottom: 20px">
+             <div class="layui-inline">
                  <input class="layui-input" name="studyLevel" id="studyLevel" autocomplete="off">
              </div>
              省市：
-             <div class="layui-inline" style="margin-bottom: 20px">
-                 <input class="layui-input" name="province" id="province" autocomplete="off"  style="width: 100px;">
+             <div class="layui-inline">
+                 <input class="layui-input" name="province" id="province" autocomplete="off"  style="width: 80px;">
              </div>
              区县：
-             <div class="layui-inline" style="margin-bottom: 20px">
-                 <input class="layui-input" name="county" id="county" autocomplete="off"  style="width: 100px;">
+             <div class="layui-inline">
+                 <input class="layui-input" name="county" id="county" autocomplete="off"  style="width: 80px;">
              </div>
              乡镇：
-             <div class="layui-inline" style="margin-bottom: 20px">
+             <div class="layui-inline">
                  <input class="layui-input" name="village" id="village" autocomplete="off"  style="width: 100px;">
              </div>
-             村组（社区）：
-             <div class="layui-inline" style="margin-bottom: 20px">
+             村组：
+             <div class="layui-inline">
                  <input class="layui-input" name="cun" id="cun" autocomplete="off"  style="width: 100px;">
              </div>
-             <br/>
-             本学期是否享受米脂资助：
+             享受米脂资助：
              <div class="layui-inline">
-                 <input type="radio" value="是"  name="thisEnjoy" checked="checked">是
-                 <input type="radio"  value="否" name="thisEnjoy" >否
+                 <select name="semester" id="thisEnjoy" style="width: 70px;height: 38px">
+                     <option value="">请选择</option>
+                     <option value="是">是</option>
+                     <option value="否">否</option>
+                 </select>
              </div>
              <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
              <button class="layui-btn" id="clear" onclick="selectClear()">清空</button>
@@ -121,6 +123,7 @@
          </div>
       
           <xblock >
+              <button class="layui-btn layui-btn-warm" id="importData" >导入</button>
               <button class="layui-btn layui-btn-warm" id="exportData" onclick="exportTable()">导出</button>
               <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
           </xblock>
@@ -201,7 +204,7 @@
             var county = $('#county');
             var village = $('#village');
             var cun = $('#cun');
-            var thisEnjoy = $("input[name='thisEnjoy']:checked");
+            var thisEnjoy = $('#thisEnjoy');
           // 执行重载
           table.reload('subsidizeInfo', {
             page: {
@@ -327,6 +330,23 @@
       $('#village').val(null);
       $('#cun').val(null);
   }
+
+  layui.use(['upload'], function(){
+      var upload = layui.upload;
+      upload.render({
+          elem: '#importData'
+          , exts: "xls|xlsx|xlsm"
+          ,url: '/subsidize/import'
+          ,done: function (data) {
+              if (data.code == 200) {
+                  layer.msg('导入成功！',{icon:6,offset:"auto",time:1000});//提示框
+                  layer._delay(location.reload(),2000)
+              } else {
+                  layer.msg('导入失败,' + data.msg,{icon:6,offset:"auto",time:3000});//提示框
+              }
+          }
+      });
+  })
 </script>  
   
 </html>

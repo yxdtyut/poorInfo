@@ -1,8 +1,12 @@
 package com.mizhi.yxd.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class SubPoor {
     private String id;
 
@@ -59,4 +63,34 @@ public class SubPoor {
     private String account;
 
     private String semester;
+
+    public SubPoor(String province, String county, String village, String cun, String name, String idCard, String sixFifteen, String headOfHouseNum, String headOfHouseName, String headOfHouseIdCard, String headOfHouseTel, String school, String studyLevel, String grade, String clazz, String studentNumber, String studyWay, String ifDisability, String disabilityNumber, String notInSchoolReason, String poorType, String ifVillage, String ifCounty, String ifProvince, String thisEnjoy, String account, String semester) {
+        this.province = province;
+        this.county = county;
+        this.village = village;
+        this.cun = cun;
+        this.name = name;
+        this.idCard = idCard;
+        this.sixFifteen = sixFifteen;
+        this.headOfHouseNum = headOfHouseNum;
+        this.headOfHouseName = headOfHouseName;
+        this.headOfHouseIdCard = headOfHouseIdCard;
+        this.headOfHouseTel = headOfHouseTel;
+        this.school = school;
+        this.studyLevel = studyLevel;
+        this.grade = grade;
+        this.clazz = clazz;
+        this.studentNumber = studentNumber;
+        this.studyWay = studyWay;
+        this.ifDisability = ifDisability;
+        this.disabilityNumber = disabilityNumber;
+        this.notInSchoolReason = notInSchoolReason;
+        this.poorType = poorType;
+        this.ifVillage = ifVillage;
+        this.ifCounty = ifCounty;
+        this.ifProvince = ifProvince;
+        this.thisEnjoy = thisEnjoy;
+        this.account = account;
+        this.semester = semester;
+    }
 }

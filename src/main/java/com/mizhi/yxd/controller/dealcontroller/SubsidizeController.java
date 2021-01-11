@@ -14,6 +14,7 @@ import com.mizhi.yxd.tools.ExcelUtils;
 import com.mizhi.yxd.tools.Layui;
 import com.mizhi.yxd.validate.ValueValidate;
 import com.mizhi.yxd.vo.CreateSubsidizeVo;
+import com.mizhi.yxd.vo.PoorExportVo;
 import com.mizhi.yxd.vo.SubsidizeExportVo;
 import com.mizhi.yxd.vo.UpdatePoorVo;
 import io.swagger.annotations.Api;
@@ -23,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -85,6 +87,7 @@ public class SubsidizeController {
         Map<String, Object> map = new HashMap<>();
         map.put("start", start);
         map.put("pagesize", lim);
+        poorRequest.initSemester();
         poorRequest.setAccount((String) httpSession.getAttribute("account"));
         List<SubsidizeAndPoor> subSubsidizes = subsidizeService.findByCondition(poorRequest);
         int total = subsidizeService.findCountByCondition(poorRequest);
@@ -136,5 +139,17 @@ public class SubsidizeController {
         List<SubsidizeAndPoor> subSubsidizes = subsidizeService.findByCondition(request);
         List<SubsidizeExportVo> poorExportVos = com.mizhi.yxd.tools.BeanUtils.copyProperties(subSubsidizes, SubsidizeExportVo.class);
         ExcelUtils.exportExcel(poorExportVos, null, "资助库", SubsidizeExportVo.class, "资助库信息", true, response);
+    }
+
+    @PostMapping("/import")
+    public Result<String> importExcel(MultipartFile file, HttpSession httpSession) throws IOException {
+        List<SubsidizeExportVo> exportVoList = ExcelUtils.importExcel(file, SubsidizeExportVo.class);
+        int count = exportVoList.stream().collect(Collectors.groupingBy(SubsidizeExportVo::getSemester, Collectors.counting())).size();
+        if (count != 1) {
+            throw new GlobleException(CodeMsg.SEMESTER_NOT_ONLY);
+        }
+        exportVoList.stream().forEach(subsidizeExportVo -> subsidizeExportVo.validate());
+        subsidizeService.batchDealImportData(exportVoList, httpSession);
+        return Result.success("success");
     }
 }

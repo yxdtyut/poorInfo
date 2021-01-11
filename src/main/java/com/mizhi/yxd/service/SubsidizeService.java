@@ -3,8 +3,10 @@ package com.mizhi.yxd.service;
 import com.mizhi.yxd.entity.SubSubsidize;
 import com.mizhi.yxd.entity.SubsidizeAndPoor;
 import com.mizhi.yxd.request.PoorRequest;
+import com.mizhi.yxd.vo.SubsidizeExportVo;
 import com.mizhi.yxd.vo.UpdatePoorVo;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -26,4 +28,6 @@ public interface SubsidizeService {
     void updateByField(UpdatePoorVo updatePoorVo);
 
     void createSubsidizeBatch(List<SubSubsidize> subSubsidizes);
+
+    void batchDealImportData(List<SubsidizeExportVo> exportVoList, HttpSession httpSession);
 }

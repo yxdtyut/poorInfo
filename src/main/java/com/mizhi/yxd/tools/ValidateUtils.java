@@ -20,4 +20,9 @@ public class ValidateUtils {
             return false;
         else return true;
     }
+
+    public static boolean checkIfNum(String text) {
+        String re = "^[0-9]+.?[0-9]$";
+        return text.matches(re);
+    }
 }
