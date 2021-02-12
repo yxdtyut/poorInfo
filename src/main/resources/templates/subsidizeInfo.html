@@ -123,6 +123,7 @@
          </div>
       
           <xblock >
+              <button class="layui-btn  layui-btn-normal" onclick="downloadTemplate()">下载模板</button>
               <button class="layui-btn layui-btn-warm" id="importData" >导入</button>
               <button class="layui-btn layui-btn-warm" id="exportData" onclick="exportTable()">导出</button>
               <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
@@ -319,7 +320,7 @@
       for(var i=0;i<checkStatus.data.length;i++){
           nums += checkStatus.data[i].id+",";
       }
-      location.href = "/subsidize/export?nums="+nums;
+      location.href = "/subsidize/export?nums="+nums+"&semester="+$("#semester").val();
   }
 
   function selectClear() {
@@ -339,6 +340,16 @@
           ,url: '/subsidize/import'
           ,done: function (data) {
               if (data.code == 200) {
+                  if(JSON.stringify(data.data) != "success") {
+                      var json = eval(data.data);
+                      var errorMessage = "部分导入失败: \n";
+                      $.each(json, function(index, item){
+                          var msg = json[index].errorMsg;
+                          errorMessage = errorMessage + msg + "\n";
+                      });
+                      alert(errorMessage);
+                      layer._delay(location.reload(),2000)
+                  }
                   layer.msg('导入成功！',{icon:6,offset:"auto",time:1000});//提示框
                   layer._delay(location.reload(),2000)
               } else {
@@ -347,6 +358,10 @@
           }
       });
   })
+
+  function downloadTemplate() {
+      window.open("/subsidize/download");
+  }
 </script>  
   
 </html>

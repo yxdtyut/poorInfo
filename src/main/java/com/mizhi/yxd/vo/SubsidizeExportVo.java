@@ -34,7 +34,10 @@ public class SubsidizeExportVo extends PoorExportVo{
     public void validate() {
         super.validate();
         String errorMsg = "信息输入有误，姓名:" + super.getName() + ",身份证:" + super.getIdCard();
-        if (StringUtils.isNotEmpty(subsidizeMoney) && !ValidateUtils.checkIfNum(subsidizeMoney)) {
+        if (StringUtils.isEmpty(subsidizeMoney) || StringUtils.isEmpty(subsidizeProject)) {
+            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + ",资助项目或资助金额不能为空"));
+        }
+        if (!ValidateUtils.checkIfNum(subsidizeMoney)) {
             throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + ",资助金额输入有误"));
         }
         if (StringUtils.isNotEmpty(nutrimealMoney) && !ValidateUtils.checkIfNum(nutrimealMoney)) {
@@ -43,6 +46,6 @@ public class SubsidizeExportVo extends PoorExportVo{
     }
 
     public SubSubsidize transferToSubsidize() {
-        return new SubSubsidize(subsidizeProject,new BigDecimal(subsidizeMoney),new BigDecimal(nutrimealMoney));
+        return new SubSubsidize(subsidizeProject,new BigDecimal(subsidizeMoney),nutrimealMoney == null? null:new BigDecimal(nutrimealMoney));
     }
 }

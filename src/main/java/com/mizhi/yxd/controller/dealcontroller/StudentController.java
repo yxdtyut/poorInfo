@@ -77,19 +77,9 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/download", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> downloadTemp(HttpServletRequest request) throws IOException {
+    public ResponseEntity<byte[]> downloadTemp() throws IOException {
         String filename = "student.xlsx";
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletResponse response = requestAttributes.getResponse();
-        // 设置信息给客户端不解析
-        String type = new MimetypesFileTypeMap().getContentType(filename);
-        // 设置contenttype，即告诉客户端所发送的数据属于什么类型
-        response.setHeader("Content-type",type);
-        // 设置编码
-        String hehe = new String(filename.getBytes("utf-8"), "iso-8859-1");
-        // 设置扩展头，当Content-Type 的类型为要下载的类型时 , 这个信息头会告诉浏览器这个文件的名字和类型。
-        response.setHeader("Content-Disposition", "attachment;filename=" + hehe);
-        FileUtil.download(filename, response);
+        FileUtil.downloadByFileName(filename);
         return null;
     }
 

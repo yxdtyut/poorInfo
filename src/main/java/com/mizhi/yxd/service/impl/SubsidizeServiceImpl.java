@@ -1,5 +1,6 @@
 package com.mizhi.yxd.service.impl;
 
+import com.mizhi.yxd.entity.BatchOperationRsp;
 import com.mizhi.yxd.entity.SubPoor;
 import com.mizhi.yxd.entity.SubSubsidize;
 import com.mizhi.yxd.entity.SubsidizeAndPoor;
@@ -12,10 +13,13 @@ import com.mizhi.yxd.service.SubsidizeService;
 import com.mizhi.yxd.tools.SnowflakeIdWorker;
 import com.mizhi.yxd.vo.SubsidizeExportVo;
 import com.mizhi.yxd.vo.UpdatePoorVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -30,6 +34,7 @@ import static java.util.stream.Collectors.toList;
  * @description:
  * @date 2020/12/15 22:17
  */
+@Slf4j
 @Service
 public class SubsidizeServiceImpl implements SubsidizeService {
     @Autowired
@@ -78,7 +83,7 @@ public class SubsidizeServiceImpl implements SubsidizeService {
     }
 
     @Override
-    public void batchDealImportData(List<SubsidizeExportVo> exportVoList, HttpSession httpSession) {
+    public List<CompletableFuture<BatchOperationRsp>> batchDealImportData(List<SubsidizeExportVo> exportVoList, HttpSession httpSession) {
         PoorRequest poorRequest = new PoorRequest();
         poorRequest.setAccount((String) httpSession.getAttribute("account"));
         List<SubPoor> subPoors = poorMapper.selectByCondition(poorRequest);
@@ -94,15 +99,26 @@ public class SubsidizeServiceImpl implements SubsidizeService {
                     }
                 }
         );
-        List<CompletableFuture<Boolean>> futureList = exportVoList.stream()
+        List<CompletableFuture<BatchOperationRsp>> collect = exportVoList.stream()
                 .map(subsidizeExportVo -> CompletableFuture.supplyAsync(
-                ()-> saveSubsidizeExportVo(subsidizeExportVo, idCards, httpSession), executor
-        )).collect(toList());
+                        () -> saveSubsidizeExportVo(subsidizeExportVo, idCards, httpSession), executor
+                        ).exceptionally(e -> {
+                            log.error(e.getMessage());
+                            BatchOperationRsp operationRsp = new BatchOperationRsp();
+                             operationRsp.setIsSuccess(false);
+                            operationRsp.setErrorMsg(subsidizeExportVo.getName() + ":" + subsidizeExportVo.getIdCard());
+                            return operationRsp;
+                        })
+                ).collect(toList());
+        return collect;
     }
 
-    private Boolean saveSubsidizeExportVo(SubsidizeExportVo subsidizeExportVo, List<String> idCards, HttpSession httpSession) {
+    @Transactional
+    public BatchOperationRsp saveSubsidizeExportVo(SubsidizeExportVo subsidizeExportVo, List<String> idCards, HttpSession httpSession) {
+        BatchOperationRsp rsp = new BatchOperationRsp();
         if (idCards.contains(subsidizeExportVo.getIdCard())) {
-            throw new GlobleException(CodeMsg.IDCARD_EXIST_ERROR.setMsg(subsidizeExportVo.getName() + "--" + subsidizeExportVo.getIdCard() + "," + CodeMsg.IDCARD_EXIST_ERROR.getMsg()));
+            log.error("idcard exist:{}", subsidizeExportVo.getIdCard());
+            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(subsidizeExportVo.getName() + "--" + subsidizeExportVo.getIdCard() + "," + CodeMsg.IDCARD_EXIST_ERROR.getMsg()));
         }
         SubPoor subPoor = subsidizeExportVo.transforToPoor();
         subPoor.setId(SnowflakeIdWorker.primaryKey());
@@ -111,7 +127,8 @@ public class SubsidizeServiceImpl implements SubsidizeService {
         SubSubsidize subSubsidize = subsidizeExportVo.transferToSubsidize();
         subSubsidize.setPoorId(subPoor.getId());
         subSubsidizeMapper.insert(subSubsidize);
-        return true;
+        rsp.setIsSuccess(true);
+        return rsp;
     }
 
 }

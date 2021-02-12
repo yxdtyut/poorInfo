@@ -1,6 +1,7 @@
 package com.mizhi.yxd.controller.dealcontroller;
 
 import com.alibaba.fastjson.JSON;
+import com.mizhi.yxd.entity.BatchOperationRsp;
 import com.mizhi.yxd.entity.SubPoor;
 import com.mizhi.yxd.entity.SubSubsidize;
 import com.mizhi.yxd.entity.SubsidizeAndPoor;
@@ -11,6 +12,7 @@ import com.mizhi.yxd.result.Result;
 import com.mizhi.yxd.service.PoorService;
 import com.mizhi.yxd.service.SubsidizeService;
 import com.mizhi.yxd.tools.ExcelUtils;
+import com.mizhi.yxd.tools.FileUtil;
 import com.mizhi.yxd.tools.Layui;
 import com.mizhi.yxd.validate.ValueValidate;
 import com.mizhi.yxd.vo.CreateSubsidizeVo;
@@ -23,16 +25,16 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -128,7 +130,7 @@ public class SubsidizeController {
     }
 
     @GetMapping("/export")
-    public void exportPoorInfo(@RequestParam String nums, HttpSession httpSession, HttpServletResponse response) throws IOException {
+    public void exportPoorInfo(@RequestParam String semester, @RequestParam String nums, HttpSession httpSession, HttpServletResponse response) throws IOException {
         PoorRequest request = new PoorRequest();
         request.setAccount((String) httpSession.getAttribute("account"));
         String[] strings = nums.split(",");
@@ -136,20 +138,55 @@ public class SubsidizeController {
         if (data.size() > 0 && !data.contains("")) {
             request.setIds(data);
         }
+        request.setSemester(semester);
         List<SubsidizeAndPoor> subSubsidizes = subsidizeService.findByCondition(request);
         List<SubsidizeExportVo> poorExportVos = com.mizhi.yxd.tools.BeanUtils.copyProperties(subSubsidizes, SubsidizeExportVo.class);
         ExcelUtils.exportExcel(poorExportVos, null, "资助库", SubsidizeExportVo.class, "资助库信息", true, response);
     }
 
     @PostMapping("/import")
-    public Result<String> importExcel(MultipartFile file, HttpSession httpSession) throws IOException {
+    public Result<Object> importExcel(MultipartFile file, HttpSession httpSession) throws IOException {
         List<SubsidizeExportVo> exportVoList = ExcelUtils.importExcel(file, SubsidizeExportVo.class);
         int count = exportVoList.stream().collect(Collectors.groupingBy(SubsidizeExportVo::getSemester, Collectors.counting())).size();
         if (count != 1) {
+            log.error("semester not only");
             throw new GlobleException(CodeMsg.SEMESTER_NOT_ONLY);
         }
         exportVoList.stream().forEach(subsidizeExportVo -> subsidizeExportVo.validate());
-        subsidizeService.batchDealImportData(exportVoList, httpSession);
+        List<CompletableFuture<BatchOperationRsp>> batchOperationRsps = subsidizeService.batchDealImportData(exportVoList, httpSession);
+        List<CompletableFuture<BatchOperationRsp>> failedOperationRsp = batchOperationRsps.stream().filter(operationRsp -> {
+            try {
+                return !operationRsp.get().getIsSuccess();
+            } catch (InterruptedException e) {
+                log.error("batch import subsidize error:" + e.getMessage());
+            } catch (ExecutionException e) {
+                log.error("batch import subsidize error:" + e.getMessage());
+            }
+            return true;
+        }).collect(Collectors.toList());
+        if (CollectionUtils.isNotEmpty(failedOperationRsp)) {
+            List<BatchOperationRsp> operationRsps = new ArrayList<>();
+            failedOperationRsp.stream().forEach(operationRsp -> {
+                try {
+                    BatchOperationRsp batchOperationRsp = operationRsp.get();
+                    if (!batchOperationRsp.getIsSuccess()) {
+                        operationRsps.add(batchOperationRsp);
+                    }
+                } catch (InterruptedException e) {
+                    log.error("batch import subsidize error:" + e.getMessage());
+                } catch (ExecutionException e) {
+                    log.error("batch import subsidize error:" + e.getMessage());
+                }
+            });
+            return Result.success(operationRsps);
+        }
         return Result.success("success");
+    }
+
+    @RequestMapping(value = "/download", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> downloadTemp() throws IOException{
+        String filename = "subsidize.xlsx";
+        FileUtil.downloadByFileName(filename);
+        return null;
     }
 }

@@ -23,6 +23,7 @@ public class ValueValidate {
 
     static {
         map.put("id","id");
+        map.put("name","name");
         map.put("province","province");
         map.put("county","county");
         map.put("village","village");

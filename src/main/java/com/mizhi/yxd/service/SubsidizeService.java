@@ -1,5 +1,6 @@
 package com.mizhi.yxd.service;
 
+import com.mizhi.yxd.entity.BatchOperationRsp;
 import com.mizhi.yxd.entity.SubSubsidize;
 import com.mizhi.yxd.entity.SubsidizeAndPoor;
 import com.mizhi.yxd.request.PoorRequest;
@@ -8,6 +9,7 @@ import com.mizhi.yxd.vo.UpdatePoorVo;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author yangxudong
@@ -29,5 +31,5 @@ public interface SubsidizeService {
 
     void createSubsidizeBatch(List<SubSubsidize> subSubsidizes);
 
-    void batchDealImportData(List<SubsidizeExportVo> exportVoList, HttpSession httpSession);
+    List<CompletableFuture<BatchOperationRsp>> batchDealImportData(List<SubsidizeExportVo> exportVoList, HttpSession httpSession);
 }
