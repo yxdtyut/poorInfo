@@ -6,12 +6,9 @@ import com.google.common.collect.Multimap;
 import com.mizhi.yxd.mapper.StatisticMapper;
 import com.mizhi.yxd.service.StatisticService;
 import com.mizhi.yxd.tools.StatisticUtil;
-import com.mizhi.yxd.vo.LearningPeriodRsp;
-import com.mizhi.yxd.vo.LearningPeriodVo;
-import com.mizhi.yxd.vo.StatisticQueryVo;
+import com.mizhi.yxd.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,12 +64,76 @@ public class StatisticServiceImpl implements StatisticService {
         return learningPeriodVos;
     }
 
-    private void assignmentToLearningPeriod(String studyLevel, int count, LearningPeriodVo learningPeriodVo) {
-        Class clazz = learningPeriodVo.getClass();
+    @Override
+    public List<LearningPeriodInMizhiVo> learningPeriodInMizhi(StatisticQueryVo statisticQueryVo) {
+        List<LearningPeriodInMizhiRsp> learningPeriodInMizhiRsps = statisticMapper.lerningPeriodInMizhi(statisticQueryVo);
+        Multimap<String, LearningPeriodInMizhiRsp> multimap = ArrayListMultimap.create();
+        learningPeriodInMizhiRsps.stream().forEach(periodRsp -> {
+            multimap.put(periodRsp.getVillage(), periodRsp);
+        });
+        Map<String, Collection<LearningPeriodInMizhiRsp>> learningPeriodInMizhiRspMaps = multimap.asMap();
+        List<LearningPeriodInMizhiVo> learningPeriodInMizhiVos = Lists.newArrayList();
+        for (Map.Entry<String, Collection<LearningPeriodInMizhiRsp>> entry : learningPeriodInMizhiRspMaps.entrySet()) {
+            String village = entry.getKey();
+            LearningPeriodInMizhiVo learningPeriodVo = judgeVillageInMizhiExist(learningPeriodInMizhiVos, village);
+            Collection<LearningPeriodInMizhiRsp> periodRsps = entry.getValue();
+            periodRsps.stream().forEach(learningPeriodInMizhiRsp -> {
+                // 设置人数
+                String studyLevelCount = StatisticUtil.learningPeriodInMizhi(learningPeriodInMizhiRsp.getStudyLevel() + "人数");
+                if (StringUtils.isEmpty(studyLevelCount)) {
+                    return;
+                }
+                assignmentToLearningPeriod(studyLevelCount, learningPeriodInMizhiRsp.getStatisticCount() ,learningPeriodVo);
+                // 设置金额
+                String studyLevelMoney = StatisticUtil.learningPeriodInMizhi(learningPeriodInMizhiRsp.getStudyLevel() + "资助金");
+                assignmentToLearningPeriod(studyLevelMoney, learningPeriodInMizhiRsp.getTotalMoney() ,learningPeriodVo);
+            });
+            learningPeriodInMizhiVos.add(learningPeriodVo);
+        }
+        // 创建总计
+        LearningPeriodInMizhiVo learningPeriodInMizhiVo = new LearningPeriodInMizhiVo();
+        learningPeriodInMizhiVo.setVillage("总计");
+        Map<String, Integer> studyLevelWithCount = learningPeriodInMizhiRsps.stream().collect(Collectors.groupingBy(LearningPeriodInMizhiRsp::getStudyLevel, Collectors.summingInt(LearningPeriodInMizhiRsp::getStatisticCount)));
+        Map<String, Double> studyLevelWithMoney = learningPeriodInMizhiRsps.stream().collect(Collectors.groupingBy(LearningPeriodInMizhiRsp::getStudyLevel, Collectors.summingDouble(LearningPeriodInMizhiRsp::getTotalMoney)));
+        studyLevelWithCount.forEach((studyLevel,count) -> {
+            String studyLevelPropertyCount = StatisticUtil.learningPeriodInMizhi(studyLevel + "人数");
+            if (StringUtils.isEmpty(studyLevelPropertyCount)) {
+                return;
+            }
+            assignmentToLearningPeriod(studyLevelPropertyCount, count, learningPeriodInMizhiVo);
+        });
+        studyLevelWithMoney.forEach((studyLevel,money) -> {
+            String studyLevelPropertyMoney = StatisticUtil.learningPeriodInMizhi(studyLevel + "资助金");
+            if (StringUtils.isEmpty(studyLevelPropertyMoney)) {
+                return;
+            }
+            assignmentToLearningPeriod(studyLevelPropertyMoney, money, learningPeriodInMizhiVo);
+        });
+        learningPeriodInMizhiVos.add(learningPeriodInMizhiVo);
+        // 设置横向total
+        learningPeriodInMizhiVos.stream().forEach(learningPeriodInMizhiVo1 -> {
+            learningPeriodInMizhiVo1.finishTotal();
+        });
+        return learningPeriodInMizhiVos;
+    }
+
+    private LearningPeriodInMizhiVo judgeVillageInMizhiExist(List<LearningPeriodInMizhiVo> learningPeriodInMizhiVos, String village) {
+        for (LearningPeriodInMizhiVo learningPeriodVo : learningPeriodInMizhiVos) {
+            if (StringUtils.isNotEmpty(learningPeriodVo.getVillage()) && learningPeriodVo.getVillage().equals(village)) {
+                return learningPeriodVo;
+            }
+        }
+        LearningPeriodInMizhiVo learningPeriodInMizhiVo = new LearningPeriodInMizhiVo();
+        learningPeriodInMizhiVo.setVillage(village);
+        return learningPeriodInMizhiVo;
+    }
+
+    private <T, R> void assignmentToLearningPeriod(String studyLevel, R value, T target) {
+        Class clazz = target.getClass();
         try {
-            Method method = clazz.getMethod("set" + studyLevel.toUpperCase().substring(0, 1)+ studyLevel.substring(1), int.class);
+            Method method = clazz.getMethod("set" + studyLevel.toUpperCase().substring(0, 1)+ studyLevel.substring(1), value.getClass());
             method.setAccessible(true);
-            method.invoke(learningPeriodVo, count);
+            method.invoke(target, value);
         } catch (NoSuchMethodException e) {
             log.error("assignment can't find method, studyLevel:{}", studyLevel);
         } catch (IllegalAccessException e) {

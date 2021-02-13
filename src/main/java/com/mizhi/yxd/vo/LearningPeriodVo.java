@@ -10,16 +10,16 @@ import lombok.Data;
 @Data
 public class LearningPeriodVo {
     private String village;
-    private int kindergarten;
-    private int primarySchool;
-    private int juniorHighSchool;
-    private int highSchool;
-    private int juniorProfession;
-    private int highProfession;
-    private int undergraduate;
-    private int graduate;
-    private int specialEducation;
-    private int total;
+    private Integer kindergarten = 0;
+    private Integer primarySchool = 0;
+    private Integer juniorHighSchool = 0;
+    private Integer highSchool = 0;
+    private Integer juniorProfession = 0;
+    private Integer highProfession = 0;
+    private Integer undergraduate = 0;
+    private Integer graduate = 0;
+    private Integer specialEducation = 0;
+    private Integer total = 0;
 
    public void finishTotal() {
        this.total = this.kindergarten + this.primarySchool + this.juniorHighSchool + this.highSchool + this.juniorProfession

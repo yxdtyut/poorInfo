@@ -102,10 +102,9 @@
           elem: '#statisticalTable'  //绑定table表格
           ,id:'statisticalInfo'
           ,method:'post'
-          ,url: '/statistic/learningPeriod' //后台springmvc接收路径
+          ,url: '/statistic/learningPeriodInMizhi' //后台springmvc接收路径
           ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
   	        layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
-	      //,curr: 5 //设定初始在第 5 页
 	      ,groups: 1 //只显示 1 个连续页码
 	      ,first: false //不显示首页
 	      ,last: false //不显示尾页
@@ -115,18 +114,14 @@
           ,cols: [
         	  [
              {type: 'checkbox',width:documentWidth*4/100} 
-              ,{type:'numbers',title:'序号', width:documentWidth*10/150, sort: true}
+              ,{type:'numbers',title:'序号', width:documentWidth*10/200, sort: true}
               ,{field:'village', title:'乡镇', width:documentWidth*8/150, edit:"text"}
-              ,{field:'kindergarten',title:'学前',width:documentWidth*8/150, edit:"text"}
-              ,{field:'primarySchool', title:'小学', width:documentWidth*10/150, edit:"text"}
-              ,{field:'juniorHighSchool', title:'初中', width:documentWidth*10/150, edit:"text"}
-              ,{field:'highSchool', title:'普高', width:documentWidth*10/150, edit:"text"}
-              ,{field:'juniorProfession', title:'中职', width:documentWidth*10/150, edit:"false"}
-              ,{field:'highProfession', title:'高职', width:documentWidth*10/150, edit:"text"}
-              ,{field:'undergraduate', title:'本科', width:documentWidth*10/150, edit:"text"}
-              ,{field:'graduate', title:'研究生', width:documentWidth*10/150, edit:"text"}
-              ,{field:'specialEducation', title:'特殊教育', width:documentWidth*10/150, edit:"text"}
-              ,{field:'total', title:'总计', width:documentWidth*10/150, edit:"text"}
+              ,{field:'kindergarten',title:'学前',width:documentWidth*8/80, edit:"text"}
+              ,{field:'primarySchool', title:'小学', width:documentWidth*10/80, edit:"text"}
+              ,{field:'juniorHighSchool', title:'初中', width:documentWidth*10/80, edit:"text"}
+              ,{field:'highSchool', title:'普高', width:documentWidth*10/80, edit:"text"}
+              ,{field:'juniorProfession', title:'中职', width:documentWidth*10/80, edit:"false"}
+              ,{field:'total', title:'总计', width:documentWidth*10/80, edit:"text"}
           ]
         	  ]
       });
@@ -140,7 +135,7 @@
             page: {
               curr: 1 //重新从第 1 页开始
             },
-        url:'/statistic/learningPeriod'
+        url:'/statistic/learningPeriodInMizhi'
             ,where: {
                 semester: semester.val().replace(/(^\s*)|(\s*$)/g, "")
             }

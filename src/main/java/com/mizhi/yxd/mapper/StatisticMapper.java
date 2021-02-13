@@ -1,5 +1,6 @@
 package com.mizhi.yxd.mapper;
 
+import com.mizhi.yxd.vo.LearningPeriodInMizhiRsp;
 import com.mizhi.yxd.vo.LearningPeriodRsp;
 import com.mizhi.yxd.vo.StatisticQueryVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,4 +16,6 @@ import java.util.List;
 @Mapper
 public interface StatisticMapper {
     List<LearningPeriodRsp> learningPeriod(@Param("vo") StatisticQueryVo statisticQueryVo);
+
+    List<LearningPeriodInMizhiRsp> lerningPeriodInMizhi(@Param("vo") StatisticQueryVo statisticQueryVo);
 }

@@ -1,5 +1,6 @@
 package com.mizhi.yxd.service;
 
+import com.mizhi.yxd.vo.LearningPeriodInMizhiVo;
 import com.mizhi.yxd.vo.LearningPeriodVo;
 import com.mizhi.yxd.vo.StatisticQueryVo;
 import org.springframework.stereotype.Service;
@@ -14,4 +15,6 @@ import java.util.List;
 public interface StatisticService {
 
     List<LearningPeriodVo> learningPeriod(StatisticQueryVo statisticQueryVo);
+
+    List<LearningPeriodInMizhiVo> learningPeriodInMizhi(StatisticQueryVo statisticQueryVo);
 }
