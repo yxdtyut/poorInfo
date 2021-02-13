@@ -1,5 +1,6 @@
 package com.mizhi.yxd.vo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import lombok.Data;
 
 /**
@@ -9,12 +10,19 @@ import lombok.Data;
  */
 @Data
 public class LearningPeriodInMizhiVo {
+    @Excel(name = "乡镇", width = 15)
     private String village;
+    @Excel(name = "学前", width = 15)
     private String kindergarten;
+    @Excel(name = "小学", width = 15)
     private String primarySchool;
+    @Excel(name = "初中", width = 15)
     private String juniorHighSchool;
+    @Excel(name = "普高", width = 15)
     private String highSchool;
+    @Excel(name = "中职", width = 15)
     private String juniorProfession;
+    @Excel(name = "总计", width = 15)
     private String total;
 
     private Integer kindergartenCount = 0;

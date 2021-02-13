@@ -1,17 +1,25 @@
 package com.mizhi.yxd.controller.dealcontroller;
 
 import com.alibaba.fastjson.JSON;
+import com.mizhi.yxd.entity.SubPoor;
+import com.mizhi.yxd.request.PoorRequest;
 import com.mizhi.yxd.service.StatisticService;
+import com.mizhi.yxd.tools.BeanUtils;
+import com.mizhi.yxd.tools.ExcelUtils;
 import com.mizhi.yxd.tools.Layui;
 import com.mizhi.yxd.vo.LearningPeriodInMizhiVo;
 import com.mizhi.yxd.vo.LearningPeriodVo;
+import com.mizhi.yxd.vo.PoorExportVo;
 import com.mizhi.yxd.vo.StatisticQueryVo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -53,5 +61,35 @@ public class StatisticalController {
         List<LearningPeriodInMizhiVo> learningPeriodInMizhiVos =  statisticService.schoolPeriodInMizhi(statisticQueryVo);
         Layui l = Layui.data(learningPeriodInMizhiVos.size(), learningPeriodInMizhiVos);
         return JSON.toJSON(l);
+    }
+
+    @GetMapping("/learningPeriod/export")
+    public void exportLearningPeriod(@RequestParam String semester, HttpSession httpSession, HttpServletResponse response) throws IOException {
+        StatisticQueryVo statisticQueryVo = getStatisticQueryVo(semester, httpSession);
+        List<LearningPeriodVo> learningPeriodVos =  statisticService.learningPeriod(statisticQueryVo);
+        ExcelUtils.exportExcel(learningPeriodVos, null, "统计信息", LearningPeriodVo.class, "米脂县户籍建档立卡学生分乡镇分学段人数统计", true, response);
+    }
+
+
+    @GetMapping("/learningPeriodInMizhi/export")
+    public void exportLearningPeriodInMizhi(@RequestParam String semester, @RequestParam String nums, HttpSession httpSession, HttpServletResponse response) throws IOException {
+        StatisticQueryVo statisticQueryVo = getStatisticQueryVo(semester, httpSession);
+        List<LearningPeriodInMizhiVo> learningPeriodInMizhiVos =  statisticService.learningPeriodInMizhi(statisticQueryVo);
+        ExcelUtils.exportExcel(learningPeriodInMizhiVos, null, "统计信息", LearningPeriodInMizhiVo.class, "米脂县户籍在米就读建档立卡学生分乡镇分学段资助汇总", true, response);
+    }
+
+
+    @GetMapping("/schoolPeriodInMizhi/export")
+    public void exportSchoolPeriodInMizhi(@RequestParam String semester, HttpSession httpSession, HttpServletResponse response) throws IOException {
+        StatisticQueryVo statisticQueryVo = getStatisticQueryVo(semester, httpSession);
+        List<LearningPeriodInMizhiVo> learningPeriodInMizhiVos =  statisticService.schoolPeriodInMizhi(statisticQueryVo);
+        ExcelUtils.exportExcel(learningPeriodInMizhiVos, null, "统计信息", LearningPeriodInMizhiVo.class, "米脂县就读建档立卡分学校分学段资助汇总", true, response);
+    }
+
+    private StatisticQueryVo getStatisticQueryVo(@RequestParam String semester, HttpSession httpSession) {
+        StatisticQueryVo statisticQueryVo = new StatisticQueryVo();
+        statisticQueryVo.setAccount((String) httpSession.getAttribute("account"));
+        statisticQueryVo.setSemester(semester);
+        return statisticQueryVo;
     }
 }

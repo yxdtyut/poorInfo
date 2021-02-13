@@ -157,12 +157,12 @@
 
   function exportTable(){
       var table = layui.table
-      var checkStatus = table.checkStatus('poorInfo');
+      var checkStatus = table.checkStatus('statisticalInfo');
       var nums="";
       for(var i=0;i<checkStatus.data.length;i++){
           nums += checkStatus.data[i].id+",";
       }
-      location.href = "/poor/export?nums="+nums+"&semester="+$("#semester").val();
+      location.href = "/statistic/learningPeriod/export?nums="+nums+"&semester="+$("#semester").val();
   }
 </script>  
   
