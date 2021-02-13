@@ -67,6 +67,18 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     public List<LearningPeriodInMizhiVo> learningPeriodInMizhi(StatisticQueryVo statisticQueryVo) {
         List<LearningPeriodInMizhiRsp> learningPeriodInMizhiRsps = statisticMapper.lerningPeriodInMizhi(statisticQueryVo);
+        List<LearningPeriodInMizhiVo> learningPeriodInMizhiVos = getLearningPeriodInMizhiVos(learningPeriodInMizhiRsps);
+        return learningPeriodInMizhiVos;
+    }
+
+    @Override
+    public List<LearningPeriodInMizhiVo> schoolPeriodInMizhi(StatisticQueryVo statisticQueryVo) {
+        List<LearningPeriodInMizhiRsp> learningPeriodInMizhiRsps = statisticMapper.schoolPeriodInMizhi(statisticQueryVo);
+        List<LearningPeriodInMizhiVo> learningPeriodInMizhiVos = getLearningPeriodInMizhiVos(learningPeriodInMizhiRsps);
+        return learningPeriodInMizhiVos;
+    }
+
+    private List<LearningPeriodInMizhiVo> getLearningPeriodInMizhiVos(List<LearningPeriodInMizhiRsp> learningPeriodInMizhiRsps) {
         Multimap<String, LearningPeriodInMizhiRsp> multimap = ArrayListMultimap.create();
         learningPeriodInMizhiRsps.stream().forEach(periodRsp -> {
             multimap.put(periodRsp.getVillage(), periodRsp);

@@ -36,4 +36,27 @@
         ORDER BY
 	        poor.village
     </select>
+
+    <select id="schoolPeriodInMizhi" resultType="com.mizhi.yxd.vo.LearningPeriodInMizhiRsp">
+        SELECT
+        poor.school as village,
+        poor.study_level AS studyLevel,
+        count(1) as statisticCount,
+        sum(sub.subsidize_money) as totalMoney
+        FROM
+        sub_poor as poor LEFT JOIN sub_subsidize as sub on poor.id = sub.poor_id
+        WHERE
+        1 = 1
+        <if test="vo.account != null and vo.account != ''">
+            and account = #{vo.account}
+        </if>
+        <if test="vo.semester != null and vo.semester != ''">
+            and semester = #{vo.semester}
+        </if>
+        GROUP BY
+        poor.school,
+        poor.study_level
+        ORDER BY
+        poor.school
+    </select>
 </mapper>

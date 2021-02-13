@@ -45,4 +45,13 @@ public class StatisticalController {
         Layui l = Layui.data(learningPeriodInMizhiVos.size(), learningPeriodInMizhiVos);
         return JSON.toJSON(l);
     }
+
+    @PostMapping("/schoolPeriodInMizhi")
+    public Object schoolPeriodInMizhi(StatisticQueryVo statisticQueryVo, HttpSession httpSession) {
+        log.info("statistic schoolPeriodInMizhi query vo message:{}", JSON.toJSONString(statisticQueryVo));
+        statisticQueryVo.setAccount((String) httpSession.getAttribute("account"));
+        List<LearningPeriodInMizhiVo> learningPeriodInMizhiVos =  statisticService.schoolPeriodInMizhi(statisticQueryVo);
+        Layui l = Layui.data(learningPeriodInMizhiVos.size(), learningPeriodInMizhiVos);
+        return JSON.toJSON(l);
+    }
 }
