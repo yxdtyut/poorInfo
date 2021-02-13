@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author yangxudong
@@ -30,4 +31,6 @@ public interface StudentMapper {
     void updateByField(@Param("poor") UpdatePoorVo updatePoorVo);
 
     void insertBatch(@Param("list") List<SubUser> users);
+
+    List<SubUser> findByConditionWithPage(@Param("student")StudentRequest studentRequest, @Param("map") Map<String,Object> map);
 }

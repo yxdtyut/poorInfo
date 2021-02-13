@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface SubSubsidizeMapper {
@@ -43,4 +44,6 @@ public interface SubSubsidizeMapper {
     void updateByField(@Param("poor") UpdatePoorVo updatePoorVo);
 
     void createSubsidizeBatch(@Param("list") List<SubSubsidize> subSubsidizes);
+
+    List<SubsidizeAndPoor> findByConditionWithPage(@Param("poor")PoorRequest poorRequest,@Param("map") Map<String,Object> map);
 }

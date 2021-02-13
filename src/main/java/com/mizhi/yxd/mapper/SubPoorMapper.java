@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface SubPoorMapper {
@@ -37,11 +38,13 @@ public interface SubPoorMapper {
 
     List<SubPoor> selectByCondition(@Param("poor") PoorRequest poorRequest);
 
-    int findCountByCondition(@Param("poor")PoorRequest  poorRequest);
+    int findCountByCondition(@Param("poor") PoorRequest poorRequest);
 
     void updateByField(@Param("poor") UpdatePoorVo updatePoorVo);
 
     int deleteByPoorIds(@Param("list") List<String> data);
 
     void insertPoorInfo(@Param("item") SubPoor subPoor);
+
+    List<SubPoor> selectByConditionWithPage(@Param("poor") PoorRequest poorRequest, @Param("map") Map<String, Object> map);
 }

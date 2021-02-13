@@ -21,12 +21,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.activation.MimetypesFileTypeMap;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -74,7 +70,7 @@ public class PoorController {
         map.put("pagesize", lim);
         poorRequest.initSemester();
         poorRequest.setAccount((String) httpSession.getAttribute("account"));
-        List<SubPoor> subPoors = poorService.findByCondition(poorRequest);
+        List<SubPoor> subPoors = poorService.findByConditionWithPage(poorRequest, map);
         int total = poorService.findCountByCondition(poorRequest);
         List<PoorVo> poorVos = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(subPoors)) {

@@ -1,7 +1,6 @@
 package com.mizhi.yxd.service.impl;
 
 import com.mizhi.yxd.entity.SubPoor;
-import com.mizhi.yxd.entity.SubPoorExample;
 import com.mizhi.yxd.exception.GlobleException;
 import com.mizhi.yxd.mapper.SubPoorMapper;
 import com.mizhi.yxd.request.PoorRequest;
@@ -11,13 +10,8 @@ import com.mizhi.yxd.tools.SnowflakeIdWorker;
 import com.mizhi.yxd.vo.UpdatePoorVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,6 +36,11 @@ public class PoorServiceImpl implements PoorService {
     @Override
     public List<SubPoor> findByCondition(PoorRequest poorRequest) {
         return poorMapper.selectByCondition(poorRequest);
+    }
+
+    @Override
+    public List<SubPoor> findByConditionWithPage(PoorRequest poorRequest, Map<String, Object> map) {
+        return poorMapper.selectByConditionWithPage(poorRequest, map);
     }
 
     @Override

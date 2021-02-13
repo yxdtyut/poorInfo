@@ -19,8 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -111,6 +111,11 @@ public class SubsidizeServiceImpl implements SubsidizeService {
                         })
                 ).collect(toList());
         return collect;
+    }
+
+    @Override
+    public List<SubsidizeAndPoor> findByConditionWithPage(PoorRequest poorRequest, Map<String, Object> map) {
+        return subSubsidizeMapper.findByConditionWithPage(poorRequest, map);
     }
 
     @Transactional

@@ -9,6 +9,7 @@ import com.mizhi.yxd.vo.UpdatePoorVo;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -32,4 +33,6 @@ public interface SubsidizeService {
     void createSubsidizeBatch(List<SubSubsidize> subSubsidizes);
 
     List<CompletableFuture<BatchOperationRsp>> batchDealImportData(List<SubsidizeExportVo> exportVoList, HttpSession httpSession);
+
+    List<SubsidizeAndPoor> findByConditionWithPage(PoorRequest poorRequest, Map<String,Object> map);
 }

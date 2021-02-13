@@ -75,4 +75,9 @@ public class StudentServiceImpl implements StudentService {
         users.stream().forEach(user -> user.setId(SnowflakeIdWorker.primaryKey()));
         studentMapper.insertBatch(users);
     }
+
+    @Override
+    public List<SubUser> findByConditionWithPage(StudentRequest studentRequest, Map<String, Object> map) {
+        return studentMapper.findByConditionWithPage(studentRequest, map);
+    }
 }

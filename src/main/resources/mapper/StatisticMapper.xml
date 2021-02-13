@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mizhi.yxd.mapper.StatisticMapper">
+
+    <select id="learningPeriod" resultType="com.mizhi.yxd.vo.LearningPeriodRsp">
+        select  village,study_level as studyLevel,count(1) as statisticCount
+         from sub_poor where 1 = 1
+         <if test="vo.account != null and vo.account != ''">
+            and account = #{vo.account}
+         </if>
+        <if test="vo.semester != null and vo.semester != ''">
+           and semester = #{vo.semester}
+        </if>
+        GROUP BY village, study_level order by village
+    </select>
+</mapper>

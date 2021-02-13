@@ -5,6 +5,7 @@ import com.mizhi.yxd.request.StudentRequest;
 import com.mizhi.yxd.vo.UpdatePoorVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author yangxudong
@@ -27,4 +28,6 @@ public interface StudentService {
     void updateByField(UpdatePoorVo updatePoorVo);
 
     void insertBatch(List<SubUser> users);
+
+    List<SubUser> findByConditionWithPage(StudentRequest studentRequest, Map<String,Object> map);
 }

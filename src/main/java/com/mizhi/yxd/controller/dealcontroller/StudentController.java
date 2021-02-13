@@ -12,31 +12,19 @@ import com.mizhi.yxd.tools.ExcelUtils;
 import com.mizhi.yxd.tools.FileUtil;
 import com.mizhi.yxd.tools.Layui;
 import com.mizhi.yxd.validate.ValueValidate;
-import com.mizhi.yxd.vo.PoorExportVo;
 import com.mizhi.yxd.vo.StudentExportVo;
 import com.mizhi.yxd.vo.UpdatePoorVo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.activation.MimetypesFileTypeMap;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author yangxudong
@@ -60,7 +48,7 @@ public class StudentController {
         Map<String, Object> map = new HashMap<>();
         map.put("start", start);
         map.put("pagesize", lim);
-        List<SubUser> subUsers = studentService.findByCondition(studentRequest);
+        List<SubUser> subUsers = studentService.findByConditionWithPage(studentRequest, map);
         int total = studentService.findCountByCondition(studentRequest);
         Layui l = Layui.data(total, subUsers);
         return JSON.toJSON(l);

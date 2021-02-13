@@ -385,7 +385,10 @@
     select
     <include refid="Base_Column_List" />
     from sub_poor
-    where account = #{poor.account}
+    where 1 = 1
+    <if test="poor.account != null and poor.account != ''">
+      and account = #{poor.account}
+    </if>
     <if test="poor.username != null and poor.username != ''">
         and name like  concat(concat('%',#{poor.username}),'%')
     </if>
@@ -423,13 +426,87 @@
   <select id="findCountByCondition" resultType="java.lang.Integer">
     select count(1)
     from sub_poor
-    where account = #{poor.account}
+    where 1 = 1
+    <if test="poor.account != null and poor.account != ''">
+      and account = #{poor.account}
+    </if>
     <if test="poor.username != null and poor.username != ''">
-      and name like concat(concat('%',#{poor.username}),'%')
+      and name like  concat(concat('%',#{poor.username}),'%')
     </if>
     <if test="poor.idcard != null and poor.idcard != ''">
       and id_card=#{poor.idcard}
     </if>
+    <if test="poor.studyLevel != null and poor.studyLevel != ''">
+      and study_level=#{poor.studyLevel}
+    </if>
+    <if test="poor.semester != null and poor.semester != ''">
+      and semester=#{poor.semester}
+    </if>
+    <if test="poor.province != null and poor.province != ''">
+      and province=#{poor.province}
+    </if>
+    <if test="poor.county != null and poor.county != ''">
+      and county=#{poor.county}
+    </if>
+    <if test="poor.village != null and poor.village != ''">
+      and village=#{poor.village}
+    </if>
+    <if test="poor.cun != null and poor.cun != ''">
+      and cun=#{poor.cun}
+    </if>
+    <if test="poor.thisEnjoy != null and poor.thisEnjoy != ''">
+      and this_enjoy=#{poor.thisEnjoy}
+    </if>
+    <if test="poor.ids != null and poor.ids.size > 0">
+      and id in
+      <foreach collection="poor.ids" item="id" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
+  </select>
+
+  <select id="selectByConditionWithPage" resultType="com.mizhi.yxd.entity.SubPoor">
+    select
+    <include refid="Base_Column_List" />
+    from sub_poor
+    where 1 = 1
+    <if test="poor.account != null and poor.account != ''">
+      and account = #{poor.account}
+    </if>
+    <if test="poor.username != null and poor.username != ''">
+      and name like  concat(concat('%',#{poor.username}),'%')
+    </if>
+    <if test="poor.idcard != null and poor.idcard != ''">
+      and id_card=#{poor.idcard}
+    </if>
+    <if test="poor.studyLevel != null and poor.studyLevel != ''">
+      and study_level=#{poor.studyLevel}
+    </if>
+    <if test="poor.semester != null and poor.semester != ''">
+      and semester=#{poor.semester}
+    </if>
+    <if test="poor.province != null and poor.province != ''">
+      and province=#{poor.province}
+    </if>
+    <if test="poor.county != null and poor.county != ''">
+      and county=#{poor.county}
+    </if>
+    <if test="poor.village != null and poor.village != ''">
+      and village=#{poor.village}
+    </if>
+    <if test="poor.cun != null and poor.cun != ''">
+      and cun=#{poor.cun}
+    </if>
+    <if test="poor.thisEnjoy != null and poor.thisEnjoy != ''">
+      and this_enjoy=#{poor.thisEnjoy}
+    </if>
+    <if test="poor.ids != null and poor.ids.size > 0">
+      and id in
+      <foreach collection="poor.ids" item="id" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+    </if>
+    limit #{map.start},#{map.pagesize}
   </select>
 
   <update id="updateByExampleSelective" parameterType="map" >

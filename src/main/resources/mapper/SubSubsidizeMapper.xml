@@ -206,7 +206,10 @@
       <include refid="Combination_List" />
       from sub_poor as poor inner join sub_subsidize as subsidize
       on poor.id = subsidize.poor_id
-      where poor.account = #{poor.account}
+      where 1 = 1
+      <if test="poor.account != null and poor.account != ''">
+        and poor.account = #{poor.account}
+      </if>
       <if test="poor.username != null and poor.username != ''">
         and poor.name like  concat(concat('%',#{poor.username}),'%')
       </if>
@@ -281,8 +284,52 @@
       </foreach>
     </if>
   </select>
+    <select id="findByConditionWithPage" resultType="com.mizhi.yxd.entity.SubsidizeAndPoor">
+      select
+      <include refid="Combination_List" />
+      from sub_poor as poor inner join sub_subsidize as subsidize
+      on poor.id = subsidize.poor_id
+      where 1 = 1
+      <if test="poor.account != null and poor.account != ''">
+        and poor.account = #{poor.account}
+      </if>
+      <if test="poor.username != null and poor.username != ''">
+        and poor.name like  concat(concat('%',#{poor.username}),'%')
+      </if>
+      <if test="poor.idcard != null and poor.idcard != ''">
+        and poor.id_card=#{poor.idcard}
+      </if>
+      <if test="poor.province != null and poor.province != ''">
+        and poor.province=#{poor.province}
+      </if>
+      <if test="poor.county != null and poor.county != ''">
+        and poor.county=#{poor.county}
+      </if>
+      <if test="poor.village != null and poor.village != ''">
+        and poor.village=#{poor.village}
+      </if>
+      <if test="poor.cun != null and poor.cun != ''">
+        and poor.cun=#{poor.cun}
+      </if>
+      <if test="poor.studyLevel != null and poor.studyLevel != ''">
+        and poor.study_level=#{poor.studyLevel}
+      </if>
+      <if test="poor.semester != null and poor.semester != ''">
+        and poor.semester=#{poor.semester}
+      </if>
+      <if test="poor.thisEnjoy != null and poor.thisEnjoy != ''">
+        and poor.this_enjoy=#{poor.thisEnjoy}
+      </if>
+      <if test="poor.ids != null and poor.ids.size > 0">
+        and poor.id in
+        <foreach collection="poor.ids" item="id" open="(" close=")" separator=",">
+          #{id}
+        </foreach>
+      </if>
+      limit #{map.start},#{map.pagesize}
+    </select>
 
-  <update id="updateByExampleSelective" parameterType="map" >
+    <update id="updateByExampleSelective" parameterType="map" >
     update sub_subsidize
     <set >
       <if test="record.poorId != null" >

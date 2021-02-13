@@ -16,7 +16,6 @@ import com.mizhi.yxd.tools.FileUtil;
 import com.mizhi.yxd.tools.Layui;
 import com.mizhi.yxd.validate.ValueValidate;
 import com.mizhi.yxd.vo.CreateSubsidizeVo;
-import com.mizhi.yxd.vo.PoorExportVo;
 import com.mizhi.yxd.vo.SubsidizeExportVo;
 import com.mizhi.yxd.vo.UpdatePoorVo;
 import io.swagger.annotations.Api;
@@ -91,7 +90,7 @@ public class SubsidizeController {
         map.put("pagesize", lim);
         poorRequest.initSemester();
         poorRequest.setAccount((String) httpSession.getAttribute("account"));
-        List<SubsidizeAndPoor> subSubsidizes = subsidizeService.findByCondition(poorRequest);
+        List<SubsidizeAndPoor> subSubsidizes = subsidizeService.findByConditionWithPage(poorRequest, map);
         int total = subsidizeService.findCountByCondition(poorRequest);
         Layui l = Layui.data(total, subSubsidizes);
         return JSON.toJSON(l);

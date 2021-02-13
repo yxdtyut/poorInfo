@@ -68,4 +68,19 @@ public class ViewRoute {
     public String studentInfoAdd() {
         return "studentInfoAdd";
     }
+
+    @RequestMapping("/learningPeriod")
+    public String learningPeriod() {
+        return "learningPeriod";
+    }
+
+    @RequestMapping("/learningPeriodInMizhi")
+    public String learningPeriodInMizhi() {
+        return "learningPeriodInMizhi";
+    }
+
+    @RequestMapping("/schoolPeriodInMizhi")
+    public String schoolPeriodInMizhi() {
+        return "schoolPeriodInMizhi";
+    }
 }

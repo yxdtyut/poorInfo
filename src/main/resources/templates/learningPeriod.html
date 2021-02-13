@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+   <link rel="stylesheet" href="/Sys/css/layui.css">
+<link rel="stylesheet" href="/Sys/css/sign.css">
+
+
+<link rel="stylesheet"
+	href="/Sys/js/css/modules/layui-icon-extend/iconfont.css">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="/Sys/css/font.css">
+<link rel="stylesheet" href="/Sys/css/xadmin.css">
+
+
+
+
+<script type="text/javascript"
+	src="/Sys/js/jquery-3.3.1.min.js"></script>
+<script src="/Sys/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="./js/xadmin.js"></script>
+<script type="text/javascript" src = "/Sys/js/jquery.table2excel.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  
+  <body>
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite></a>
+      </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="x-body">
+      <div class="layui-row">
+        <div class="searchTable" style="margin-bottom: 20px">
+            学期：
+            <div class="layui-inline">
+                <select name="semester" id="semester" style="width: 110px;height: 38px">
+                    <option value="2021春" selected>2021春</option>
+                    <option value="2021秋">2021秋</option>
+                    <option value="2022春">2022春</option>
+                    <option value="2022秋">2022秋</option>
+                    <option value="2023春">2023春</option>
+                    <option value="2023秋">2023秋</option>
+                    <option value="2024春">2024春</option>
+                    <option value="2024秋">2024秋</option>
+                    <option value="2025春">2025春</option>
+                    <option value="2025秋">2025秋</option>
+                    <option value="2026春">2026春</option>
+                    <option value="2026秋">2026秋</option>
+                    <option value="2027春">2027春</option>
+                    <option value="2027秋">2027秋</option>
+                    <option value="2028春">2028春</option>
+                    <option value="2028秋">2028秋</option>
+                    <option value="2029春">2029春</option>
+                    <option value="2029秋">2029秋</option>
+                    <option value="2030春">2030春</option>
+                    <option value="2030秋">2030秋</option>
+                    <option value="2031春">2031春</option>
+                    <option value="2031秋">2031秋</option>
+                    <option value="2032春">2032春</option>
+                    <option value="2032秋">2032秋</option>
+                    <option value="2033春">2033春</option>
+                    <option value="2033秋">2033秋</option>
+                    <option value="2034春">2034春</option>
+                    <option value="2034秋">2034秋</option>
+                    <option value="2035春">2035春</option>
+                    <option value="2035秋">2035秋</option>
+                </select>
+            </div>
+              <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
+              <button class="layui-btn" id="clear" onclick="selectClear()">清空</button>
+        </div>
+      </div>
+      
+      <xblock >
+          <button class="layui-btn layui-btn-warm" id="exportData" onclick="exportTable()">导出</button>
+      </xblock>
+    <table id="statisticalTable" lay-filter="statisticalTable"></table>
+  
+    </div>   
+  </body>
+
+  <script >
+  var documentWidth = $(document).width();
+  layui.use('table', function(){
+      var table = layui.table;
+      table.render({
+          elem: '#statisticalTable'  //绑定table表格
+          ,id:'statisticalInfo'
+          ,method:'post'
+          ,url: '/statistic/learningPeriod' //后台springmvc接收路径
+          ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+  	        layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+	      //,curr: 5 //设定初始在第 5 页
+	      ,groups: 1 //只显示 1 个连续页码
+	      ,first: false //不显示首页
+	      ,last: false //不显示尾页
+	      ,limit:1000
+	      ,limits:[1000]
+	    }
+          ,cols: [
+        	  [
+             {type: 'checkbox',width:documentWidth*4/100} 
+              ,{type:'numbers',title:'序号', width:documentWidth*10/100, sort: true}
+              ,{field:'village', title:'乡镇', width:documentWidth*8/100, edit:"text"}
+              ,{field:'kindergarten',title:'学前',width:documentWidth*8/100, edit:"text"}
+              ,{field:'primarySchool', title:'小学', width:documentWidth*10/100, edit:"text"}
+              ,{field:'juniorHighSchool', title:'初中', width:documentWidth*10/100, edit:"text"}
+              ,{field:'highSchool', title:'普高', width:documentWidth*10/100, edit:"text"}
+              ,{field:'juniorProfession', title:'中职', width:documentWidth*10/80, edit:"false"}
+              ,{field:'highProfession', title:'高职', width:documentWidth*10/100, edit:"text"}
+              ,{field:'undergraduate', title:'本科', width:documentWidth*10/100, edit:"text"}
+              ,{field:'graduate', title:'研究生', width:documentWidth*10/100, edit:"text"}
+              ,{field:'specialEducation', title:'特殊教育', width:documentWidth*10/100, edit:"text"}
+              ,{field:'total', title:'总计', width:documentWidth*10/100, edit:"text"}
+          ]
+        	  ]
+      });
+    
+      //表格重載
+	  var $ = layui.$, active = {
+        reload: function(){
+          var semester = $('#semester');
+          // 执行重载
+          table.reload('statisticalInfo', {
+            page: {
+              curr: 1 //重新从第 1 页开始
+            },
+        url:'/statistic/learningPeriod'
+            ,where: {
+                semester: semester.val().replace(/(^\s*)|(\s*$)/g, "")
+            }
+            ,method:'post'
+          });
+        }
+      };
+    		  
+      $('.searchTable .layui-btn').on('click', function(){
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+      });
+  });
+
+  function exportTable(){
+      var table = layui.table
+      var checkStatus = table.checkStatus('poorInfo');
+      var nums="";
+      for(var i=0;i<checkStatus.data.length;i++){
+          nums += checkStatus.data[i].id+",";
+      }
+      location.href = "/poor/export?nums="+nums+"&semester="+$("#semester").val();
+  }
+</script>  
+  
+</html>
