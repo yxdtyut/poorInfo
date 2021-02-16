@@ -40,6 +40,9 @@ public class LearningPeriodVo {
     @Excel(name = "特殊教育", width = 15)
     private Integer specialEducation = 0;
 
+    @Excel(name = "博士", width = 15)
+    private Integer doctor = 0;
+
     @Excel(name = "总计", width = 15)
     private Integer total = 0;
 

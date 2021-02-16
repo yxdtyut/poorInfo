@@ -21,6 +21,7 @@ public class StatisticUtil {
         learningPeriodMap.put("高职", "highProfession");
         learningPeriodMap.put("本科", "undergraduate");
         learningPeriodMap.put("研究生", "graduate");
+        learningPeriodMap.put("博士", "doctor");
         learningPeriodMap.put("特殊教育", "specialEducation");
 
         learningPeriodInMizhiMap.put("学前人数", "kindergartenCount");

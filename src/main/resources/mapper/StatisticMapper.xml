@@ -21,7 +21,7 @@
             count(1) as statisticCount,
             sum(sub.subsidize_money) as totalMoney
         FROM
-            sub_poor as poor LEFT JOIN sub_subsidize as sub on poor.id = sub.poor_id
+            sub_poor as poor inner JOIN sub_subsidize as sub on poor.id = sub.poor_id
         WHERE
         county = '米脂县'
         <if test="vo.account != null and vo.account != '' and vo.account != 'zzzx'">
@@ -39,14 +39,14 @@
 
     <select id="schoolPeriodInMizhi" resultType="com.mizhi.yxd.vo.LearningPeriodInMizhiRsp">
         SELECT
-        poor.school as village,
-        poor.study_level AS studyLevel,
-        count(1) as statisticCount,
-        sum(sub.subsidize_money) as totalMoney
+            poor.school as village,
+            poor.study_level AS studyLevel,
+            count(1) as statisticCount,
+            sum(sub.subsidize_money) as totalMoney
         FROM
-        sub_poor as poor LEFT JOIN sub_subsidize as sub on poor.id = sub.poor_id
+            sub_poor as poor inner JOIN sub_subsidize as sub on poor.id = sub.poor_id
         WHERE
-        if_county='是'
+        if_county='县内'
         <if test="vo.account != null and vo.account != '' and vo.account != 'zzzx'">
             and account = #{vo.account}
         </if>
@@ -54,8 +54,8 @@
             and semester = #{vo.semester}
         </if>
         GROUP BY
-        poor.school,
-        poor.study_level
+           poor.school,
+           poor.study_level
         ORDER BY
         poor.school
     </select>
