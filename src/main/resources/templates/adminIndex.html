@@ -38,6 +38,9 @@
                     <a href="loginView">切换帐号</a>
                 </dd>
                 <dd>
+                    <a onclick="changePwd()">修改密码</a>
+                </dd>
+                <dd>
                     <a href="loginOut">退出</a>
                 </dd>
             </dl>
@@ -136,7 +139,24 @@
 </div>
 <!-- 底部结束 -->
 <script>
-
+    function changePwd() {
+        layer.open(
+            {
+                type: 2,
+                title: '修改密码页面',
+                skin: 'layui-layer-lan',
+                shadeClose: false,
+                shade: 0.8,
+                area:  ['450px', '450px'],
+                resize:true,
+                content:'/Sys/changePwd',
+                success: function(layero, index){
+                },
+                end: function(){
+                    window.location.reload(); //刷新父页面
+                }
+            })
+    }
 </script>
 </body>
 </html>

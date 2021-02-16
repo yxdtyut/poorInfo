@@ -13,6 +13,10 @@
         </foreach>
     </insert>
 
+    <update id="updatePwd">
+        update admin set psw = #{vo.password} where account = #{vo.account}
+    </update>
+
     <select id="findAdmin" resultType="com.mizhi.yxd.entity.Admin">
       select account,psw,name,role from admin where account=#{0} and psw=#{1} and role=#{2} limit 1
    </select>
@@ -23,5 +27,9 @@
 
     <select id="findAll" resultType="com.mizhi.yxd.entity.Admin">
         select account,psw,name,role from admin
+    </select>
+
+    <select id="findAdminByPwdVo" resultType="com.mizhi.yxd.entity.Admin">
+        select account,psw,name,role from admin where account = #{vo.account} and psw = #{vo.oldPassword}
     </select>
 </mapper>

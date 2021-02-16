@@ -19,6 +19,8 @@ public class CodeMsg {
     public static final CodeMsg ACCOUNT_IS_NULL = new CodeMsg(500102, "登录名称为空");
     public static final CodeMsg PSW_IS_NULL = new CodeMsg(500103, "密码为空");
     public static final CodeMsg NAME_IS_NULL = new CodeMsg(500104, "用户名称为空");
+    public static final CodeMsg PWD_NOT_RIGHT = new CodeMsg(500105, "原密码不正确");
+    public static final CodeMsg TWO_PWD_NOT_RIGHT = new CodeMsg(500106, "两次密码输入不一致");
 
     /**校验模块.6001xx*/
     public static final CodeMsg NAME_IDCARD_NULL = new CodeMsg(600101, "学期或者姓名或身份证为空");

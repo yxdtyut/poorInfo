@@ -2,6 +2,7 @@ package com.mizhi.yxd.service.impl;
 
 import com.mizhi.yxd.exception.GlobleException;
 import com.mizhi.yxd.result.CodeMsg;
+import com.mizhi.yxd.vo.PwdVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +50,16 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void insertBatch(List<Admin> accounts) {
 		adminMapper.insertBatch(accounts);
+	}
+
+	@Override
+	public Admin findAdminByPwdVo(PwdVo pwdVo) {
+		return adminMapper.findAdminByPwdVo(pwdVo);
+	}
+
+	@Override
+	public void updatePwd(PwdVo pwdVo) {
+		adminMapper.updatePwd(pwdVo);
 	}
 
 }

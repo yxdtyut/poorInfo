@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>密码修改页面</title>
+
+
+    
+    <link rel="stylesheet" href="/Sys/css/layui.css">
+    <link rel="stylesheet" href="/Sys/css/sign.css">
+    
+    <link rel="stylesheet" href="/Sys/js/css/modules/layui-icon-extend/iconfont.css">
+     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/Sys/css/font.css">
+	<link rel="stylesheet" href="/Sys/css/xadmin.css">
+	
+	
+<script type="text/javascript"
+	src="/Sys/js/jquery-3.3.1.min.js"></script>
+    <script src="/Sys/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+
+
+</head>
+<body class="layui-unselect lau-sign-body" style="padding-top: 0px " >
+
+<form action="" class="layui-form">
+
+    <div class="layui-form-item" >
+        <div class="layui-inline">
+            <label class="layui-form-label">原密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="oldPassword"  placeholder="请输入原密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password"  placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">确认密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="confirmPassword"  placeholder="请输入确认密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item lau-sign-other" style="margin-top: 20px;text-align:center">
+        <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="updatePwd" style="margin-right: 100px">提交</button>
+    </div>
+</form>
+
+</body>
+<script src="/Sys/lib/layui/layui.js"></script>
+<script>
+   $(function(){
+	   layui.use('form', function() {
+           var form = layui.form;
+          
+           //监听提交
+           form.on('submit(updatePwd)', function(data) {
+               // 单击之后提交按钮不可选,防止重复提交
+               var DISABLED = 'layui-btn-disabled';
+               // 增加样式
+               $('.layui-btn-normal').addClass(DISABLED);
+               // 增加属性
+               $('.layui-btn-normal').attr('disabled', 'disabled');
+
+               var loginjson= JSON.stringify(data.field);
+               var logindata=JSON.parse(loginjson);
+				data=JSON.stringify(logindata)
+				$.ajax({
+	               	 url : "/Sys/updatePwd",
+	                 data : data,
+	                 type:'POST',
+	                 dateType:'json', 
+	                 contentType : 'application/json',
+	                 success:function(data){
+	                	if(data.code=="200"){
+	                		layer.msg("修改成功！",function(){
+	                            window.parent.layer.closeAll();
+	                        });
+	                	} else {
+                            layer.msg(data.msg,{icon:5,offset:"auto",time:2000});
+                            $('.layui-btn-normal').removeClass(DISABLED);
+                            $('.layui-btn-normal').removeAttr('disabled');
+                        }
+	                 },
+	                 error:function(args){
+	                	 layer.msg(data.msg,{icon:5,offset:"auto",time:2000});
+                         $('.layui-btn-normal').removeClass(DISABLED);
+                         $('.layui-btn-normal').removeAttr('disabled');
+	                 }
+	               	});
+              		
+           });
+       });   
+   });
+</script>
+</html>

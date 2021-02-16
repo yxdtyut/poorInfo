@@ -1,6 +1,7 @@
 package com.mizhi.yxd.mapper;
 
 import com.mizhi.yxd.entity.Admin;
+import com.mizhi.yxd.vo.PwdVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import org.apache.ibatis.annotations.Param;
@@ -19,4 +20,8 @@ public interface AdminMapper {
     List<Admin> findAll();
 
     void insertBatch(@Param("accounts") List<Admin> accounts);
+
+    Admin findAdminByPwdVo(@Param("vo") PwdVo pwdVo);
+
+    void updatePwd(@Param("vo") PwdVo pwdVo);
 }

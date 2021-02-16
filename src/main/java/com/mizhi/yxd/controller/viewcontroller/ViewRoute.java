@@ -83,4 +83,9 @@ public class ViewRoute {
     public String schoolPeriodInMizhi() {
         return "schoolPeriodInMizhi";
     }
+
+    @RequestMapping("/changePwd")
+    public String changePwd() {
+        return "changePwd";
+    }
 }

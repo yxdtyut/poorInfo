@@ -12,6 +12,7 @@ import com.mizhi.yxd.result.Result;
 import com.mizhi.yxd.tools.BeanUtils;
 import com.mizhi.yxd.tools.ExcelUtils;
 import com.mizhi.yxd.vo.AccountExportVo;
+import com.mizhi.yxd.vo.PwdVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,8 +52,7 @@ public class LoginResgisterDeal {
 		dataJson = JSON.toJSONString(admin);
 		return Result.success(dataJson);
 	}
-	
-	
+
 	@RequestMapping(value = "/registUser")
 	@ResponseBody
 	public Result registUser(@RequestBody Map map) {
@@ -80,6 +80,28 @@ public class LoginResgisterDeal {
 		adminService.checkAccountExist(accounts);
 		adminService.insertBatch(accounts);
 		log.info("import account success");
+		return Result.success("success");
+	}
+
+	@RequestMapping(value = "/updatePwd")
+	@ResponseBody
+	public Result updatePwd(@RequestBody PwdVo pwdVo, HttpSession httpSession) {
+		String account = (String) httpSession.getAttribute("account");
+		pwdVo.setAccount(account);
+		pwdVo.setOldPassword(SecureUtil.md5(pwdVo.getOldPassword()));
+		// 查询用户是否存在
+		Admin admin = adminService.findAdminByPwdVo(pwdVo);
+		if (null == admin) {
+			log.error("change password is not right:{}", account);
+			throw new GlobleException(CodeMsg.PWD_NOT_RIGHT);
+		}
+		if (!pwdVo.judgePasswordSame()) {
+			throw new GlobleException(CodeMsg.TWO_PWD_NOT_RIGHT);
+		}
+		pwdVo.setPassword(SecureUtil.md5(pwdVo.getPassword()));
+		pwdVo.setConfirmPassword(SecureUtil.md5(pwdVo.getConfirmPassword()));
+		adminService.updatePwd(pwdVo);
+		log.info("update password success, account:{}", account);
 		return Result.success("success");
 	}
 }
