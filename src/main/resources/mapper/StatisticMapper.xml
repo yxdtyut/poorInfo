@@ -5,7 +5,7 @@
 
     <select id="learningPeriod" resultType="com.mizhi.yxd.vo.LearningPeriodRsp">
         select  village,study_level as studyLevel,count(1) as statisticCount
-         from sub_poor where 1 = 1
+         from sub_poor where county = '米脂县'
          <if test="vo.account != null and vo.account != ''">
             and account = #{vo.account}
          </if>
@@ -23,7 +23,7 @@
         FROM
             sub_poor as poor LEFT JOIN sub_subsidize as sub on poor.id = sub.poor_id
         WHERE
-            1 = 1
+        county = '米脂县'
         <if test="vo.account != null and vo.account != ''">
             and account = #{vo.account}
         </if>
@@ -46,7 +46,7 @@
         FROM
         sub_poor as poor LEFT JOIN sub_subsidize as sub on poor.id = sub.poor_id
         WHERE
-        1 = 1
+        if_county='是'
         <if test="vo.account != null and vo.account != ''">
             and account = #{vo.account}
         </if>

@@ -113,15 +113,21 @@
 	    }
           ,cols: [
         	  [
-             {type: 'checkbox',width:documentWidth*4/100} 
-              ,{type:'numbers',title:'序号', width:documentWidth*10/200, sort: true}
-              ,{field:'village', title:'乡镇', width:documentWidth*8/80, edit:"text"}
-              ,{field:'kindergarten',title:'学前',width:documentWidth*8/80, edit:"text"}
-              ,{field:'primarySchool', title:'小学', width:documentWidth*10/80, edit:"text"}
-              ,{field:'juniorHighSchool', title:'初中', width:documentWidth*10/80, edit:"text"}
-              ,{field:'highSchool', title:'普高', width:documentWidth*10/80, edit:"text"}
-              ,{field:'juniorProfession', title:'中职', width:documentWidth*10/80, edit:"false"}
-              ,{field:'total', title:'总计', width:documentWidth*10/80, edit:"text"}
+             {type: 'checkbox',width:documentWidth*4/100}
+                  ,{type:'numbers',title:'序号', width:documentWidth*10/200, sort: true}
+                  ,{field:'village', title:'乡镇', width:documentWidth*8/100, edit:"text"}
+                  ,{field:'kindergartenCount',title:'学前(人数)',width:documentWidth*10/150, edit:"text"}
+                  ,{field:'kindergartenMoney',title:'学前(金额)',width:documentWidth*10/150, edit:"text"}
+                  ,{field:'primarySchoolCount', title:'小学(人数)', width:documentWidth*10/150, edit:"text"}
+                  ,{field:'primarySchoolMoney', title:'小学(金额)', width:documentWidth*10/150, edit:"text"}
+                  ,{field:'juniorHighSchoolCount', title:'初中(人数)', width:documentWidth*10/150, edit:"text"}
+                  ,{field:'juniorHighSchoolMoney', title:'初中(金额)', width:documentWidth*10/150, edit:"text"}
+                  ,{field:'highSchoolCount', title:'普高(人数)', width:documentWidth*10/150, edit:"text"}
+                  ,{field:'highSchoolMoney', title:'普高(金额)', width:documentWidth*10/150, edit:"text"}
+                  ,{field:'juniorProfessionCount', title:'中职(人数)', width:documentWidth*10/150, edit:"false"}
+                  ,{field:'juniorProfessionMoney', title:'中职(金额)', width:documentWidth*10/150, edit:"false"}
+                  ,{field:'totalCount', title:'总计(人数)', width:documentWidth*10/150, edit:"text"}
+                  ,{field:'totalMoney', title:'总计(金额)', width:documentWidth*10/150, edit:"text"}
           ]
         	  ]
       });

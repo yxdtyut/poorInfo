@@ -1,15 +1,11 @@
 package com.mizhi.yxd.controller.dealcontroller;
 
 import com.alibaba.fastjson.JSON;
-import com.mizhi.yxd.entity.SubPoor;
-import com.mizhi.yxd.request.PoorRequest;
 import com.mizhi.yxd.service.StatisticService;
-import com.mizhi.yxd.tools.BeanUtils;
 import com.mizhi.yxd.tools.ExcelUtils;
 import com.mizhi.yxd.tools.Layui;
 import com.mizhi.yxd.vo.LearningPeriodInMizhiVo;
 import com.mizhi.yxd.vo.LearningPeriodVo;
-import com.mizhi.yxd.vo.PoorExportVo;
 import com.mizhi.yxd.vo.StatisticQueryVo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 /**
