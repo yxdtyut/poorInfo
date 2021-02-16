@@ -76,7 +76,7 @@ public class LoginResgisterDeal {
 		List<AccountExportVo> exportVoList = ExcelUtils.importExcel(file, AccountExportVo.class);
 		exportVoList.stream().forEach(accountExportVo -> accountExportVo.validate());
 		final List<Admin> accounts = BeanUtils.copyProperties(exportVoList, Admin.class);
-		log.info("import account:{}", JSON.toJSONString(accounts));
+		accounts.stream().forEach(account -> SecureUtil.md5(account.getPsw()));
 		adminService.checkAccountExist(accounts);
 		adminService.insertBatch(accounts);
 		log.info("import account success");
