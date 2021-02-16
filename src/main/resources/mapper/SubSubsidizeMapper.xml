@@ -207,7 +207,7 @@
       from sub_poor as poor inner join sub_subsidize as subsidize
       on poor.id = subsidize.poor_id
       where 1 = 1
-      <if test="poor.account != null and poor.account != ''">
+      <if test="poor.account != null and poor.account != '' and poor.account != 'zzzx'">
         and poor.account = #{poor.account}
       </if>
       <if test="poor.username != null and poor.username != ''">
@@ -249,7 +249,10 @@
     select count(1)
     from sub_poor as poor inner join sub_subsidize as subsidize
     on poor.id = subsidize.poor_id
-    where poor.account = #{poor.account}
+    where 1 = 1
+    <if test="poor.account != null and poor.account != '' and poor.account != 'zzzx'">
+      and poor.account = #{poor.account}
+    </if>
     <if test="poor.username != null and poor.username != ''">
       and poor.name like  concat(concat('%',#{poor.username}),'%')
     </if>
@@ -284,13 +287,13 @@
       </foreach>
     </if>
   </select>
-    <select id="findByConditionWithPage" resultType="com.mizhi.yxd.entity.SubsidizeAndPoor">
+    <select id="findByConditionWithPage" resultMap="combinationMap">
       select
       <include refid="Combination_List" />
       from sub_poor as poor inner join sub_subsidize as subsidize
       on poor.id = subsidize.poor_id
       where 1 = 1
-      <if test="poor.account != null and poor.account != ''">
+      <if test="poor.account != null and poor.account != '' and poor.account != 'zzzx'">
         and poor.account = #{poor.account}
       </if>
       <if test="poor.username != null and poor.username != ''">

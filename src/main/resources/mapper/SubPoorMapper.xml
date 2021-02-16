@@ -386,7 +386,7 @@
     <include refid="Base_Column_List" />
     from sub_poor
     where 1 = 1
-    <if test="poor.account != null and poor.account != ''">
+    <if test="poor.account != null and poor.account != '' and poor.account != 'zzzx'">
       and account = #{poor.account}
     </if>
     <if test="poor.username != null and poor.username != ''">
@@ -427,7 +427,7 @@
     select count(1)
     from sub_poor
     where 1 = 1
-    <if test="poor.account != null and poor.account != ''">
+    <if test="poor.account != null and poor.account != '' and poor.account != 'zzzx'">
       and account = #{poor.account}
     </if>
     <if test="poor.username != null and poor.username != ''">
@@ -465,12 +465,12 @@
     </if>
   </select>
 
-  <select id="selectByConditionWithPage" resultType="com.mizhi.yxd.entity.SubPoor">
+  <select id="selectByConditionWithPage" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from sub_poor
     where 1 = 1
-    <if test="poor.account != null and poor.account != ''">
+    <if test="poor.account != null and poor.account != ''  and poor.account != 'zzzx'">
       and account = #{poor.account}
     </if>
     <if test="poor.username != null and poor.username != ''">
@@ -590,7 +590,7 @@
       <if test="record.thisEnjoy != null" >
         this_enjoy = #{record.thisEnjoy,jdbcType=VARCHAR},
       </if>
-      <if test="record.account != null" >
+      <if test="record.account != null  and record.account != 'zzzx'" >
         account = #{record.account,jdbcType=VARCHAR},
       </if>
       <if test="record.semester != null" >
@@ -713,7 +713,7 @@
       <if test="thisEnjoy != null" >
         this_enjoy = #{thisEnjoy,jdbcType=VARCHAR},
       </if>
-      <if test="account != null" >
+      <if test="account != null  and account != 'zzzx'" >
         account = #{account,jdbcType=VARCHAR},
       </if>
       <if test="semester != null" >
