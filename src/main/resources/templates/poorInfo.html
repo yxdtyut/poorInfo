@@ -17,9 +17,6 @@
 <link rel="stylesheet" href="/Sys/css/font.css">
 <link rel="stylesheet" href="/Sys/css/xadmin.css">
 
-
-
-
 <script type="text/javascript"
 	src="/Sys/js/jquery-3.3.1.min.js"></script>
 <script src="/Sys/lib/layui/layui.js" charset="utf-8"></script>
@@ -121,7 +118,6 @@
           <button class="layui-btn layui-btn-warm" id="exportData" onclick="exportTable()">导出</button>
           <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
           <button class="layui-btn layui-btn-normal" id="addSusidizeByCondition" onclick="addSusidizeByCondition()">根据条件添加资助库</button>
-          <button class="layui-btn layui-btn-normal" id="importAccount">导入登录用户</button>
       </xblock>
     <table id="poorTable" lay-filter="poorTable"></table>
   
@@ -132,9 +128,7 @@
       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="add">添加至资助库</a>
       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
   </script>
-  
-  
-  
+
   <script >
   var documentWidth = $(document).width();
   layui.use('table', function(){
@@ -406,24 +400,6 @@
                    layer.msg('导入失败,' + data.msg,{icon:6,offset:"auto",time:3000});//提示框
                }
            }
-      });
-  })
-
-  layui.use(['form','layer','table', 'upload'], function(){
-      var table = layui.table
-          ,form = layui.form,upload = layui.upload;
-      upload.render({
-          elem: '#importAccount'
-          ,exts: "xls|xlsx|xlsm"
-          ,url: '/Sys/importAccount'
-          ,done: function (data) {
-              if (data.code == 200) {
-                  layer.msg('导入成功！',{icon:6,offset:"auto",time:2000});//提示框
-                  layer._delay(location.reload(),2000)
-              } else {
-                  layer.msg('导入失败,' + data.msg,{icon:6,offset:"auto",time:3000});//提示框
-              }
-          }
       });
   })
 

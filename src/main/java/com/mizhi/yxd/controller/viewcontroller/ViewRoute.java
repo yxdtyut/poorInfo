@@ -88,4 +88,9 @@ public class ViewRoute {
     public String changePwd() {
         return "changePwd";
     }
+
+    @RequestMapping("/baseFunction")
+    public String baseFunction() {
+        return "baseFunction";
+    }
 }

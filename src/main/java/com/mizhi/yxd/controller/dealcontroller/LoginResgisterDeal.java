@@ -14,6 +14,7 @@ import com.mizhi.yxd.tools.ExcelUtils;
 import com.mizhi.yxd.vo.AccountExportVo;
 import com.mizhi.yxd.vo.PwdVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -72,11 +73,15 @@ public class LoginResgisterDeal {
 
 	@PostMapping(value = "/importAccount")
 	@ResponseBody
-	public Result<String> importExcel(MultipartFile file) throws IOException {
+	public Result<String> importExcel(MultipartFile file, HttpSession httpSession) throws IOException {
+		String loginAccount = (String) httpSession.getAttribute("account");
+		if (!loginAccount.equals("zzzx")) {
+			throw new GlobleException(CodeMsg.NOT_SYS_USER);
+		}
 		List<AccountExportVo> exportVoList = ExcelUtils.importExcel(file, AccountExportVo.class);
 		exportVoList.stream().forEach(accountExportVo -> accountExportVo.validate());
 		final List<Admin> accounts = BeanUtils.copyProperties(exportVoList, Admin.class);
-		accounts.stream().forEach(account -> SecureUtil.md5(account.getPsw()));
+		accounts.stream().forEach(account -> account.setPsw(SecureUtil.md5(account.getPsw())));
 		adminService.checkAccountExist(accounts);
 		adminService.insertBatch(accounts);
 		log.info("import account success");
