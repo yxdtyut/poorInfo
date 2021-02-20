@@ -29,6 +29,7 @@ public class ValueValidate {
         map.put("village","village");
         map.put("cun","cun");
         map.put("idCard","id_card");
+        map.put("buildCard","build_card");
         map.put("sixFifteen","six_fifteen");
         map.put("headOfHouseNum","head_of_house_num");
         map.put("headOfHouseName","head_of_house_name");
@@ -83,6 +84,10 @@ public class ValueValidate {
 
         if ("idCard".equals(feild) && !ValidateUtils.checkIdCard(value)) {
             throw new GlobleException(CodeMsg.IDCARD_NOT_RIGHT);
+        }
+
+        if ("buildCard".equals(feild) && (!"是".equals(value) && !"否".equals(value))) {
+            throw new GlobleException(CodeMsg.DUILD_CARD_NOT_RIGHT);
         }
 
         if ("headOfHouseIdCard".equals(feild) && !ValidateUtils.checkIdCard(value)) {

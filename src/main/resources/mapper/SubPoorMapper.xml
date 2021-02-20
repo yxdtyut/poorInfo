@@ -9,6 +9,7 @@
     <result column="cun" property="cun" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="id_card" property="idCard" jdbcType="VARCHAR" />
+    <result column="build_card" property="buildCard" jdbcType="VARCHAR" />
     <result column="six_fifteen" property="sixFifteen" jdbcType="VARCHAR" />
     <result column="head_of_house_num" property="headOfHouseNum" jdbcType="VARCHAR" />
     <result column="head_of_house_name" property="headOfHouseName" jdbcType="VARCHAR" />
@@ -31,99 +32,17 @@
     <result column="account" property="account" jdbcType="VARCHAR" />
     <result column="semester" property="semester" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
+
   <sql id="Base_Column_List" >
-    id, province, county, village, cun, name, id_card, six_fifteen, head_of_house_num, 
+    id, province, county, village, cun, name, id_card, build_card, six_fifteen, head_of_house_num,
     head_of_house_name, head_of_house_id_card, head_of_house_tel, school, study_level, grade, clazz, student_number,
     study_way, if_disability, disability_number, not_in_school_reason, poor_type,
     if_village, if_county, if_province, this_enjoy, account, semester
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mizhi.yxd.entity.SubPoorExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from sub_poor
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from sub_poor
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from sub_poor
     where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.mizhi.yxd.entity.SubPoorExample" >
-    delete from sub_poor
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
   </delete>
 
   <delete id="deleteByPoorIds">
@@ -133,206 +52,10 @@
     </foreach>
   </delete>
 
-  <insert id="insert" parameterType="com.mizhi.yxd.entity.SubPoor" >
-    insert into sub_poor (id, province, county, 
-      village, cun, name, 
-      id_card, six_fifteen, head_of_house_num, 
-      head_of_house_name, head_of_house_id_card, head_of_house_tel, school,
-      study_level, grade, clazz, 
-      student_number, study_way, if_disability,
-      disability_number, not_in_school_reason, poor_type, 
-      if_village, if_county, if_province, 
-      this_enjoy, account, semester)
-    values (#{id,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{county,jdbcType=VARCHAR}, 
-      #{village,jdbcType=VARCHAR}, #{cun,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{idCard,jdbcType=VARCHAR}, #{sixFifteen,jdbcType=VARCHAR}, #{headOfHouseNum,jdbcType=VARCHAR}, 
-      #{headOfHouseName,jdbcType=VARCHAR},#{headOfHouseIdCard,jdbcType=VARCHAR}, #{headOfHouseTel,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR},
-      #{studyLevel,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{clazz,jdbcType=VARCHAR}, 
-      #{studentNumber,jdbcType=VARCHAR}, #{studyWay,jdbcType=VARCHAR}, #{ifDisability,jdbcType=VARCHAR}, 
-      #{disabilityNumber,jdbcType=VARCHAR}, #{notInSchoolReason,jdbcType=VARCHAR}, #{poorType,jdbcType=VARCHAR}, 
-      #{ifVillage,jdbcType=VARCHAR}, #{ifCounty,jdbcType=VARCHAR}, #{ifProvince,jdbcType=VARCHAR}, 
-      #{thisEnjoy,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{semester,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.mizhi.yxd.entity.SubPoor" >
-    insert into sub_poor
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="province != null" >
-        province,
-      </if>
-      <if test="county != null" >
-        county,
-      </if>
-      <if test="village != null" >
-        village,
-      </if>
-      <if test="cun != null" >
-        cun,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="idCard != null" >
-        id_card,
-      </if>
-      <if test="sixFifteen != null" >
-        six_fifteen,
-      </if>
-      <if test="headOfHouseNum != null" >
-        head_of_house_num,
-      </if>
-      <if test="headOfHouseName != null" >
-        head_of_house_name,
-      </if>
-      <if test="headOfHouseIdCard != null" >
-        head_of_house_id_card,
-      </if>
-      <if test="headOfHouseTel != null" >
-        head_of_house_tel,
-      </if>
-      <if test="school != null" >
-        school,
-      </if>
-      <if test="studyLevel != null" >
-        study_level,
-      </if>
-      <if test="grade != null" >
-        grade,
-      </if>
-      <if test="clazz != null" >
-        clazz,
-      </if>
-      <if test="studentNumber != null" >
-        student_number,
-      </if>
-      <if test="studyWay != null" >
-        study_way,
-      </if>
-      <if test="ifDisability != null" >
-        "if_disability",
-      </if>
-      <if test="disabilityNumber != null" >
-        disability_number,
-      </if>
-      <if test="notInSchoolReason != null" >
-        not_in_school_reason,
-      </if>
-      <if test="poorType != null" >
-        poor_type,
-      </if>
-      <if test="ifVillage != null" >
-        if_village,
-      </if>
-      <if test="ifCounty != null" >
-        if_county,
-      </if>
-      <if test="ifProvince != null" >
-        if_province,
-      </if>
-      <if test="thisEnjoy != null" >
-        this_enjoy,
-      </if>
-      <if test="account != null" >
-        account,
-      </if>
-      <if test="semester != null" >
-        semester,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null" >
-        #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="county != null" >
-        #{county,jdbcType=VARCHAR},
-      </if>
-      <if test="village != null" >
-        #{village,jdbcType=VARCHAR},
-      </if>
-      <if test="cun != null" >
-        #{cun,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="idCard != null" >
-        #{idCard,jdbcType=VARCHAR},
-      </if>
-      <if test="sixFifteen != null" >
-        #{sixFifteen,jdbcType=VARCHAR},
-      </if>
-      <if test="headOfHouseNum != null" >
-        #{headOfHouseNum,jdbcType=VARCHAR},
-      </if>
-      <if test="headOfHouseName != null" >
-        #{headOfHouseName,jdbcType=VARCHAR},
-      </if>
-      <if test="headOfHouseIdCard != null" >
-        #{headOfHouseIdCard,jdbcType=VARCHAR},
-      </if>
-      <if test="headOfHouseTel != null" >
-        #{headOfHouseTel,jdbcType=VARCHAR},
-      </if>
-      <if test="school != null" >
-        #{school,jdbcType=VARCHAR},
-      </if>
-      <if test="studyLevel != null" >
-        #{studyLevel,jdbcType=VARCHAR},
-      </if>
-      <if test="grade != null" >
-        #{grade,jdbcType=VARCHAR},
-      </if>
-      <if test="clazz != null" >
-        #{clazz,jdbcType=VARCHAR},
-      </if>
-      <if test="studentNumber != null" >
-        #{studentNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="studyWay != null" >
-        #{studyWay,jdbcType=VARCHAR},
-      </if>
-      <if test="ifDisability != null" >
-        #{ifDisability,jdbcType=VARCHAR},
-      </if>
-      <if test="disabilityNumber != null" >
-        #{disabilityNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="notInSchoolReason != null" >
-        #{notInSchoolReason,jdbcType=VARCHAR},
-      </if>
-      <if test="poorType != null" >
-        #{poorType,jdbcType=VARCHAR},
-      </if>
-      <if test="ifVillage != null" >
-        #{ifVillage,jdbcType=VARCHAR},
-      </if>
-      <if test="ifCounty != null" >
-        #{ifCounty,jdbcType=VARCHAR},
-      </if>
-      <if test="ifProvince != null" >
-        #{ifProvince,jdbcType=VARCHAR},
-      </if>
-      <if test="thisEnjoy != null" >
-        #{thisEnjoy,jdbcType=VARCHAR},
-      </if>
-      <if test="account != null" >
-        #{account,jdbcType=VARCHAR},
-      </if>
-      <if test="semester != null" >
-        #{semester,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-
   <insert id="insertBatch">
     insert into sub_poor (id, province, county,
     village, cun, name,
-    id_card, six_fifteen, head_of_house_num,
+    id_card, build_card, six_fifteen, head_of_house_num,
     head_of_house_name,head_of_house_id_card, head_of_house_tel, school,
     study_level, grade, clazz,
     student_number, study_way, if_disability,
@@ -343,7 +66,7 @@
     <foreach collection="list" item="item" index="index" separator=",">
       (#{item.id,jdbcType=VARCHAR}, #{item.province,jdbcType=VARCHAR}, #{item.county,jdbcType=VARCHAR},
       #{item.village,jdbcType=VARCHAR}, #{item.cun,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR},
-      #{item.idCard,jdbcType=VARCHAR}, #{item.sixFifteen,jdbcType=VARCHAR}, #{item.headOfHouseNum,jdbcType=VARCHAR},
+      #{item.idCard,jdbcType=VARCHAR},#{item.buildCard,jdbcType=VARCHAR}, #{item.sixFifteen,jdbcType=VARCHAR}, #{item.headOfHouseNum,jdbcType=VARCHAR},
       #{item.headOfHouseName,jdbcType=VARCHAR},#{item.headOfHouseIdCard,jdbcType=VARCHAR}, #{item.headOfHouseTel,jdbcType=VARCHAR}, #{item.school,jdbcType=VARCHAR},
       #{item.studyLevel,jdbcType=VARCHAR}, #{item.grade,jdbcType=VARCHAR}, #{item.clazz,jdbcType=VARCHAR},
       #{item.studentNumber,jdbcType=VARCHAR}, #{item.studyWay,jdbcType=VARCHAR}, #{item.ifDisability,jdbcType=VARCHAR},
@@ -356,7 +79,7 @@
   <insert id="insertPoorInfo">
     insert into sub_poor (id, province, county,
     village, cun, name,
-    id_card, six_fifteen, head_of_house_num,
+    id_card,build_card, six_fifteen, head_of_house_num,
     head_of_house_name,head_of_house_id_card, head_of_house_tel, school,
     study_level, grade, clazz,
     student_number, study_way, if_disability,
@@ -365,7 +88,7 @@
     this_enjoy, account, semester) values
     (#{item.id,jdbcType=VARCHAR}, #{item.province,jdbcType=VARCHAR}, #{item.county,jdbcType=VARCHAR},
       #{item.village,jdbcType=VARCHAR}, #{item.cun,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR},
-      #{item.idCard,jdbcType=VARCHAR}, #{item.sixFifteen,jdbcType=VARCHAR}, #{item.headOfHouseNum,jdbcType=VARCHAR},
+      #{item.idCard,jdbcType=VARCHAR},#{item.buildCard,jdbcType=VARCHAR}, #{item.sixFifteen,jdbcType=VARCHAR}, #{item.headOfHouseNum,jdbcType=VARCHAR},
       #{item.headOfHouseName,jdbcType=VARCHAR},#{item.headOfHouseIdCard,jdbcType=VARCHAR}, #{item.headOfHouseTel,jdbcType=VARCHAR}, #{item.school,jdbcType=VARCHAR},
       #{item.studyLevel,jdbcType=VARCHAR}, #{item.grade,jdbcType=VARCHAR}, #{item.clazz,jdbcType=VARCHAR},
       #{item.studentNumber,jdbcType=VARCHAR}, #{item.studyWay,jdbcType=VARCHAR}, #{item.ifDisability,jdbcType=VARCHAR},
@@ -373,13 +96,6 @@
       #{item.ifVillage,jdbcType=VARCHAR}, #{item.ifCounty,jdbcType=VARCHAR}, #{item.ifProvince,jdbcType=VARCHAR},
       #{item.thisEnjoy,jdbcType=VARCHAR}, #{item.account,jdbcType=VARCHAR}, #{item.semester,jdbcType=VARCHAR})
   </insert>
-
-  <select id="countByExample" parameterType="com.mizhi.yxd.entity.SubPoorExample" resultType="java.lang.Integer" >
-    select count(*) from sub_poor
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
 
   <select id="selectByCondition" resultMap="BaseResultMap">
     select
@@ -508,251 +224,6 @@
     </if>
     limit #{map.start},#{map.pagesize}
   </select>
-
-  <update id="updateByExampleSelective" parameterType="map" >
-    update sub_poor
-    <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=VARCHAR},
-      </if>
-      <if test="record.province != null" >
-        province = #{record.province,jdbcType=VARCHAR},
-      </if>
-      <if test="record.county != null" >
-        county = #{record.county,jdbcType=VARCHAR},
-      </if>
-      <if test="record.village != null" >
-        village = #{record.village,jdbcType=VARCHAR},
-      </if>
-      <if test="record.cun != null" >
-        cun = #{record.cun,jdbcType=VARCHAR},
-      </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.idCard != null" >
-        id_card = #{record.idCard,jdbcType=VARCHAR},
-      </if>
-      <if test="record.sixFifteen != null" >
-        six_fifteen = #{record.sixFifteen,jdbcType=VARCHAR},
-      </if>
-      <if test="record.headOfHouseNum != null" >
-        head_of_house_num = #{record.headOfHouseNum,jdbcType=VARCHAR},
-      </if>
-      <if test="record.headOfHouseName != null" >
-        head_of_house_name = #{record.headOfHouseName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.headOfHouseIdCard != null" >
-        head_of_house_id_card = #{record.headOfHouseIdCard,jdbcType=VARCHAR},
-      </if>
-      <if test="record.headOfHouseTel != null" >
-        head_of_house_tel = #{record.headOfHouseTel,jdbcType=VARCHAR},
-      </if>
-      <if test="record.school != null" >
-        school = #{record.school,jdbcType=VARCHAR},
-      </if>
-      <if test="record.studyLevel != null" >
-        study_level = #{record.studyLevel,jdbcType=VARCHAR},
-      </if>
-      <if test="record.grade != null" >
-        grade = #{record.grade,jdbcType=VARCHAR},
-      </if>
-      <if test="record.clazz != null" >
-        clazz = #{record.clazz,jdbcType=VARCHAR},
-      </if>
-      <if test="record.studentNumber != null" >
-        student_number = #{record.studentNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="record.studyWay != null" >
-        study_way = #{record.studyWay,jdbcType=VARCHAR},
-      </if>
-      <if test="record.ifDisability != null" >
-        "if_disability" = #{record.ifDisability,jdbcType=VARCHAR},
-      </if>
-      <if test="record.disabilityNumber != null" >
-        disability_number = #{record.disabilityNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="record.notInSchoolReason != null" >
-        not_in_school_reason = #{record.notInSchoolReason,jdbcType=VARCHAR},
-      </if>
-      <if test="record.poorType != null" >
-        poor_type = #{record.poorType,jdbcType=VARCHAR},
-      </if>
-      <if test="record.ifVillage != null" >
-        if_village = #{record.ifVillage,jdbcType=VARCHAR},
-      </if>
-      <if test="record.ifCounty != null" >
-        if_county = #{record.ifCounty,jdbcType=VARCHAR},
-      </if>
-      <if test="record.ifProvince != null" >
-        if_province = #{record.ifProvince,jdbcType=VARCHAR},
-      </if>
-      <if test="record.thisEnjoy != null" >
-        this_enjoy = #{record.thisEnjoy,jdbcType=VARCHAR},
-      </if>
-      <if test="record.account != null  and record.account != 'zzzx'" >
-        account = #{record.account,jdbcType=VARCHAR},
-      </if>
-      <if test="record.semester != null" >
-        semester = #{record.semester,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update sub_poor
-    set id = #{record.id,jdbcType=VARCHAR},
-      province = #{record.province,jdbcType=VARCHAR},
-      county = #{record.county,jdbcType=VARCHAR},
-      village = #{record.village,jdbcType=VARCHAR},
-      cun = #{record.cun,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      id_card = #{record.idCard,jdbcType=VARCHAR},
-      six_fifteen = #{record.sixFifteen,jdbcType=VARCHAR},
-      head_of_house_num = #{record.headOfHouseNum,jdbcType=VARCHAR},
-      head_of_house_name = #{record.headOfHouseName,jdbcType=VARCHAR},
-      head_of_house_id_card = #{record.headOfHouseIdCard,jdbcType=VARCHAR},
-      head_of_house_tel = #{record.headOfHouseTel,jdbcType=VARCHAR},
-      school = #{record.school,jdbcType=VARCHAR},
-      study_level = #{record.studyLevel,jdbcType=VARCHAR},
-      grade = #{record.grade,jdbcType=VARCHAR},
-      clazz = #{record.clazz,jdbcType=VARCHAR},
-      student_number = #{record.studentNumber,jdbcType=VARCHAR},
-      study_way = #{record.studyWay,jdbcType=VARCHAR},
-      "if_disability" = #{record.ifDisability,jdbcType=VARCHAR},
-      disability_number = #{record.disabilityNumber,jdbcType=VARCHAR},
-      not_in_school_reason = #{record.notInSchoolReason,jdbcType=VARCHAR},
-      poor_type = #{record.poorType,jdbcType=VARCHAR},
-      if_village = #{record.ifVillage,jdbcType=VARCHAR},
-      if_county = #{record.ifCounty,jdbcType=VARCHAR},
-      if_province = #{record.ifProvince,jdbcType=VARCHAR},
-      this_enjoy = #{record.thisEnjoy,jdbcType=VARCHAR},
-      account = #{record.account,jdbcType=VARCHAR},
-      semester = #{record.semester,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mizhi.yxd.entity.SubPoor" >
-    update sub_poor
-    <set >
-      <if test="province != null" >
-        province = #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="county != null" >
-        county = #{county,jdbcType=VARCHAR},
-      </if>
-      <if test="village != null" >
-        village = #{village,jdbcType=VARCHAR},
-      </if>
-      <if test="cun != null" >
-        cun = #{cun,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="idCard != null" >
-        id_card = #{idCard,jdbcType=VARCHAR},
-      </if>
-      <if test="sixFifteen != null" >
-        six_fifteen = #{sixFifteen,jdbcType=VARCHAR},
-      </if>
-      <if test="headOfHouseNum != null" >
-        head_of_house_num = #{headOfHouseNum,jdbcType=VARCHAR},
-      </if>
-      <if test="headOfHouseName != null" >
-        head_of_house_name = #{headOfHouseName,jdbcType=VARCHAR},
-      </if>
-      <if test="headOfHouseIdCard != null" >
-        head_of_house_id_card = #{headOfHouseIdCard,jdbcType=VARCHAR},
-      </if>
-      <if test="headOfHouseTel != null" >
-        head_of_house_tel = #{headOfHouseTel,jdbcType=VARCHAR},
-      </if>
-      <if test="school != null" >
-        school = #{school,jdbcType=VARCHAR},
-      </if>
-      <if test="studyLevel != null" >
-        study_level = #{studyLevel,jdbcType=VARCHAR},
-      </if>
-      <if test="grade != null" >
-        grade = #{grade,jdbcType=VARCHAR},
-      </if>
-      <if test="clazz != null" >
-        clazz = #{clazz,jdbcType=VARCHAR},
-      </if>
-      <if test="studentNumber != null" >
-        student_number = #{studentNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="studyWay != null" >
-        study_way = #{studyWay,jdbcType=VARCHAR},
-      </if>
-      <if test="ifDisability != null" >
-        "if_disability" = #{ifDisability,jdbcType=VARCHAR},
-      </if>
-      <if test="disabilityNumber != null" >
-        disability_number = #{disabilityNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="notInSchoolReason != null" >
-        not_in_school_reason = #{notInSchoolReason,jdbcType=VARCHAR},
-      </if>
-      <if test="poorType != null" >
-        poor_type = #{poorType,jdbcType=VARCHAR},
-      </if>
-      <if test="ifVillage != null" >
-        if_village = #{ifVillage,jdbcType=VARCHAR},
-      </if>
-      <if test="ifCounty != null" >
-        if_county = #{ifCounty,jdbcType=VARCHAR},
-      </if>
-      <if test="ifProvince != null" >
-        if_province = #{ifProvince,jdbcType=VARCHAR},
-      </if>
-      <if test="thisEnjoy != null" >
-        this_enjoy = #{thisEnjoy,jdbcType=VARCHAR},
-      </if>
-      <if test="account != null  and account != 'zzzx'" >
-        account = #{account,jdbcType=VARCHAR},
-      </if>
-      <if test="semester != null" >
-        semester = #{semester,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.mizhi.yxd.entity.SubPoor" >
-    update sub_poor
-    set province = #{province,jdbcType=VARCHAR},
-      county = #{county,jdbcType=VARCHAR},
-      village = #{village,jdbcType=VARCHAR},
-      cun = #{cun,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      id_card = #{idCard,jdbcType=VARCHAR},
-      six_fifteen = #{sixFifteen,jdbcType=VARCHAR},
-      head_of_house_num = #{headOfHouseNum,jdbcType=VARCHAR},
-      head_of_house_name = #{headOfHouseName,jdbcType=VARCHAR},
-      head_of_house_id_card = #{headOfHouseIdCard,jdbcType=VARCHAR},
-      head_of_house_tel = #{headOfHouseTel,jdbcType=VARCHAR},
-      school = #{school,jdbcType=VARCHAR},
-      study_level = #{studyLevel,jdbcType=VARCHAR},
-      grade = #{grade,jdbcType=VARCHAR},
-      clazz = #{clazz,jdbcType=VARCHAR},
-      student_number = #{studentNumber,jdbcType=VARCHAR},
-      study_way = #{studyWay,jdbcType=VARCHAR},
-      "if_disability" = #{ifDisability,jdbcType=VARCHAR},
-      disability_number = #{disabilityNumber,jdbcType=VARCHAR},
-      not_in_school_reason = #{notInSchoolReason,jdbcType=VARCHAR},
-      poor_type = #{poorType,jdbcType=VARCHAR},
-      if_village = #{ifVillage,jdbcType=VARCHAR},
-      if_county = #{ifCounty,jdbcType=VARCHAR},
-      if_province = #{ifProvince,jdbcType=VARCHAR},
-      this_enjoy = #{thisEnjoy,jdbcType=VARCHAR},
-      account = #{account,jdbcType=VARCHAR}
-      semester = #{semester,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
 
   <update id="updateByField">
     update sub_poor set ${poor.field} = #{poor.value} where id = #{poor.id} and account = #{poor.account}

@@ -22,6 +22,8 @@ public class SubPoor {
 
     private String idCard;
 
+    private String buildCard;
+
     private String sixFifteen;
 
     private String headOfHouseNum;

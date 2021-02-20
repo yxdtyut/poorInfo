@@ -25,6 +25,8 @@ public class SubsidizeAndPoor{
 
     private String idCard;
 
+    private String buildCard;
+
     private String sixFifteen;
 
     private String headOfHouseNum;

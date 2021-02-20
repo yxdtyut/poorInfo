@@ -13,27 +13,11 @@ import java.util.Map;
 
 @Mapper
 public interface SubSubsidizeMapper {
-    int countByExample(SubSubsidizeExample example);
-
-    int deleteByExample(SubSubsidizeExample example);
-
     int deleteByPrimaryKey(String poorId);
 
     int insert(SubSubsidize record);
 
-    int insertSelective(SubSubsidize record);
-
-    List<SubSubsidize> selectByExample(SubSubsidizeExample example);
-
     SubSubsidize selectByPrimaryKey(String poorId);
-
-    int updateByExampleSelective(@Param("record") SubSubsidize record, @Param("example") SubSubsidizeExample example);
-
-    int updateByExample(@Param("record") SubSubsidize record, @Param("example") SubSubsidizeExample example);
-
-    int updateByPrimaryKeySelective(SubSubsidize record);
-
-    int updateByPrimaryKey(SubSubsidize record);
 
     List<SubsidizeAndPoor> findByCondition(@Param("poor") PoorRequest poorRequest);
 

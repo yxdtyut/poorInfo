@@ -25,6 +25,8 @@ public class PoorVo {
 
     private String idCard;
 
+    private String buildCard;
+
     private String betweenSixFifteen;
 
     private String headOfHouseNum;
