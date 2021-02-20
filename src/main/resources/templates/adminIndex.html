@@ -53,7 +53,7 @@
 <div class="left-nav">
     <div id="side-nav" style="width: 100%; height: 57%">
         <ul id="nav">
-
+            <li th:id="hide" hidden th:text="${session.role}"></li>
             <li><a href="javascript:;"> <i class="iconfont">&#xe726;</i>
                 <cite>生源管理</cite> <i class="iconfont nav_right">&#xe697;</i>
             </a>
@@ -106,11 +106,17 @@
                             <cite>米脂县就读建档立卡分学校分学段资助汇总</cite>
                         </a>
                     </li >
+                    <li>
+                        <a _href="schoolPeriodInMizhiNotBuildCard">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>米脂县就读分学校分学段资助汇总</cite>
+                        </a>
+                    </li >
                 </ul>
             </li>
 
-            <li><a href="javascript:;"> <i
-                    class="iconfont layui-icon-extend-chengji"></i> <cite>系统</cite>
+            <li id="userManager"><a href="javascript:;"> <i
+                    class="iconfont layui-icon-extend-chengji"></i> <cite>用户管理</cite>
                 <i class="iconfont nav_right">&#xe697;</i>
             </a>
                 <ul class="sub-menu">
@@ -119,6 +125,7 @@
                     </a></li>
                 </ul>
             </li>
+
         </ul>
     </div>
     <div style="background-image: url('/Sys/images/bg2.png'); width: 100%; height: 43%; bottom: 0; background-repeat: no-repeat;"></div>
@@ -149,7 +156,14 @@
     </div>
 </div>
 <!-- 底部结束 -->
-<script>
+<script type="text/javascript">
+    $(function () {
+        var role = $("#hide").text();
+        if(role != 'admin') {
+            $("#userManager").attr("hidden", true);
+        }
+    });
+
     function changePwd() {
         layer.open(
             {

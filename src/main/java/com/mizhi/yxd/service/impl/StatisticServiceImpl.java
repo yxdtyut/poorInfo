@@ -78,6 +78,13 @@ public class StatisticServiceImpl implements StatisticService {
         return learningPeriodInMizhiVos;
     }
 
+    @Override
+    public List<LearningPeriodInMizhiVo> schoolPeriodInMizhiNotBuildCard(StatisticQueryVo statisticQueryVo) {
+        List<LearningPeriodInMizhiRsp> learningPeriodInMizhiRsps = statisticMapper.schoolPeriodInMizhiNotBuildCard(statisticQueryVo);
+        List<LearningPeriodInMizhiVo> learningPeriodInMizhiVos = getLearningPeriodInMizhiVos(learningPeriodInMizhiRsps);
+        return learningPeriodInMizhiVos;
+    }
+
     private List<LearningPeriodInMizhiVo> getLearningPeriodInMizhiVos(List<LearningPeriodInMizhiRsp> learningPeriodInMizhiRsps) {
         Multimap<String, LearningPeriodInMizhiRsp> multimap = ArrayListMultimap.create();
         learningPeriodInMizhiRsps.stream().forEach(periodRsp -> {

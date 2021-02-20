@@ -20,4 +20,6 @@ public interface StatisticMapper {
     List<LearningPeriodInMizhiRsp> lerningPeriodInMizhi(@Param("vo") StatisticQueryVo statisticQueryVo);
 
     List<LearningPeriodInMizhiRsp> schoolPeriodInMizhi(@Param("vo")StatisticQueryVo statisticQueryVo);
+
+    List<LearningPeriodInMizhiRsp> schoolPeriodInMizhiNotBuildCard(@Param("vo")StatisticQueryVo statisticQueryVo);
 }

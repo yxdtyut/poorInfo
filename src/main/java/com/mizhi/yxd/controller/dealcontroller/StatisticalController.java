@@ -61,6 +61,15 @@ public class StatisticalController {
         return JSON.toJSON(l);
     }
 
+    @PostMapping("/schoolPeriodInMizhiNotBuildCard")
+    public Object schoolPeriodInMizhiNotBuildCard(StatisticQueryVo statisticQueryVo, HttpSession httpSession) {
+        log.info("statistic schoolPeriodInMizhiNotBuildCard query vo message:{}", JSON.toJSONString(statisticQueryVo));
+        statisticQueryVo.setAccount((String) httpSession.getAttribute("account"));
+        List<LearningPeriodInMizhiVo> learningPeriodInMizhiVos =  statisticService.schoolPeriodInMizhiNotBuildCard(statisticQueryVo);
+        Layui l = Layui.data(learningPeriodInMizhiVos.size(), learningPeriodInMizhiVos);
+        return JSON.toJSON(l);
+    }
+
     @GetMapping("/learningPeriod/export")
     public void exportLearningPeriod(@RequestParam String semester, HttpSession httpSession, HttpServletResponse response) throws IOException {
         StatisticQueryVo statisticQueryVo = getStatisticQueryVo(semester, httpSession);
@@ -81,6 +90,16 @@ public class StatisticalController {
     public void exportSchoolPeriodInMizhi(@RequestParam String semester, HttpSession httpSession, HttpServletResponse response) throws IOException {
         StatisticQueryVo statisticQueryVo = getStatisticQueryVo(semester, httpSession);
         List<LearningPeriodInMizhiVo> learningPeriodInMizhiVos =  statisticService.schoolPeriodInMizhi(statisticQueryVo);
+        if (CollectionUtils.isNotEmpty(learningPeriodInMizhiVos)) {
+            List<SchoolPeriodInMizhiVo> schoolPeriodInMizhiVos = BeanUtils.copyProperties(learningPeriodInMizhiVos, SchoolPeriodInMizhiVo.class);
+            ExcelUtils.exportExcel(schoolPeriodInMizhiVos, null, "统计信息", SchoolPeriodInMizhiVo.class, "米脂县就读建档立卡分学校分学段资助汇总", true, response);
+        }
+    }
+
+    @GetMapping("/schoolPeriodInMizhiNotBuildCard/export")
+    public void schoolPeriodInMizhiNotBuildCard(@RequestParam String semester, HttpSession httpSession, HttpServletResponse response) throws IOException {
+        StatisticQueryVo statisticQueryVo = getStatisticQueryVo(semester, httpSession);
+        List<LearningPeriodInMizhiVo> learningPeriodInMizhiVos =  statisticService.schoolPeriodInMizhiNotBuildCard(statisticQueryVo);
         if (CollectionUtils.isNotEmpty(learningPeriodInMizhiVos)) {
             List<SchoolPeriodInMizhiVo> schoolPeriodInMizhiVos = BeanUtils.copyProperties(learningPeriodInMizhiVos, SchoolPeriodInMizhiVo.class);
             ExcelUtils.exportExcel(schoolPeriodInMizhiVos, null, "统计信息", SchoolPeriodInMizhiVo.class, "米脂县就读建档立卡分学校分学段资助汇总", true, response);

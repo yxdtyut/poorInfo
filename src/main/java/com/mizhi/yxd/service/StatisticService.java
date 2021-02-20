@@ -19,4 +19,6 @@ public interface StatisticService {
     List<LearningPeriodInMizhiVo> learningPeriodInMizhi(StatisticQueryVo statisticQueryVo);
 
     List<LearningPeriodInMizhiVo> schoolPeriodInMizhi(StatisticQueryVo statisticQueryVo);
+
+    List<LearningPeriodInMizhiVo> schoolPeriodInMizhiNotBuildCard(StatisticQueryVo statisticQueryVo);
 }

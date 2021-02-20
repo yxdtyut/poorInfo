@@ -1,1 +1,1 @@
-insert into admin  (account,name,psw,role) values ('zzzx', '资助中心', '89a3c82829a0090f3bc3081db6ef87f3', 0);
+insert into admin  (account,name,psw,role) values ('zzzx', '学生资助和后勤服务中心', '89a3c82829a0090f3bc3081db6ef87f3', 0);
