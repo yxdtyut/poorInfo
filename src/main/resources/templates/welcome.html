@@ -23,8 +23,8 @@
         <script src="/Sys/js/formSelects-v4.js" type="text/javascript" charset="utf-8"></script>
 
 </head>
-    <body>
-    <div class="x-body layui-anim layui-anim-up">
+    <body style="background-image: url('/Sys/images/bg5.jpg');no-repeat center ;width: 100%;height: 100%;background-size: 100% 100%;">
+    <div class="x-body layui-anim layui-anim-up" >
         <blockquote class="layui-elem-quote">欢迎：<span
 					th:text="${session.name}"></span>
           当前日期:[[${#dates.format(new java.util.Date().getTime(), 'yyyy-MM-dd')}]]</blockquote>
