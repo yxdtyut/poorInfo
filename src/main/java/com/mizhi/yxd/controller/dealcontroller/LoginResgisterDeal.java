@@ -1,6 +1,7 @@
 package com.mizhi.yxd.controller.dealcontroller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +12,10 @@ import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.result.Result;
 import com.mizhi.yxd.tools.BeanUtils;
 import com.mizhi.yxd.tools.ExcelUtils;
+import com.mizhi.yxd.tools.Layui;
 import com.mizhi.yxd.vo.AccountExportVo;
 import com.mizhi.yxd.vo.PwdVo;
+import com.mizhi.yxd.vo.UserQueryVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,6 +110,38 @@ public class LoginResgisterDeal {
 		pwdVo.setConfirmPassword(SecureUtil.md5(pwdVo.getConfirmPassword()));
 		adminService.updatePwd(pwdVo);
 		log.info("update password success, account:{}", account);
+		return Result.success("success");
+	}
+
+	@PostMapping(value = "/userManager")
+	@ResponseBody
+	public Object userManager(@RequestParam("limit") String limit, @RequestParam("page") String page
+			,UserQueryVo userQueryVo, HttpSession httpSession) {
+		log.info("userManager query:{}", JSON.toJSONString(userQueryVo));
+		int lim = Integer.parseInt(limit);
+		int start = (Integer.parseInt(page) - 1) * lim;
+		Map<String, Object> map = new HashMap<>();
+		map.put("start", start);
+		map.put("pagesize", lim);
+		List<Admin> admins = adminService.queryUserWithPage(userQueryVo, map);
+		int total = adminService.queryAdminCountByCondition(userQueryVo);
+		Layui l = Layui.data(total, admins);
+		return JSON.toJSON(l);
+	}
+
+	@DeleteMapping("/delete/{account}")
+	@ResponseBody
+	public Result<Integer> deleteUser(@PathVariable String account) {
+		log.info("delete user info, account:{}", account);
+		int count = adminService.deleteUser(account);
+		return Result.success(count);
+	}
+
+	@GetMapping("/reset/{account}")
+	@ResponseBody
+	public Result<String> resetUserPwd(@PathVariable String account) {
+		log.info("reset user password, account:{}", account);
+		adminService.resetUserPwd(account);
 		return Result.success("success");
 	}
 }

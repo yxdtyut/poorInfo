@@ -99,4 +99,9 @@ public class ViewRoute {
     public String baseFunction() {
         return "baseFunction";
     }
+
+    @RequestMapping("/userManager")
+    public String userManager() {
+        return "userManager";
+    }
 }

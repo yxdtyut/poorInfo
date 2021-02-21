@@ -17,6 +17,14 @@
         update admin set psw = #{vo.password} where account = #{vo.account}
     </update>
 
+    <update id="resetUserPwd">
+        update admin set psw = #{pwd} where account = #{account}
+    </update>
+
+    <delete id="deleteUser">
+        delete from admin where account = #{account}
+    </delete>
+
     <select id="findAdmin" resultType="com.mizhi.yxd.entity.Admin">
       select account,psw,name,role from admin where account=#{0} and psw=#{1} and role=#{2} limit 1
    </select>
@@ -31,5 +39,26 @@
 
     <select id="findAdminByPwdVo" resultType="com.mizhi.yxd.entity.Admin">
         select account,psw,name,role from admin where account = #{vo.account} and psw = #{vo.oldPassword}
+    </select>
+
+    <select id="queryUserWithPage" resultType="com.mizhi.yxd.entity.Admin">
+        select account,psw,name,role from admin where 1 = 1
+        <if test="vo.account != null and vo.account != ''">
+           and account = #{vo.account}
+        </if>
+        <if test="vo.name != null and vo.name != ''">
+            and name = #{vo.name}
+        </if>
+        limit #{map.start},#{map.pagesize}
+    </select>
+
+    <select id="queryAdminCountByCondition" resultType="java.lang.Integer">
+        select count(1) from admin where 1 = 1
+        <if test="vo.account != null and vo.account != ''">
+            and account = #{vo.account}
+        </if>
+        <if test="vo.name != null and vo.name != ''">
+            and name = #{vo.name}
+        </if>
     </select>
 </mapper>

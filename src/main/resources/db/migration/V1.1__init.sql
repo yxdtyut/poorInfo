@@ -6,8 +6,9 @@ CREATE TABLE `admin` (
   `name` varchar(20) DEFAULT NULL,
   `psw` varchar(255) NOT NULL,
   `role` int(10) DEFAULT NULL COMMENT '0代表管理员,1代表普通用户',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `account_only` (`account`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS sub_poor;
 

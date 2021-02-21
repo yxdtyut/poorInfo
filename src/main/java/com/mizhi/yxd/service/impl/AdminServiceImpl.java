@@ -1,8 +1,10 @@
 package com.mizhi.yxd.service.impl;
 
+import cn.hutool.crypto.SecureUtil;
 import com.mizhi.yxd.exception.GlobleException;
 import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.vo.PwdVo;
+import com.mizhi.yxd.vo.UserQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +62,27 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void updatePwd(PwdVo pwdVo) {
 		adminMapper.updatePwd(pwdVo);
+	}
+
+	@Override
+	public List<Admin> queryUserWithPage(UserQueryVo userQueryVo, Map<String, Object> map) {
+		return adminMapper.queryUserWithPage(userQueryVo, map);
+	}
+
+	@Override
+	public int queryAdminCountByCondition(UserQueryVo userQueryVo) {
+		return adminMapper.queryAdminCountByCondition(userQueryVo);
+	}
+
+	@Override
+	public int deleteUser(String account) {
+		return adminMapper.deleteUser(account);
+	}
+
+	@Override
+	public void resetUserPwd(String account) {
+		String pwd = SecureUtil.md5("zzzx6666");
+		adminMapper.resetUserPwd(account, pwd);
 	}
 
 }
