@@ -318,10 +318,10 @@
           dataType:"json",
           success:function(data){
               if(data.code == 200) {
-                  layer.msg('删除成功！',{icon:6,offset:"auto",time:1000});//提示框
+                  alert("删除成功");
                   setTimeout(location.reload(),2000)
               } else {
-                  layer.msg('删除失败！',{icon:5,offset:"auto",time:1000});//提示框
+                  alert("删除失败");
               }
           }
       });
@@ -395,10 +395,10 @@
         ,url: '/poor/import'
            ,done: function (data) {
                if (data.code == 200) {
-                   layer.msg('导入成功！',{icon:6,offset:"auto",time:1000});//提示框
+                   alert("导入成功");
                    layer._delay(location.reload(),2000)
                } else {
-                   layer.msg('导入失败,' + data.msg,{icon:6,offset:"auto",time:3000});//提示框
+                   alert("导入失败" + data.msg);
                }
            }
       });

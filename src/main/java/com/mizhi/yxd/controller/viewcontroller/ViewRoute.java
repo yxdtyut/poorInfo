@@ -104,4 +104,9 @@ public class ViewRoute {
     public String userManager() {
         return "userManager";
     }
+
+    @RequestMapping("/learningPeriodWithSubsidize")
+    public String learningPeriodWithSubsidize() {
+        return "learningPeriodWithSubsidize";
+    }
 }

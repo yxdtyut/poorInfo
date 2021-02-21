@@ -2,6 +2,7 @@ package com.mizhi.yxd.service;
 
 import com.mizhi.yxd.vo.LearningPeriodInMizhiVo;
 import com.mizhi.yxd.vo.LearningPeriodVo;
+import com.mizhi.yxd.vo.LearningPeriodWithSubsidizeVo;
 import com.mizhi.yxd.vo.StatisticQueryVo;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +22,6 @@ public interface StatisticService {
     List<LearningPeriodInMizhiVo> schoolPeriodInMizhi(StatisticQueryVo statisticQueryVo);
 
     List<LearningPeriodInMizhiVo> schoolPeriodInMizhiNotBuildCard(StatisticQueryVo statisticQueryVo);
+
+    List<LearningPeriodWithSubsidizeVo> learningPeriodWithSubsidize(StatisticQueryVo statisticQueryVo);
 }

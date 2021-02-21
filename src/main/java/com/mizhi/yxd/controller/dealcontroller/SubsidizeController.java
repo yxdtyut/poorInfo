@@ -140,6 +140,9 @@ public class SubsidizeController {
         request.setSemester(semester);
         List<SubsidizeAndPoor> subSubsidizes = subsidizeService.findByCondition(request);
         List<SubsidizeExportVo> poorExportVos = com.mizhi.yxd.tools.BeanUtils.copyProperties(subSubsidizes, SubsidizeExportVo.class);
+        if (CollectionUtils.isNotEmpty(poorExportVos)) {
+            poorExportVos.stream().forEach(poorExportVo -> poorExportVo.setSemester(semester));
+        }
         ExcelUtils.exportExcel(poorExportVos, null, "资助库", SubsidizeExportVo.class, "资助库信息", true, response);
     }
 

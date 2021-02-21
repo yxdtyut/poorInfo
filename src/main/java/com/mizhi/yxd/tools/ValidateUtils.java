@@ -22,7 +22,7 @@ public class ValidateUtils {
     }
 
     public static boolean checkIfNum(String text) {
-        String re = "^[0-9]+.?[0-9]$";
+        String re = "^[0-9]+.?[0-9]*$";
         return text.matches(re);
     }
 }

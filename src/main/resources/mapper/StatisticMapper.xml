@@ -23,7 +23,7 @@
         FROM
             sub_poor as poor inner JOIN sub_subsidize as sub on poor.id = sub.poor_id
         WHERE
-        county = '米脂县' and build_card='是'
+        county = '米脂县' and build_card='是' and this_enjoy = '是'
         <if test="vo.account != null and vo.account != '' and vo.account != 'zzzx'">
             and account = #{vo.account}
         </if>
@@ -46,7 +46,7 @@
         FROM
             sub_poor as poor inner JOIN sub_subsidize as sub on poor.id = sub.poor_id
         WHERE
-        if_county='县内' and build_card='是'
+        poor.if_county='县内' and poor.build_card='是' and poor.this_enjoy = '是'
         <if test="vo.account != null and vo.account != '' and vo.account != 'zzzx'">
             and account = #{vo.account}
         </if>
@@ -69,7 +69,7 @@
         FROM
         sub_poor as poor inner JOIN sub_subsidize as sub on poor.id = sub.poor_id
         WHERE
-        if_county='县内'
+        poor.if_county='县内' and poor.this_enjoy = '是'
         <if test="vo.account != null and vo.account != '' and vo.account != 'zzzx'">
             and account = #{vo.account}
         </if>
@@ -82,4 +82,28 @@
         ORDER BY
         poor.school
     </select>
+
+    <select id="learningPeriodWithSubsidize" resultType="com.mizhi.yxd.vo.LearningPeriodInMizhiRsp">
+        SELECT
+        poor.village,
+        poor.study_level AS studyLevel,
+        count(1) as statisticCount,
+        sum(sub.subsidize_money) as totalMoney
+        FROM
+        sub_poor as poor inner JOIN sub_subsidize as sub on poor.id = sub.poor_id
+        WHERE
+        county = '米脂县' and build_card='是'
+        <if test="vo.account != null and vo.account != '' and vo.account != 'zzzx'">
+            and account = #{vo.account}
+        </if>
+        <if test="vo.semester != null and vo.semester != ''">
+            and semester = #{vo.semester}
+        </if>
+        GROUP BY
+        poor.village,
+        poor.study_level
+        ORDER BY
+        poor.village
+    </select>
+
 </mapper>

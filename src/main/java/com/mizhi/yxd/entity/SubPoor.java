@@ -66,13 +66,14 @@ public class SubPoor {
 
     private String semester;
 
-    public SubPoor(String province, String county, String village, String cun, String name, String idCard, String sixFifteen, String headOfHouseNum, String headOfHouseName, String headOfHouseIdCard, String headOfHouseTel, String school, String studyLevel, String grade, String clazz, String studentNumber, String studyWay, String ifDisability, String disabilityNumber, String notInSchoolReason, String poorType, String ifVillage, String ifCounty, String ifProvince, String thisEnjoy, String account, String semester) {
+    public SubPoor(String province, String county, String village, String cun, String name, String idCard, String buildCard, String sixFifteen, String headOfHouseNum, String headOfHouseName, String headOfHouseIdCard, String headOfHouseTel, String school, String studyLevel, String grade, String clazz, String studentNumber, String studyWay, String ifDisability, String disabilityNumber, String notInSchoolReason, String poorType, String ifVillage, String ifCounty, String ifProvince, String thisEnjoy, String account, String semester) {
         this.province = province;
         this.county = county;
         this.village = village;
         this.cun = cun;
         this.name = name;
         this.idCard = idCard;
+        this.buildCard = buildCard;
         this.sixFifteen = sixFifteen;
         this.headOfHouseNum = headOfHouseNum;
         this.headOfHouseName = headOfHouseName;

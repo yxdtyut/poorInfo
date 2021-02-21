@@ -132,7 +132,7 @@ public class PoorExportVo {
     }
 
     public SubPoor transforToPoor() {
-        return new SubPoor(province, county, village, cun, name, idCard, sixFifteen, headOfHouseNum,
+        return new SubPoor(province, county, village, cun, name, idCard, buildCard ,sixFifteen, headOfHouseNum,
                 headOfHouseName, headOfHouseIdCard, headOfHouseTel, school, studyLevel, grade, clazz,
                 studentNumber, studyWay, ifDisability, disabilityNumber, notInSchoolReason, poorType,
                 ifVillage, ifCounty, ifProvince, thisEnjoy, null, semester);
