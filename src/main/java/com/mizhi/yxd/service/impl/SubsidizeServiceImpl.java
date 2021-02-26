@@ -86,8 +86,8 @@ public class SubsidizeServiceImpl implements SubsidizeService {
     public List<CompletableFuture<BatchOperationRsp>> batchDealImportData(List<SubsidizeExportVo> exportVoList, HttpSession httpSession) {
         PoorRequest poorRequest = new PoorRequest();
         poorRequest.setAccount((String) httpSession.getAttribute("account"));
-        List<SubPoor> subPoors = poorMapper.selectByCondition(poorRequest);
-        List<String> idCards = subPoors.stream().map(SubPoor::getIdCard).collect(Collectors.toList());
+        List<SubsidizeAndPoor> subPoors = subSubsidizeMapper.findByCondition(poorRequest);
+        List<String> idCards = subPoors.stream().map(SubsidizeAndPoor::getIdCard).collect(Collectors.toList());
         Executor executor = Executors.newFixedThreadPool(4,
                 new ThreadFactory() {
                     @Override

@@ -47,7 +47,7 @@
            and account = #{vo.account}
         </if>
         <if test="vo.name != null and vo.name != ''">
-            and name = #{vo.name}
+            and name like concat('%',#{vo.name},'%')
         </if>
         limit #{map.start},#{map.pagesize}
     </select>
@@ -58,7 +58,7 @@
             and account = #{vo.account}
         </if>
         <if test="vo.name != null and vo.name != ''">
-            and name = #{vo.name}
+            and name like concat('%',#{vo.name},'%')
         </if>
     </select>
 </mapper>

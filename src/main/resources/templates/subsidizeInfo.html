@@ -91,11 +91,11 @@
              </div>
              学段：
              <div class="layui-inline">
-                 <input class="layui-input" name="studyLevel" id="studyLevel" autocomplete="off" style="width: 100px;">
+                 <input class="layui-input" name="studyLevel" id="studyLevel" autocomplete="off" style="width: 80px;">
              </div>
-             省市：
+             学校全称：
              <div class="layui-inline">
-                 <input class="layui-input" name="province" id="province" autocomplete="off"  style="width: 80px;">
+                 <input class="layui-input" name="school" id="school" autocomplete="off"  style="width: 100px;">
              </div>
              区县：
              <div class="layui-inline">
@@ -202,7 +202,7 @@
           var idcard = $('#idcard');
             var semester = $('#semester');
             var studyLevel = $('#studyLevel');
-            var province = $('#province');
+            var school = $('#school');
             var county = $('#county');
             var village = $('#village');
             var cun = $('#cun');
@@ -218,7 +218,7 @@
                 idcard: idcard.val().replace(/(^\s*)|(\s*$)/g, ""),
                   semester: semester.val().replace(/(^\s*)|(\s*$)/g, ""),
                   studyLevel: studyLevel.val().replace(/(^\s*)|(\s*$)/g, ""),
-                  province: province.val().replace(/(^\s*)|(\s*$)/g, ""),
+                  school: school.val().replace(/(^\s*)|(\s*$)/g, ""),
                   county: county.val().replace(/(^\s*)|(\s*$)/g, ""),
                   village: village.val().replace(/(^\s*)|(\s*$)/g, ""),
                   cun: cun.val().replace(/(^\s*)|(\s*$)/g, ""),

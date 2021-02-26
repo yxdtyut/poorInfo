@@ -120,6 +120,9 @@
     <if test="poor.province != null and poor.province != ''">
       and province=#{poor.province}
     </if>
+    <if test="poor.school != null and poor.school != ''">
+      and school like concat('%',#{poor.school},'%')
+    </if>
     <if test="poor.county != null and poor.county != ''">
       and county=#{poor.county}
     </if>
@@ -160,6 +163,9 @@
     </if>
     <if test="poor.province != null and poor.province != ''">
       and province=#{poor.province}
+    </if>
+    <if test="poor.school != null and poor.school != ''">
+      and school like concat('%',#{poor.school},'%')
     </if>
     <if test="poor.county != null and poor.county != ''">
       and county=#{poor.county}

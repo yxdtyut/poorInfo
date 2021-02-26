@@ -15,6 +15,7 @@ public class PoorRequest {
     private String account;
     private String username;
     private String province;
+    private String school;
     private String county;
     private String village;
     private String cun;
