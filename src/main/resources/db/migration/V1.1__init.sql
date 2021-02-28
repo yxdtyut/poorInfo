@@ -20,9 +20,11 @@ CREATE TABLE `sub_poor` (
   `cun` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `id_card` varchar(32) DEFAULT NULL,
+  `build_card` varchar(5) DEFAULT NULL COMMENT '是否建档立卡',
   `six_fifteen` varchar(10) DEFAULT NULL COMMENT '只能写是或者否',
   `head_of_house_num` varchar(50) DEFAULT NULL,
   `head_of_house_name` varchar(50) DEFAULT NULL,
+  `head_of_house_id_card` varchar(50) DEFAULT NULL COMMENT '户主身份证号码',
   `head_of_house_tel` varchar(50) DEFAULT NULL,
   `school` varchar(255) DEFAULT NULL,
   `study_level` varchar(50) DEFAULT NULL,
@@ -39,7 +41,9 @@ CREATE TABLE `sub_poor` (
   `if_province` varchar(50) DEFAULT NULL,
   `this_enjoy` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '本学期是否享受米脂资助 只能写是或者否',
   `account` varchar(255) DEFAULT NULL COMMENT '账号',
-  PRIMARY KEY (`id`)
+  `semester` varchar(50) NOT NULL COMMENT '学段',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idcard` (`id_card`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS sub_subsidize;

@@ -22,6 +22,7 @@ public class CodeMsg {
     public static final CodeMsg PWD_NOT_RIGHT = new CodeMsg(500105, "原密码不正确");
     public static final CodeMsg TWO_PWD_NOT_RIGHT = new CodeMsg(500106, "两次密码输入不一致");
     public static final CodeMsg NOT_SYS_USER = new CodeMsg(500107, "非管理员无权限导入");
+    public static final CodeMsg IMPROT_INSERT_ERROR = new CodeMsg(500108, "导入数据保存失败，请检查是否有重复数据");
 
     /**校验模块.6001xx*/
     public static final CodeMsg NAME_IDCARD_NULL = new CodeMsg(600101, "学期或者姓名或身份证为空");

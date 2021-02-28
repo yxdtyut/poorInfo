@@ -26,6 +26,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -86,8 +87,10 @@ public class SubsidizeServiceImpl implements SubsidizeService {
     public List<CompletableFuture<BatchOperationRsp>> batchDealImportData(List<SubsidizeExportVo> exportVoList, HttpSession httpSession) {
         PoorRequest poorRequest = new PoorRequest();
         poorRequest.setAccount((String) httpSession.getAttribute("account"));
-        List<SubsidizeAndPoor> subPoors = subSubsidizeMapper.findByCondition(poorRequest);
-        List<String> idCards = subPoors.stream().map(SubsidizeAndPoor::getIdCard).collect(Collectors.toList());
+        List<SubsidizeAndPoor> subsidizes = subSubsidizeMapper.findByCondition(poorRequest);
+        List<String> idCards = subsidizes.stream().map(SubsidizeAndPoor::getIdCard).collect(Collectors.toList());
+        List<SubPoor> subPoors = poorMapper.selectByCondition(poorRequest);
+        Map<String, SubPoor> idcardToPoorMap = subPoors.stream().collect(Collectors.toMap(SubPoor::getIdCard, subPoor -> subPoor));
         Executor executor = Executors.newFixedThreadPool(4,
                 new ThreadFactory() {
                     @Override
@@ -101,7 +104,7 @@ public class SubsidizeServiceImpl implements SubsidizeService {
         );
         List<CompletableFuture<BatchOperationRsp>> collect = exportVoList.stream()
                 .map(subsidizeExportVo -> CompletableFuture.supplyAsync(
-                        () -> saveSubsidizeExportVo(subsidizeExportVo, idCards, httpSession), executor
+                        () -> saveSubsidizeExportVo(subsidizeExportVo, idCards, httpSession, idcardToPoorMap), executor
                         ).exceptionally(e -> {
                             log.error(e.getMessage());
                             BatchOperationRsp operationRsp = new BatchOperationRsp();
@@ -119,18 +122,24 @@ public class SubsidizeServiceImpl implements SubsidizeService {
     }
 
     @Transactional
-    public BatchOperationRsp saveSubsidizeExportVo(SubsidizeExportVo subsidizeExportVo, List<String> idCards, HttpSession httpSession) {
+    public BatchOperationRsp saveSubsidizeExportVo(SubsidizeExportVo subsidizeExportVo, List<String> idCards, HttpSession httpSession, Map<String, SubPoor> idcardToPoorMap) {
         BatchOperationRsp rsp = new BatchOperationRsp();
         if (idCards.contains(subsidizeExportVo.getIdCard())) {
             log.error("idcard exist:{}", subsidizeExportVo.getIdCard());
             throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(subsidizeExportVo.getName() + "--" + subsidizeExportVo.getIdCard() + "," + CodeMsg.IDCARD_EXIST_ERROR.getMsg()));
         }
-        SubPoor subPoor = subsidizeExportVo.transforToPoor();
-        subPoor.setId(SnowflakeIdWorker.primaryKey());
-        subPoor.setAccount((String) httpSession.getAttribute("account"));
-        poorMapper.insertPoorInfo(subPoor);
+        String poorId = null;
+        if (!idcardToPoorMap.containsKey(subsidizeExportVo.getIdCard())) {
+            SubPoor subPoor = subsidizeExportVo.transforToPoor();
+            subPoor.setId(SnowflakeIdWorker.primaryKey());
+            subPoor.setAccount((String) httpSession.getAttribute("account"));
+            poorMapper.insertPoorInfo(subPoor);
+            poorId = subPoor.getId();
+        } else {
+            poorId = idcardToPoorMap.get(subsidizeExportVo.getIdCard()).getId();
+        }
         SubSubsidize subSubsidize = subsidizeExportVo.transferToSubsidize();
-        subSubsidize.setPoorId(subPoor.getId());
+        subSubsidize.setPoorId(poorId);
         subSubsidizeMapper.insert(subSubsidize);
         rsp.setIsSuccess(true);
         return rsp;

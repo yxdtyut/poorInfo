@@ -8,10 +8,12 @@ import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.service.PoorService;
 import com.mizhi.yxd.tools.SnowflakeIdWorker;
 import com.mizhi.yxd.vo.UpdatePoorVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
  * @description:
  * @date 2020/10/26 22:37
  */
+@Slf4j
 @Service
 public class PoorServiceImpl implements PoorService {
 
@@ -30,7 +33,12 @@ public class PoorServiceImpl implements PoorService {
     @Override
     public void insertBatch(List<SubPoor> poors) {
         poors.stream().forEach(subPoor -> subPoor.setId(SnowflakeIdWorker.primaryKey()));
-        poorMapper.insertBatch(poors);
+        try {
+            poorMapper.insertBatch(poors);
+        } catch (Exception e) {
+            log.error("poor import insert error, e:{}", e.getMessage());
+            throw new GlobleException(CodeMsg.IMPROT_INSERT_ERROR);
+        }
     }
 
     @Override
