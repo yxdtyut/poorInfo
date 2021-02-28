@@ -111,7 +111,7 @@
              </div>
              享受米脂资助：
              <div class="layui-inline">
-                 <select name="semester" id="thisEnjoy" style="width: 70px;height: 38px">
+                 <select name="thisEnjoy" id="thisEnjoy" style="width: 70px;height: 38px">
                      <option value="">请选择</option>
                      <option value="是">是</option>
                      <option value="否">否</option>
@@ -212,7 +212,7 @@
             page: {
               curr: 1 //重新从第 1 页开始
             },
-        url:'/subsidize/subsidizeInfo'
+            url:'/subsidize/subsidizeInfo'
             ,where: {
                 username: username.val().replace(/(^\s*)|(\s*$)/g, ""),
                 idcard: idcard.val().replace(/(^\s*)|(\s*$)/g, ""),
@@ -333,7 +333,7 @@
       $('#cun').val(null);
   }
 
-  layui.use(['upload'], function(){
+  layui.use(['form','layer','table','upload'], function(){
       var upload = layui.upload;
       upload.render({
           elem: '#importData'
@@ -341,6 +341,10 @@
           ,url: '/subsidize/import'
           ,done: function (data) {
               if (data.code == 200) {
+                  if(data.data == 'success') {
+                      alert("导入成功");
+                      layer._delay(location.reload(),2000)
+                  }
                   if(JSON.stringify(data.data) != "success") {
                       var json = eval(data.data);
                       var errorMessage = "部分导入失败: \n";
@@ -351,8 +355,6 @@
                       alert(errorMessage);
                       layer._delay(location.reload(),2000)
                   }
-                  alert("导入成功");
-                  layer._delay(location.reload(),2000)
               } else {
                   alert("导入失败" + data.msg);
               }
