@@ -135,6 +135,9 @@
     <if test="poor.thisEnjoy != null and poor.thisEnjoy != ''">
       and this_enjoy=#{poor.thisEnjoy}
     </if>
+    <if test="poor.buildCard != null and poor.buildCard != ''">
+      and build_card=#{poor.buildCard}
+    </if>
     <if test="poor.ids != null and poor.ids.size > 0">
       and id in
       <foreach collection="poor.ids" item="id" open="(" close=")" separator=",">
@@ -179,6 +182,9 @@
     <if test="poor.thisEnjoy != null and poor.thisEnjoy != ''">
       and this_enjoy=#{poor.thisEnjoy}
     </if>
+    <if test="poor.buildCard != null and poor.buildCard != ''">
+      and build_card=#{poor.buildCard}
+    </if>
     <if test="poor.ids != null and poor.ids.size > 0">
       and id in
       <foreach collection="poor.ids" item="id" open="(" close=")" separator=",">
@@ -218,6 +224,9 @@
     </if>
     <if test="poor.cun != null and poor.cun != ''">
       and cun=#{poor.cun}
+    </if>
+    <if test="poor.buildCard != null and poor.buildCard != ''">
+      and build_card=#{poor.buildCard}
     </if>
     <if test="poor.thisEnjoy != null and poor.thisEnjoy != ''">
       and this_enjoy=#{poor.thisEnjoy}

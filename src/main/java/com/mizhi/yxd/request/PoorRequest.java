@@ -23,6 +23,7 @@ public class PoorRequest {
     private String studyLevel;
     private String thisEnjoy;
     private String semester;
+    private String buildCard;
     private List<String> ids;
 
     public void initSemester() {

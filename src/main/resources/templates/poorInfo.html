@@ -80,7 +80,7 @@
             </div>
               姓名：
               <div class="layui-inline">
-                <input class="layui-input" name="username" id="username" autocomplete="off" style="width: 100px;">
+                <input class="layui-input" name="username" id="username" autocomplete="off" style="width: 70px;">
               </div>
              身份证：
              <div class="layui-inline">
@@ -88,24 +88,32 @@
              </div>
              学段：
              <div class="layui-inline">
-                 <input class="layui-input" name="studyLevel" id="studyLevel" autocomplete="off">
+                 <input class="layui-input" name="studyLevel" id="studyLevel" autocomplete="off" style="width: 80px;">
              </div>
-             省市：
-             <div class="layui-inline">
-                 <input class="layui-input" name="province" id="province" autocomplete="off"  style="width: 100px;">
-             </div>
+            学校全称：
+            <div class="layui-inline">
+                <input class="layui-input" name="school" id="school" autocomplete="off"  style="width: 100px;">
+            </div>
              区县：
              <div class="layui-inline">
-                 <input class="layui-input" name="county" id="county" autocomplete="off"  style="width: 100px;">
+                 <input class="layui-input" name="county" id="county" autocomplete="off"  style="width: 80px;">
              </div>
              乡镇：
              <div class="layui-inline">
-                 <input class="layui-input" name="village" id="village" autocomplete="off"  style="width: 100px;">
+                 <input class="layui-input" name="village" id="village" autocomplete="off"  style="width: 80px;">
              </div>
              村组（社区）：
              <div class="layui-inline">
-                 <input class="layui-input" name="cun" id="cun" autocomplete="off"  style="width: 100px;">
+                 <input class="layui-input" name="cun" id="cun" autocomplete="off"  style="width: 80px;">
              </div>
+             是否建档立卡：
+            <div class="layui-inline">
+                <select name="buildCard" id="buildCard" style="width: 70px;height: 38px">
+                    <option value="">请选择</option>
+                    <option value="是">是</option>
+                    <option value="否">否</option>
+                </select>
+            </div>
               <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
               <button class="layui-btn" id="clear" onclick="selectClear()">清空</button>
         </div>
@@ -189,10 +197,12 @@
           var idcard = $('#idcard');
           var semester = $('#semester');
           var studyLevel = $('#studyLevel');
-          var province = $('#province');
+          var school = $('#school');
+          var buildCard = $('#buildCard');
           var county = $('#county');
           var village = $('#village');
           var cun = $('#cun');
+          var buildCard = $('#buildCard');
           // 执行重载
           table.reload('poorInfo', {
             page: {
@@ -204,10 +214,12 @@
                 idcard: idcard.val().replace(/(^\s*)|(\s*$)/g, ""),
                 semester: semester.val().replace(/(^\s*)|(\s*$)/g, ""),
                 studyLevel: studyLevel.val().replace(/(^\s*)|(\s*$)/g, ""),
-                province: province.val().replace(/(^\s*)|(\s*$)/g, ""),
+                school: school.val().replace(/(^\s*)|(\s*$)/g, ""),
+                buildCard: buildCard.val().replace(/(^\s*)|(\s*$)/g, ""),
                 county: county.val().replace(/(^\s*)|(\s*$)/g, ""),
                 village: village.val().replace(/(^\s*)|(\s*$)/g, ""),
-                cun: cun.val().replace(/(^\s*)|(\s*$)/g, "")
+                cun: cun.val().replace(/(^\s*)|(\s*$)/g, ""),
+                buildCard: buildCard.val().replace(/(^\s*)|(\s*$)/g, "")
             }
             ,method:'post'
           });
@@ -284,11 +296,12 @@
       var idcard = $('#idcard').val().replace(/(^\s*)|(\s*$)/g, "");
       var semester = $('#semester').val().replace(/(^\s*)|(\s*$)/g, "");
       var studyLevel = $('#studyLevel').val().replace(/(^\s*)|(\s*$)/g, "");
-      var province = $('#province').val().replace(/(^\s*)|(\s*$)/g, "");
+      var school = $('#school').val().replace(/(^\s*)|(\s*$)/g, "");
+      var buildCard = $('#buildCard').val().replace(/(^\s*)|(\s*$)/g, "");
       var county = $('#county').val().replace(/(^\s*)|(\s*$)/g, "");
       var village = $('#village').val().replace(/(^\s*)|(\s*$)/g, "");
       var cun = $('#cun').val();
-      layer.confirm('当前条件:[学期:'+semester+'],[姓名:'+username+'], [身份证:'+idcard+'], [学段:'+studyLevel+'] , [省市:'+province+'], [区县:'+county+'], [乡镇:'+village+'], [村组（社区）:'+cun+'] ', function(index){
+      layer.confirm('当前条件:[学期:'+semester+'],[姓名:'+username+'], [身份证:'+idcard+'], [学段:'+studyLevel+'] , [学校全称:'+school+'], [区县:'+county+'], [乡镇:'+village+'], [村组（社区）:'+cun+'], [是否建档立卡:'+buildCard+'] ', function(index){
           layer.open(
               {
                   type: 2,
@@ -301,7 +314,7 @@
                   content:'/Sys/subsidize',
                   success: function(layero, index){
                       var iframeWin = window[layero.find('iframe')[0]['name']];
-                      iframeWin.condition(username, idcard,semester,studyLevel,  province, county, village, cun);
+                      iframeWin.condition(username, idcard,semester,studyLevel,  school, county, village, cun, buildCard);
                   },
                   end: function(){
                       window.location.reload(); //刷新父页面
@@ -407,10 +420,11 @@
       function selectClear() {
           $('#username').val(null);
           $('#idcard').val(null);
-          $('#province').val(null);
+          $('#school').val(null);
           $('#county').val(null);
           $('#village').val(null);
           $('#cun').val(null);
+          $('#buildCard').val(null);
       }
 
 </script>  

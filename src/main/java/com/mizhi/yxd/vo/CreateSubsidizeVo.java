@@ -16,7 +16,8 @@ public class CreateSubsidizeVo {
     private String idcard;
     private String semester;
     private String studyLevel;
-    private String province;
+    private String school;
+    private String buildCard;
     private String county;
     private String village;
     private String cun;
