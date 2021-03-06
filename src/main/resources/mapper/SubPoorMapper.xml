@@ -225,6 +225,9 @@
     <if test="poor.cun != null and poor.cun != ''">
       and cun=#{poor.cun}
     </if>
+    <if test="poor.school != null and poor.school != ''">
+      and school like concat('%',#{poor.school},'%')
+    </if>
     <if test="poor.buildCard != null and poor.buildCard != ''">
       and build_card=#{poor.buildCard}
     </if>
