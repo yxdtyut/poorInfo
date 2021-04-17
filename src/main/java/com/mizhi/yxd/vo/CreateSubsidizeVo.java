@@ -21,7 +21,7 @@ public class CreateSubsidizeVo {
     private String county;
     private String village;
     private String cun;
-
+    private String thisEnjoy;
     private String subsidizeProject;
 
     private BigDecimal subsidizeMoney;

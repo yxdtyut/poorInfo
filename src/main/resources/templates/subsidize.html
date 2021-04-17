@@ -42,6 +42,7 @@
                 <input type="hidden" id="village" name="village" autocomplete="off" class="layui-input">
                 <input type="hidden" id="cun" name="cun" autocomplete="off" class="layui-input">
                 <input type="hidden" id="buildCard" name="buildCard" autocomplete="off" class="layui-input">
+                <input type="hidden" id="thisEnjoy" name="thisEnjoy" autocomplete="off" class="layui-input">
                 <input type="text" name="subsidizeProject" placeholder="请输入资助项目" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -119,7 +120,7 @@
        $("#poorId").attr("value", id);
    }
 
-   function condition(username, idcard,semester,studyLevel, school, county, village, cun, buildCard) {
+   function condition(username, idcard,semester,studyLevel, school, county, village, cun, buildCard, thisEnjoy) {
        $("#username").attr("value", username);
        $("#idcard").attr("value", idcard);
        $("#semester").attr("value", semester);
@@ -129,6 +130,7 @@
        $("#village").attr("value", village);
        $("#cun").attr("value", cun);
        $("#buildCard").attr("value", buildCard);
+       $("#thisEnjoy").attr("value", thisEnjoy);
    }
    
 </script>
