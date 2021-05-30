@@ -41,7 +41,7 @@ public class PoorExportVo {
     @Excel(name = "身份证号码", width = 20)
     private String idCard;
 
-    @Excel(name = "是否建档立卡学生", width = 20)
+    @Excel(name = "是否脱贫家庭学生", width = 20)
     private String buildCard;
 
     @Excel(name = "是否6-15周岁", width = 15)
@@ -111,7 +111,7 @@ public class PoorExportVo {
         }
 
         if (StringUtils.isNotEmpty(buildCard)  && (!"是".equals(buildCard) && !"否".equals(buildCard))) {
-            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:是否建档立卡只能写是或者否"));
+            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:是否脱贫家庭只能写是或者否"));
         }
 
         if (!ValidateUtils.checkIdCard(idCard)) {

@@ -50,7 +50,7 @@ public class SubUser {
         }
 
         if (StringUtils.isNotEmpty(buildCard) && (!"是".equals(buildCard) && !"否".equals(buildCard))) {
-            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:是否建档立卡只能写是或者否"));
+            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:是否脱贫家庭只能写是或者否"));
         }
 
         if (StringUtils.isNotEmpty(sex) && (!"男".equals(sex) && !"女".equals(sex))) {

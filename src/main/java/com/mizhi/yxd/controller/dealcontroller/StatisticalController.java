@@ -80,7 +80,7 @@ public class StatisticalController {
     public void exportLearningPeriod(@RequestParam String semester, HttpSession httpSession, HttpServletResponse response) throws IOException {
         StatisticQueryVo statisticQueryVo = getStatisticQueryVo(semester, httpSession);
         List<LearningPeriodVo> learningPeriodVos =  statisticService.learningPeriod(statisticQueryVo);
-        ExcelUtils.exportExcel(learningPeriodVos, null, "统计信息", LearningPeriodVo.class, "米脂县户籍建档立卡学生分乡镇分学段人数统计", true, response);
+        ExcelUtils.exportExcel(learningPeriodVos, null, "统计信息", LearningPeriodVo.class, "米脂县户籍脱贫家庭学生分乡镇分学段人数统计", true, response);
     }
 
 
@@ -88,7 +88,7 @@ public class StatisticalController {
     public void exportLearningPeriodInMizhi(@RequestParam String semester, @RequestParam String nums, HttpSession httpSession, HttpServletResponse response) throws IOException {
         StatisticQueryVo statisticQueryVo = getStatisticQueryVo(semester, httpSession);
         List<LearningPeriodInMizhiVo> learningPeriodInMizhiVos =  statisticService.learningPeriodInMizhi(statisticQueryVo);
-        ExcelUtils.exportExcel(learningPeriodInMizhiVos, null, "统计信息", LearningPeriodInMizhiVo.class, "米脂县户籍在米就读建档立卡学生分乡镇分学段资助汇总", true, response);
+        ExcelUtils.exportExcel(learningPeriodInMizhiVos, null, "统计信息", LearningPeriodInMizhiVo.class, "米脂县户籍在米就读脱贫家庭学生分乡镇分学段资助汇总", true, response);
     }
 
 
@@ -98,7 +98,7 @@ public class StatisticalController {
         List<LearningPeriodInMizhiVo> learningPeriodInMizhiVos =  statisticService.schoolPeriodInMizhi(statisticQueryVo);
         if (CollectionUtils.isNotEmpty(learningPeriodInMizhiVos)) {
             List<SchoolPeriodInMizhiVo> schoolPeriodInMizhiVos = BeanUtils.copyProperties(learningPeriodInMizhiVos, SchoolPeriodInMizhiVo.class);
-            ExcelUtils.exportExcel(schoolPeriodInMizhiVos, null, "统计信息", SchoolPeriodInMizhiVo.class, "米脂县就读建档立卡分学校分学段资助汇总", true, response);
+            ExcelUtils.exportExcel(schoolPeriodInMizhiVos, null, "统计信息", SchoolPeriodInMizhiVo.class, "米脂县就读脱贫家庭分学校分学段资助汇总", true, response);
         }
     }
 
@@ -116,7 +116,7 @@ public class StatisticalController {
     public void learningPeriodWithSubsidize(@RequestParam String semester, HttpSession httpSession, HttpServletResponse response) throws IOException {
         StatisticQueryVo statisticQueryVo = getStatisticQueryVo(semester, httpSession);
         List<LearningPeriodWithSubsidizeVo> learningPeriodWithSubsidizeVos =  statisticService.learningPeriodWithSubsidize(statisticQueryVo);
-        ExcelUtils.exportExcel(learningPeriodWithSubsidizeVos, null, "统计信息", LearningPeriodWithSubsidizeVo.class, "米脂户籍建档立卡学生资助总表", true, response);
+        ExcelUtils.exportExcel(learningPeriodWithSubsidizeVos, null, "统计信息", LearningPeriodWithSubsidizeVo.class, "米脂户籍脱贫家庭学生资助总表", true, response);
     }
 
     private StatisticQueryVo getStatisticQueryVo(@RequestParam String semester, HttpSession httpSession) {

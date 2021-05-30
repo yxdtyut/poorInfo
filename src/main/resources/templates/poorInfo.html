@@ -107,7 +107,7 @@
                  <input class="layui-input" name="cun" id="cun" autocomplete="off"  style="width: 80px;">
              </div>
             <br>
-             是否建档立卡：
+             是否脱贫家庭：
             <div class="layui-inline">
                 <select name="buildCard" id="buildCard" style="width: 170px;height: 38px">
                     <option value="">请选择</option>
@@ -174,7 +174,7 @@
               ,{field:'cun', title:'村组（社区）', width:documentWidth*10/100, edit:"text"}
               ,{field:'name', title:'姓名', width:documentWidth*10/100, edit:"text"}
               ,{field:'idCard', title:'身份证号码', width:documentWidth*10/80, edit:"false"}
-              ,{field:'buildCard', title:'是否建档立卡学生', width:documentWidth*10/80, edit:"text"}
+              ,{field:'buildCard', title:'是否脱贫家庭学生', width:documentWidth*10/80, edit:"text"}
               ,{field:'sixFifteen', title:'是否6-15周岁', width:documentWidth*10/100, edit:"text"}
               ,{field:'headOfHouseNum', title:'户编号', width:documentWidth*10/100, edit:"text"}
               ,{field:'headOfHouseName', title:'户主姓名', width:documentWidth*10/100, edit:"text"}
@@ -311,7 +311,7 @@
       var village = $('#village').val().replace(/(^\s*)|(\s*$)/g, "");
       var cun = $('#cun').val();
       var thisEnjoy = $('#thisEnjoy').val();
-      layer.confirm('当前条件:[学期:'+semester+'],[姓名:'+username+'], [身份证:'+idcard+'], [学段:'+studyLevel+'] , [学校全称:'+school+'], [区县:'+county+'], [乡镇:'+village+'], [村组（社区）:'+cun+'], [是否建档立卡:'+buildCard+'], [本学期是否享受米脂资助:'+thisEnjoy+'] ', function(index){
+      layer.confirm('当前条件:[学期:'+semester+'],[姓名:'+username+'], [身份证:'+idcard+'], [学段:'+studyLevel+'] , [学校全称:'+school+'], [区县:'+county+'], [乡镇:'+village+'], [村组（社区）:'+cun+'], [是否脱贫家庭:'+buildCard+'], [本学期是否享受米脂资助:'+thisEnjoy+'] ', function(index){
           layer.open(
               {
                   type: 2,

@@ -20,7 +20,7 @@ CREATE TABLE `sub_poor` (
   `cun` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `id_card` varchar(32) DEFAULT NULL,
-  `build_card` varchar(5) DEFAULT NULL COMMENT '是否建档立卡',
+  `build_card` varchar(5) DEFAULT NULL COMMENT '是否脱贫家庭',
   `six_fifteen` varchar(10) DEFAULT NULL COMMENT '只能写是或者否',
   `head_of_house_num` varchar(50) DEFAULT NULL,
   `head_of_house_name` varchar(50) DEFAULT NULL,

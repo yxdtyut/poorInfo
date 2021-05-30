@@ -39,7 +39,7 @@ public class CodeMsg {
     public static final CodeMsg HOMEWORK_NOT_RIGHT = new CodeMsg(600112, "是否享受作业本数据只能写是或者否");
     public static final CodeMsg STUDY_TOOL_NOT_RIGHT = new CodeMsg(600113, "是否享受学具数据只能写是或者否");
     public static final CodeMsg SEX_NOT_RIGHT = new CodeMsg(600114, "是否享受学具数据只能写是或者否");
-    public static final CodeMsg DUILD_CARD_NOT_RIGHT = new CodeMsg(600115, "是否建档立卡数据只能写是或者否");
+    public static final CodeMsg DUILD_CARD_NOT_RIGHT = new CodeMsg(600115, "是否脱贫家庭数据只能写是或者否");
     public static final CodeMsg HEAD_OF_IDCARD_NOT_RIGHT = new CodeMsg(600116, "户主身份证格式有误");
     public static final CodeMsg SEMESTER_NOT_ONLY = new CodeMsg(600117, "学期字段不唯一");
 
