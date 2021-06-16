@@ -7,10 +7,7 @@ import com.mizhi.yxd.request.PoorRequest;
 import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.result.Result;
 import com.mizhi.yxd.service.PoorService;
-import com.mizhi.yxd.tools.BeanUtils;
-import com.mizhi.yxd.tools.ExcelUtils;
-import com.mizhi.yxd.tools.FileUtil;
-import com.mizhi.yxd.tools.Layui;
+import com.mizhi.yxd.tools.*;
 import com.mizhi.yxd.validate.ValueValidate;
 import com.mizhi.yxd.vo.PoorExportVo;
 import com.mizhi.yxd.vo.PoorVo;
@@ -48,7 +45,12 @@ public class PoorController {
         exportVoList.stream().forEach(poorExportVo -> poorExportVo.validate());
         int count = exportVoList.stream().collect(Collectors.groupingBy(PoorExportVo::getSemester, Collectors.counting())).size();
         if (count != 1) {
+            log.error("semester not only");
             throw new GlobleException(CodeMsg.SEMESTER_NOT_ONLY);
+        }
+        if (CollectionUtils.isNotEmpty(exportVoList) && !SemesterUtil.ifContain(exportVoList.get(0).getSemester())) {
+            log.error("semester not right");
+            throw new GlobleException(CodeMsg.SEMESTER_NOT_RIGHT);
         }
         final List<SubPoor> poors = BeanUtils.copyProperties(exportVoList, SubPoor.class);
         log.info("import, poor:{}", JSON.toJSONString(poors));

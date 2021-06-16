@@ -42,6 +42,7 @@ public class CodeMsg {
     public static final CodeMsg DUILD_CARD_NOT_RIGHT = new CodeMsg(600115, "是否脱贫家庭数据只能写是或者否");
     public static final CodeMsg HEAD_OF_IDCARD_NOT_RIGHT = new CodeMsg(600116, "户主身份证格式有误");
     public static final CodeMsg SEMESTER_NOT_ONLY = new CodeMsg(600117, "学期字段不唯一");
+    public static final CodeMsg SEMESTER_NOT_RIGHT = new CodeMsg(600118, "学期字段不正确，请参考页面");
 
     private Integer code;
     private String msg;

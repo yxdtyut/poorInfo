@@ -14,6 +14,7 @@ import com.mizhi.yxd.service.SubsidizeService;
 import com.mizhi.yxd.tools.ExcelUtils;
 import com.mizhi.yxd.tools.FileUtil;
 import com.mizhi.yxd.tools.Layui;
+import com.mizhi.yxd.tools.SemesterUtil;
 import com.mizhi.yxd.validate.ValueValidate;
 import com.mizhi.yxd.vo.CreateSubsidizeVo;
 import com.mizhi.yxd.vo.SubsidizeExportVo;
@@ -153,6 +154,10 @@ public class SubsidizeController {
         if (count != 1) {
             log.error("semester not only");
             throw new GlobleException(CodeMsg.SEMESTER_NOT_ONLY);
+        }
+        if (CollectionUtils.isNotEmpty(exportVoList) && !SemesterUtil.ifContain(exportVoList.get(0).getSemester())) {
+            log.error("semester not right");
+            throw new GlobleException(CodeMsg.SEMESTER_NOT_RIGHT);
         }
         exportVoList.stream().forEach(subsidizeExportVo -> subsidizeExportVo.validate());
         List<CompletableFuture<BatchOperationRsp>> batchOperationRsps = subsidizeService.batchDealImportData(exportVoList, httpSession);

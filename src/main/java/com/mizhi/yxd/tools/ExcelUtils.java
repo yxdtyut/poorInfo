@@ -5,6 +5,9 @@ import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
+import cn.afterturn.easypoi.excel.entity.result.ExcelVerifyHandlerResult;
+import cn.afterturn.easypoi.handler.inter.IExcelVerifyHandler;
+import cn.hutool.core.util.ObjectUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.multipart.MultipartFile;
@@ -217,6 +220,18 @@ public class ExcelUtils {
         ImportParams params = new ImportParams();
         params.setTitleRows(titleRows);
         params.setHeadRows(headerRows);
+        //重点是这一行用于 EasyPOI导入遇到空白行问题
+        params.setVerifyHandler(new IExcelVerifyHandler() {
+            @Override
+            public ExcelVerifyHandlerResult verifyHandler(Object obj) {
+                ExcelVerifyHandlerResult result=new ExcelVerifyHandlerResult(true);
+                if (ObjectUtil.isNotNull(obj)){
+                    boolean b = ObjectIsNullUtil.checkFieldAllNull(obj);
+                    result.setSuccess(!b);
+                }
+                return result;
+            }
+        });
 //        params.setSaveUrl("/excel/");
 //        params.setNeedSave(true);
         // params.setNeedVerify(needVerfiy);
