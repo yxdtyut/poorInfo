@@ -2,14 +2,12 @@ package com.mizhi.yxd.validate;
 
 import com.mizhi.yxd.exception.GlobleException;
 import com.mizhi.yxd.result.CodeMsg;
+import com.mizhi.yxd.tools.StatisticUtil;
 import com.mizhi.yxd.tools.ValidateUtils;
 import com.mizhi.yxd.vo.UpdatePoorVo;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author yangxudong
@@ -108,6 +106,11 @@ public class ValueValidate {
 
         if ("nutrimealMoney".equals(feild) && !value.matches("([1-9]\\d*\\.?\\d*)|(0\\.\\d*[1-9])")) {
             throw new GlobleException(CodeMsg.DECIMAL_NOT_RIGHT_ERROR);
+        }
+
+        Set<String> learningPeriodSet = StatisticUtil.unmodifyLearningPeriodMap.keySet();
+        if ("studyLevel".equals(feild) && !learningPeriodSet.contains(value)) {
+            throw new GlobleException(CodeMsg.STUDY_LEVEL_NOT_RIGHT);
         }
     }
 

@@ -2,6 +2,7 @@ package com.mizhi.yxd.tools;
 
 import com.google.common.collect.Maps;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -13,6 +14,7 @@ public class StatisticUtil {
     private static Map<String, String> learningPeriodMap = Maps.newHashMap();
     private static Map<String, String> learningPeriodInMizhiMap = Maps.newHashMap();
     private static Map<String, String> learningPeriodWithSubsidizeMap = Maps.newHashMap();
+    public static Map<String, String> unmodifyLearningPeriodMap = null;
     static {
         learningPeriodMap.put("学前", "kindergarten");
         learningPeriodMap.put("小学", "primarySchool");
@@ -24,6 +26,7 @@ public class StatisticUtil {
         learningPeriodMap.put("研究生", "graduate");
         learningPeriodMap.put("博士", "doctor");
         learningPeriodMap.put("特殊教育", "specialEducation");
+        unmodifyLearningPeriodMap = Collections.unmodifiableMap(learningPeriodMap);
 
         learningPeriodInMizhiMap.put("学前人数", "kindergartenCount");
         learningPeriodInMizhiMap.put("小学人数", "primarySchoolCount");

@@ -4,11 +4,14 @@ import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.mizhi.yxd.entity.SubPoor;
 import com.mizhi.yxd.exception.GlobleException;
 import com.mizhi.yxd.result.CodeMsg;
+import com.mizhi.yxd.tools.StatisticUtil;
 import com.mizhi.yxd.tools.ValidateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Set;
 
 /**
  * @program: subsidize
@@ -128,6 +131,11 @@ public class PoorExportVo {
 
         if (StringUtils.isNotEmpty(thisEnjoy) && (!"是".equals(thisEnjoy) && !"否".equals(thisEnjoy))) {
             throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:本学期是否享受米脂资助只能写是或者否"));
+        }
+
+        Set<String> learningPeriodSet = StatisticUtil.unmodifyLearningPeriodMap.keySet();
+        if (!learningPeriodSet.contains(studyLevel)) {
+            throw new GlobleException(CodeMsg.STUDY_LEVEL_NOT_RIGHT.setMsg(errorMsg + "，原因:学段不正确，请在[学前,小学,初中,普高,中职,高职,本科,研究生,博士,特殊教育]中选择"));
         }
     }
 
