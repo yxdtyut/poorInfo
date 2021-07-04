@@ -25,7 +25,6 @@ public class SubUser {
     private String model;
     private String homework;
     private String studyTool;
-    private String buildCard;
     private String remark;
 
     public void validate() {
@@ -47,10 +46,6 @@ public class SubUser {
 
         if (StringUtils.isNotEmpty(studyTool) && (!"是".equals(studyTool) && !"否".equals(studyTool))) {
             throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:是否享受学具只能写是或者否"));
-        }
-
-        if (StringUtils.isNotEmpty(buildCard) && (!"是".equals(buildCard) && !"否".equals(buildCard))) {
-            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:是否脱贫家庭只能写是或者否"));
         }
 
         if (StringUtils.isNotEmpty(sex) && (!"男".equals(sex) && !"女".equals(sex))) {
