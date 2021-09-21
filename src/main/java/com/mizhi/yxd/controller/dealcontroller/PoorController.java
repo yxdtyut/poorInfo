@@ -7,6 +7,7 @@ import com.mizhi.yxd.request.PoorRequest;
 import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.result.Result;
 import com.mizhi.yxd.service.PoorService;
+import com.mizhi.yxd.service.SemesterService;
 import com.mizhi.yxd.tools.*;
 import com.mizhi.yxd.validate.ValueValidate;
 import com.mizhi.yxd.vo.PoorExportVo;
@@ -39,6 +40,12 @@ public class PoorController {
     @Autowired
     private PoorService poorService;
 
+    @Autowired
+    private SemesterService semesterService;
+
+    @Autowired
+    private SemesterUtil semesterUtil;
+
     @PostMapping("/import")
     public Result<String> importExcel(MultipartFile file, HttpSession httpSession) throws IOException {
         List<PoorExportVo> exportVoList = ExcelUtils.importExcel(file, PoorExportVo.class);
@@ -48,9 +55,13 @@ public class PoorController {
             log.error("semester not only");
             throw new GlobleException(CodeMsg.SEMESTER_NOT_ONLY);
         }
-        if (CollectionUtils.isNotEmpty(exportVoList) && !SemesterUtil.ifContain(exportVoList.get(0).getSemester())) {
+        if (CollectionUtils.isNotEmpty(exportVoList) && !semesterUtil.ifContain(exportVoList.get(0).getSemester())) {
             log.error("semester not right");
             throw new GlobleException(CodeMsg.SEMESTER_NOT_RIGHT);
+        }
+        if (CollectionUtils.isNotEmpty(exportVoList) && "1".equals(semesterService.queryLockedByName(exportVoList.get(0).getSemester()))) {
+            log.error("semester is locked");
+            throw new GlobleException(CodeMsg.SEMESTER_IS_LOCKED);
         }
         final List<SubPoor> poors = BeanUtils.copyProperties(exportVoList, SubPoor.class);
         log.info("import, poor:{}", JSON.toJSONString(poors));

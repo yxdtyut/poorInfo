@@ -127,10 +127,13 @@
             </a>
                 <ul class="sub-menu">
                     <li><a _href="baseFunction"> <i
-                            class="iconfont">&#xe6a7;</i> <cite>功能列表</cite>
+                            class="iconfont">&#xe6a7;</i> <cite>导入用户</cite>
                     </a></li>
                     <li><a _href="userManager"> <i
                             class="iconfont">&#xe6a7;</i> <cite>用户管理</cite>
+                    </a></li>
+                    <li><a _href="semesterManager"> <i
+                            class="iconfont">&#xe6a7;</i> <cite>学期管理</cite>
                     </a></li>
                 </ul>
             </li>
@@ -169,6 +172,7 @@
         var role = $("#hide").text();
         if(role != 'admin') {
             $("#userManager").attr("hidden", true);
+            $("#semesterManager").attr("hidden", true);
         }
     });
 

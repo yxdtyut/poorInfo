@@ -43,7 +43,8 @@ public class CodeMsg {
     public static final CodeMsg HEAD_OF_IDCARD_NOT_RIGHT = new CodeMsg(600116, "户主身份证格式有误");
     public static final CodeMsg SEMESTER_NOT_ONLY = new CodeMsg(600117, "学期字段不唯一");
     public static final CodeMsg SEMESTER_NOT_RIGHT = new CodeMsg(600118, "学期字段不正确，请参考页面");
-    public static final CodeMsg STUDY_LEVEL_NOT_RIGHT = new CodeMsg(600118, "学段不正确，请在[学前,小学,初中,普高,中职,高职,本科,研究生,博士,特殊教育]中选择");
+    public static final CodeMsg STUDY_LEVEL_NOT_RIGHT = new CodeMsg(600119, "学段不正确，请在[学前,小学,初中,普高,中职,高职,本科,研究生,博士,特殊教育]中选择");
+    public static final CodeMsg SEMESTER_IS_LOCKED = new CodeMsg(600120, "学期已被锁定，请联系管理员解锁该学期");
 
     private Integer code;
     private String msg;

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mizhi.yxd.mapper.SemesterMapper">
+    <update id="updateSemester">
+        update sub_semester set locked = #{semester.locked} where name = #{semester.name}
+    </update>
+    <select id="querySemesterWithPage" resultType="com.mizhi.yxd.entity.Semester" parameterType="map">
+        select name,(case locked when '1' then '锁定' when '0' then '未锁定' end) as locked from sub_semester limit #{map.start},#{map.pagesize}
+    </select>
+    <select id="findCount" resultType="java.lang.Integer">
+        select count(1) from sub_semester;
+    </select>
+    <select id="queryLockedByName" resultType="java.lang.String">
+        select locked from sub_semester where name = #{name}
+    </select>
+    <select id="findCountByCondition" resultType="java.lang.Integer">
+         select count(1) from sub_semester where name = #{name}
+    </select>
+</mapper>

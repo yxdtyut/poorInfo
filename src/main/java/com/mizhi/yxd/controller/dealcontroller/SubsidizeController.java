@@ -10,6 +10,7 @@ import com.mizhi.yxd.request.PoorRequest;
 import com.mizhi.yxd.result.CodeMsg;
 import com.mizhi.yxd.result.Result;
 import com.mizhi.yxd.service.PoorService;
+import com.mizhi.yxd.service.SemesterService;
 import com.mizhi.yxd.service.SubsidizeService;
 import com.mizhi.yxd.tools.ExcelUtils;
 import com.mizhi.yxd.tools.FileUtil;
@@ -52,6 +53,12 @@ public class SubsidizeController {
 
     @Autowired
     private PoorService poorService;
+
+    @Autowired
+    private SemesterService semesterService;
+
+    @Autowired
+    private SemesterUtil semesterUtil;
 
     @PostMapping("/add")
     public Result<String> createSubsidize(@RequestBody CreateSubsidizeVo createSubsidizeVo, HttpSession httpSession) {
@@ -155,9 +162,13 @@ public class SubsidizeController {
             log.error("semester not only");
             throw new GlobleException(CodeMsg.SEMESTER_NOT_ONLY);
         }
-        if (CollectionUtils.isNotEmpty(exportVoList) && !SemesterUtil.ifContain(exportVoList.get(0).getSemester())) {
+        if (CollectionUtils.isNotEmpty(exportVoList) && !semesterUtil.ifContain(exportVoList.get(0).getSemester())) {
             log.error("semester not right");
             throw new GlobleException(CodeMsg.SEMESTER_NOT_RIGHT);
+        }
+        if (CollectionUtils.isNotEmpty(exportVoList) && "1".equals(semesterService.queryLockedByName(exportVoList.get(0).getSemester()))) {
+            log.error("semester is locked");
+            throw new GlobleException(CodeMsg.SEMESTER_IS_LOCKED);
         }
         exportVoList.stream().forEach(subsidizeExportVo -> subsidizeExportVo.validate());
         List<CompletableFuture<BatchOperationRsp>> batchOperationRsps = subsidizeService.batchDealImportData(exportVoList, httpSession);

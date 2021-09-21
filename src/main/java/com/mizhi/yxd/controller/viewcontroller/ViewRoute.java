@@ -105,6 +105,11 @@ public class ViewRoute {
         return "userManager";
     }
 
+    @RequestMapping("/semesterManager")
+    public String semesterManager() {
+        return "semesterManager";
+    }
+
     @RequestMapping("/learningPeriodWithSubsidize")
     public String learningPeriodWithSubsidize() {
         return "learningPeriodWithSubsidize";
