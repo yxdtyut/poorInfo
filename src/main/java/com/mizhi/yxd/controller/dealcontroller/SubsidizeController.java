@@ -105,14 +105,16 @@ public class SubsidizeController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public Result<Integer> deleteSubsidizeInfo(@PathVariable String id) {
-        log.info("delete poor info, id:{}", id);
+    public Result<Integer> deleteSubsidizeInfo(@PathVariable String id, @PathVariable String semester) {
+        log.info("delete poor info, id:{}, semester:{}", id, semester);
+        validateIfLock(semester);
         int count = subsidizeService.deleteSubsidizeInfo(id);
         return Result.success(count);
     }
 
     @PostMapping("/deletes")
-    public Result<Integer> deletePoolInfos(String nums) {
+    public Result<Integer> deletePoolInfos(String nums, String semester) {
+        validateIfLock(semester);
         String[] strings = nums.split(",");
         List<String> data = Arrays.asList(strings);
         int count = 0;
@@ -120,6 +122,13 @@ public class SubsidizeController {
             count = subsidizeService.deleteByPoorIds(data);
         }
         return Result.success(count);
+    }
+
+    private void validateIfLock(@PathVariable String semester) {
+        if (StringUtils.isNotEmpty(semester) && "1".equals(semesterService.queryLockedByName(semester))) {
+            log.error("semester is locked");
+            throw new GlobleException(CodeMsg.SEMESTER_IS_LOCKED);
+        }
     }
 
     @PutMapping("/update")

@@ -16,6 +16,7 @@ import com.mizhi.yxd.vo.UpdatePoorVo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -103,15 +104,24 @@ public class PoorController {
         return Result.success("success");
     }
 
-    @DeleteMapping("/delete/{id}")
-    public Result<Integer> deletePoorInfo(@PathVariable String id) {
-        log.info("delete poor info, id:{}", id);
+    @DeleteMapping("/delete/{id}/{semester}")
+    public Result<Integer> deletePoorInfo(@PathVariable String id, @PathVariable String semester) {
+        log.info("delete poor info, id:{}, semester:{}", id, semester);
+        validateIfLock(semester);
         int count = poorService.deletePoorInfo(id);
         return Result.success(count);
     }
 
+    private void validateIfLock(@PathVariable String semester) {
+        if (StringUtils.isNotEmpty(semester) && "1".equals(semesterService.queryLockedByName(semester))) {
+            log.error("semester is locked");
+            throw new GlobleException(CodeMsg.SEMESTER_IS_LOCKED);
+        }
+    }
+
     @PostMapping("/deletes")
-    public Result<Integer> deletePoolInfos(String nums) {
+    public Result<Integer> deletePoolInfos(String nums, String semester) {
+        validateIfLock(semester);
         String[] strings = nums.split(",");
         List<String> data = Arrays.asList(strings);
         int count = 0;
@@ -123,6 +133,7 @@ public class PoorController {
 
     @PostMapping("/add")
     public Result<String> addPoorInfo(@RequestBody PoorExportVo poorExportVo, HttpSession httpSession) {
+        validateIfLock(poorExportVo.getSemester());
         poorExportVo.validate();
         SubPoor subPoor = new SubPoor();
         org.springframework.beans.BeanUtils.copyProperties(poorExportVo, subPoor);

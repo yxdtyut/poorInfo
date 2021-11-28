@@ -1,0 +1,1 @@
+alter table `sub_poor` drop index idcard;

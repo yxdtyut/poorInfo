@@ -267,9 +267,10 @@
   });
 
   function deleteSubsidizeInfo(poorId){
+      var semester = $("#semester").val();
       $.ajax({
           type:"delete",
-          url:"/subsidize/delete/"+poorId,
+          url:"/subsidize/delete/"+poorId+"/"+semester,
           async:true,
           dataType:"json",
           success:function(data){
@@ -277,13 +278,14 @@
                   alert("删除成功");
                   setTimeout(location.reload(),2000)
               } else {
-                  alert("删除失败");
+                  alert("删除失败:" + data.msg);
               }
           }
       });
   }
 
   function delAll (argument) {
+      var semester = $("#semester").val();
 	  layui.use('table',function(){
 	  var table = layui.table
 	  var checkStatus = table.checkStatus('subsidizeInfo');
@@ -300,14 +302,14 @@
 
 		$.ajax({
 			url:'/subsidize/deletes',
-			data:{'nums':nums},
+            data:{'nums':nums, 'semester': semester},
 			type:'post',
 			success:function(data){
 				 if(data.code == 200){
 				        parent.layer.msg('删除成功！', {icon: 1,time:2000,shade:0.2});
 				        location.reload(true);
 			        }else{
-				        parent.layer.msg('删除失败！', {icon: 2,time:3000,shade:0.2});
+                        parent.layer.msg('删除失败:' + data.msg, {icon: 2,time:3000,shade:0.2});
 			        }
 			}
 		});      

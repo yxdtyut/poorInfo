@@ -264,9 +264,10 @@
 
       table.on('tool(poorTable)', function (obj) {
           var data = obj.data;
+          var semester = $("#semester").val();
           if(obj.event === 'del'){
               layer.confirm('真的删除['+data.name+']么', function(index){
-                  deletePoorInfo(data.id);
+                  deletePoorInfo(data.id, semester);
               });
           }
           if(obj.event === 'add') {
@@ -333,10 +334,10 @@
       })
   }
 
-  function deletePoorInfo(poorId){
+  function deletePoorInfo(poorId, semester){
       $.ajax({
           type:"delete",
-          url:"/poor/delete/"+poorId,
+          url:"/poor/delete/"+poorId+"/"+semester,
           async:true,
           dataType:"json",
           success:function(data){
@@ -344,13 +345,14 @@
                   alert("删除成功");
                   setTimeout(location.reload(),2000)
               } else {
-                  alert("删除失败");
+                  alert("删除失败:" + data.msg);
               }
           }
       });
   }
 
   function delAll (argument) {
+      var semester = $("#semester").val();
 	  layui.use('table',function(){
 	  var table = layui.table
 	  var checkStatus = table.checkStatus('poorInfo');
@@ -367,14 +369,14 @@
 
 		$.ajax({
 			url:'/poor/deletes',
-			data:{'nums':nums},
+			data:{'nums':nums, 'semester': semester},
 			type:'post',
 			success:function(data){
 				 if(data.code == 200){
 				        parent.layer.msg('删除成功！', {icon: 1,time:2000,shade:0.2});
 				        location.reload(true);
 			        }else{
-				        parent.layer.msg('删除失败！', {icon: 2,time:3000,shade:0.2});
+				        parent.layer.msg('删除失败:' + data.msg, {icon: 2,time:3000,shade:0.2});
 			        }
 			}
 		});      

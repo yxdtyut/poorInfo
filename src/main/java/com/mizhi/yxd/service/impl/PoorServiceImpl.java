@@ -81,6 +81,9 @@ public class PoorServiceImpl implements PoorService {
     public void checkIdcardExist(List<SubPoor> poors, HttpSession httpSession) {
         PoorRequest poorRequest = new PoorRequest();
         poorRequest.setAccount((String) httpSession.getAttribute("account"));
+        if (poors.size() > 0) {
+            poorRequest.setSemester(poors.get(0).getSemester());
+        }
         List<SubPoor> subPoors = poorMapper.selectByCondition(poorRequest);
         if (subPoors.size() > 0) {
             Map<String, SubPoor> allSubPoorMap = subPoors.stream().collect(Collectors.toMap(SubPoor::getIdCard, x -> x));
