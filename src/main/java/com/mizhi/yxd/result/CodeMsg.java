@@ -45,6 +45,7 @@ public class CodeMsg {
     public static final CodeMsg SEMESTER_NOT_RIGHT = new CodeMsg(600118, "学期字段不正确，请参考页面");
     public static final CodeMsg STUDY_LEVEL_NOT_RIGHT = new CodeMsg(600119, "学段不正确，请在[学前,小学,初中,普高,中职,高职,本科,研究生,博士,特殊教育]中选择");
     public static final CodeMsg SEMESTER_IS_LOCKED = new CodeMsg(600120, "学期已被锁定，请联系管理员解锁该学期");
+    public static final CodeMsg IDCARD_REPEATED = new CodeMsg(600121, "有重复的身份证信息，请检查导入的表格");
 
     private Integer code;
     private String msg;

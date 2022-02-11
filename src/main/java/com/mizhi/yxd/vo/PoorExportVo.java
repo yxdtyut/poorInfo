@@ -56,7 +56,7 @@ public class PoorExportVo {
     @Excel(name = "户主姓名", width = 15)
     private String headOfHouseName;
 
-    @Excel(name = "户主身份证号码", width = 15)
+    @Excel(name = "户类型", width = 15)
     private String headOfHouseIdCard;
 
     @Excel(name = "联系电话", width = 15)

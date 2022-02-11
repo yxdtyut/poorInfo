@@ -18,6 +18,7 @@ import com.mizhi.yxd.tools.Layui;
 import com.mizhi.yxd.tools.SemesterUtil;
 import com.mizhi.yxd.validate.ValueValidate;
 import com.mizhi.yxd.vo.CreateSubsidizeVo;
+import com.mizhi.yxd.vo.PoorExportVo;
 import com.mizhi.yxd.vo.SubsidizeExportVo;
 import com.mizhi.yxd.vo.UpdatePoorVo;
 import io.swagger.annotations.Api;
@@ -166,6 +167,12 @@ public class SubsidizeController {
     @PostMapping("/import")
     public Result<Object> importExcel(MultipartFile file, HttpSession httpSession) throws IOException {
         List<SubsidizeExportVo> exportVoList = ExcelUtils.importExcel(file, SubsidizeExportVo.class);
+        if (exportVoList.size() > 0) {
+            List<String> idCardList = exportVoList.stream().map(SubsidizeExportVo::getIdCard).distinct().collect(Collectors.toList());
+            if (idCardList.size() != exportVoList.size()) {
+                throw new GlobleException(CodeMsg.IDCARD_REPEATED);
+            }
+        }
         int count = exportVoList.stream().collect(Collectors.groupingBy(SubsidizeExportVo::getSemester, Collectors.counting())).size();
         if (count != 1) {
             log.error("semester not only");

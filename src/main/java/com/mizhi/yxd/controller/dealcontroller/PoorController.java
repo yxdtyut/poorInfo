@@ -50,6 +50,12 @@ public class PoorController {
     @PostMapping("/import")
     public Result<String> importExcel(MultipartFile file, HttpSession httpSession) throws IOException {
         List<PoorExportVo> exportVoList = ExcelUtils.importExcel(file, PoorExportVo.class);
+        if (exportVoList.size() > 0) {
+            List<String> idCardList = exportVoList.stream().map(PoorExportVo::getIdCard).distinct().collect(Collectors.toList());
+            if (idCardList.size() != exportVoList.size()) {
+                throw new GlobleException(CodeMsg.IDCARD_REPEATED);
+            }
+        }
         exportVoList.stream().forEach(poorExportVo -> poorExportVo.validate());
         int count = exportVoList.stream().collect(Collectors.groupingBy(PoorExportVo::getSemester, Collectors.counting())).size();
         if (count != 1) {
