@@ -121,7 +121,7 @@ public class PoorExportVo {
             throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，身份证信息有误!"));
         }
 
-        if (StringUtils.isNotEmpty(headOfHouseIdCard) && !ValidateUtils.checkIdCard(headOfHouseIdCard)) {
+        if (StringUtils.isNotEmpty(headOfHouseIdCard)) {
             throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，户主身份证信息有误!"));
         }
 
