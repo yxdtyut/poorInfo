@@ -121,10 +121,6 @@ public class PoorExportVo {
             throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，身份证信息有误!"));
         }
 
-        if (StringUtils.isNotEmpty(headOfHouseIdCard)) {
-            throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，户主身份证信息有误!"));
-        }
-
         if (StringUtils.isNotEmpty(ifDisability) && (!"是".equals(ifDisability) && !"否".equals(ifDisability))) {
             throw new GlobleException(CodeMsg.IMPORT_VALIDATE_ERROR.setMsg(errorMsg + "，原因:是否残疾生字段只能写是或者否"));
         }
